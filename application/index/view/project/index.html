@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="华运、华运资本、投资、项目管理、管理系统、投资公司"/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="__PUBLIC__/img/logo.ico">
+    <title>华运资本项目管理系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/zui.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/mymine.css">
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/webuploader.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="__PUBLIC__/js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+<header>
+    <div class="row head_top">
+        <div class="col-xs-11" style="width: 100%;">
+            <div class="head_top_cont">
+                <img src="__PUBLIC__/img/index_bj.png" class="img-responsive">
+                <div class="logo">
+                    <div class="logo_cont">
+                        <img src="__PUBLIC__/img/logo.png">
+                        <h2>华运资本项目管理系统</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head_bottom">
+        <div class="head_bottom_cont">
+            <div class="exit">
+                <img src="__PUBLIC__/img/exit.png">
+                <h4 class="logout">退出</h4>
+            </div>
+            <div class="login_user">
+                <img src="__PUBLIC__/img/user_icon.png">
+                <h4>你好，{$userInfo.user_name}</h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="index_container">
+        <div class="nav">
+            <ul>
+                {if condition="$menu_res.0 eq 1"}
+
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>项目管理</h4>
+                    </div>
+                    <ul>
+                        <!--选择的阶段id-->
+                        <input type="hidden" class="project_stage_id" value="{$project_stage_id.id}">
+
+
+                        {volist name="projectStage" id="stage"}
+
+                        <li class="nav_item_li {if condition ='$project_stage_id.id eq $stage.id'}open{/if}">
+                            <a href="{:url('index',['stage_id'=>$stage['id'],'stage_judge'=>1])}">
+                                <div class="li_item">
+                                    {if condition ="$project_stage_id.id eq $stage.id"}
+                                    <img src="__PUBLIC__/img/sj2.png">
+                                    {else/}
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    {/if}
+                                    <h5>{$stage.name}
+                                        {volist name="messagestageLog" id="messagestage"}
+                                    {if condition="$stage.id eq $messagestage.stage_id"}(+{$messagestage.stagenum}){/if}
+                                    {/volist}
+                                    </h5>
+                                </div>
+                            </a>
+                        </li>
+                        {/volist}
+
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.5 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>日志</h4>
+                    </div>
+                    <ul>
+
+                        {volist name="logtype" id="logtype"}
+                        <li class="nav_item_li">
+                            <a href="{:url('Log/index',['type_id'=>$logtype['id']])}">
+                                <div class="li_item">
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    <h5>{$logtype.log_type}</h5>
+                                </div>
+
+
+                            </a>
+                        </li>
+                        {/volist}
+
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.4 eq 1"}
+                <li>
+                    <a href="{:url('Newfile/share')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>共享</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.2 eq 1"}
+                <li>
+                    <a href="{:url('Ucenter/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>成员管理</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.1 eq 1"}
+                <li>
+                    <a href="{:url('Department/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.3 eq 1"}
+                <li>
+                    <a href="{:url('Account/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>账号设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+            </ul>
+        </div>
+        <div class="cont_right">
+            <div class="index_right">
+                <div class="index_right_top">
+                    <div class="add_project">创建项目</div>
+                    <div class="shaixuan">
+                        <label>行业筛选：</label>
+
+                        <select class="select_category">
+
+                            <option value="0" {if condition="$category_id eq 0" }selected{
+                            /if}>全部</option>
+                            {volist name="category" id="cate"}
+                            {if condition="$category_id eq $cate.id"}
+                            <option value="{$cate.id}" selected>{$cate.name}</option>
+                            {else/}
+                            <option value="{$cate.id}">{$cate.name}</option>
+                            {/if}
+                            {/volist}
+
+                        </select>
+                    </div>
+                </div>
+                <div class="index_right_table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="active">项目名称</th>
+                            <th class="active3">时间</th>
+                            <!--<th class="active4">估值</th>-->
+                            <th class="active3">更新时间</th>
+                            <th class="active3">行业</th>
+                            <th class="active2">跟进人
+                                <select class="select_charge">
+                                    <option value="0" {if condition="$charge_id eq 0" }selected{
+                                    /if}>全部</option>
+
+                                    {if condition="$charge_issert eq 1"}
+                                    {volist name="charge" id="charge"}
+                                    {if condition="$charge_id eq $charge.1"}
+                                    <option value="{$charge.1}" selected>{$charge.0}</option>
+                                    {else/}
+                                    <option value="{$charge.1}">{$charge.0}</option>
+                                    {/if}
+                                    {/volist}
+                                    {/if}
+                                </select>
+                            </th>
+                            <th class="active2">项目联系方式</th>
+                        </tr>
+                        </thead>
+                        <input type="hidden" class="project_charge_id" value="{$charge_id}">
+                        <input type="hidden" class="project_category_id" value="{$category_id}">
+
+                        <tbody>
+                        {volist name="result" id="res"}
+                        <tr>
+                            <td class="active">
+                                <a href="{:url('edit',['id'=>$res.id,'stage_id'=>$project_stage_id.id,'message_judge'=>1])}">
+                                    <h4 title="{$res.name}">{$res.name}
+                                    {volist name="messageproLog" id="messagepro"}
+                                        {if condition="$messagepro.project_id eq $res.id"}(+{$messagepro.pronum}){/if}
+                                        {/volist}</h4>
+                                </a>
+                            </td>
+                            <td class="active3">{:date("Y/m/d",$res.time1)}</td>
+                            <!--<td class="active4">{$res.valuation}</td>-->
+                            <td class="active3">{:date("m/d H:i",$res.time2)}</td>
+                            <td class="active3">{$res.cname}</td>
+                            <td class="active2">{$res.ename}</td>
+                            <td class="active2">{$res.mobile}</td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page">
+                    <div class="page_right">
+
+                        {$result->render()}
+
+                    </div>
+                </div>
+            </div>
+            <div class="add_project_cont" style="display: none">
+                <div class="apc_top">
+                    <div class="apc_top_cont">
+                        <img src="__PUBLIC__/img/fh.png">
+                        <h5>返回</h5>
+                    </div>
+                </div>
+                <div class="apc_cont">
+                    <div class="pit_nav">
+                        <ul>
+                            <li class="active">
+                                项目概况
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pit_bottom">
+                        <div class="project_cont">
+                            <form action="">
+                                <div class="pc_item">
+                                    <span>项目名称：</span>
+                                    <input type="text" class="pc_input project_name" value=""/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>项目介绍：</span>
+                                    <textarea class="project_brief"></textarea>
+                                </div>
+                                <div class="pc_item">
+                                    <span>企业全称：</span>
+                                    <input type="text" class="pc_input project_company" value=""/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>行业分类：</span>
+                                    <select class="project_category">
+                                        {volist name="category" id="ca"}
+                                        <option value="{$ca.id}">{$ca.name}</option>
+                                        {/volist}
+
+                                    </select>
+                                </div>
+                                <div class="pc_item">
+                                    <span>发展阶段：</span>
+                                    <select class="active project_investment">
+
+                                        {volist name="investment" id="inve"}
+                                        <option value="{$inve.id}">{$inve.investment_name}</option>
+
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="pc_item">
+                                    <span>融资要求：</span>
+                                    <input type="text" class="pc_input project_valuation" value=""/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>联系电话：</span>
+                                    <input type="text" class="pc_input2 project_mobile" value=""
+                                           placeholder="电话、微信、QQ等"/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>时间：</span>
+                                    <div class="doc-dd">
+                                        <input name="act_start_time" type="text" class="text-box time1 " value=""
+                                               readonly="readonly"/>
+                                    </div>
+                                </div>
+                                <div class="pc_item">
+                                    <span>更新时间：</span>
+                                    <div class="doc-dd">
+                                        <input name="act_start_time" type="text" class="text-box time2" value=""
+                                               readonly="readonly"/>
+                                    </div>
+                                </div>
+                                <div class="pc_item">
+                                    <span>跟进人：</span>
+                                    <select class="active ucenter_id">
+                                        <option value="{$userInfo.id}">{$userInfo.user_name}</option>
+
+                                    </select>
+                                </div>
+                                <div class="pc_item">
+                                    <span>项目库：</span>
+                                    <ul>
+
+                                        {volist name="projectStage" id="ps"}
+                                        <li>
+                                            <span id="new_project_stage_id" data-id="{$ps.id}"></span>
+                                            <h5>{$ps.name}</h5>
+                                        </li>
+                                        {/volist}
+
+                                    </ul>
+                                </div>
+                                <div class="pc_item">
+                                    <span>初审意见：</span>
+                                    <textarea class="suggestion"></textarea>
+                                </div>
+                                <div class="pc_item">
+                                    <button type="button" class="new_save">保存</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="__PUBLIC__/js/webuploader.js"></script>
+<script src="__PUBLIC__/js/store.min.js"></script>
+
+<!--<script type="text/javascript" src="__PUBLIC__/js/js.js" ></script>-->
+<!-- 统计代码 start -->
+<script type="text/javascript">
+    $(".ui-icon-circle-triangle-e").text('>');
+    $("input[name='act_start_time'],input[name='act_stop_time']").datetimepicker();
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F96790c81142777e7724407f030936c10' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 统计代码 end -->
+
+<script type="text/javascript">
+    store.set("xiangmu_num",'');
+    $(function () {
+        var public = "__PUBLIC__";
+        /************项目管理、日志二级菜单点击事件***********/
+        $(".nav_item").click(function () {
+            var ul = $(this).siblings('ul');
+            var display = $(this).siblings('ul').css('display');
+            if (display == "block") {
+                ul.hide();
+                $(this).find('img').attr('src', public + '/img/jia.png');
+            } else {
+                ul.show();
+                $(this).find('img').attr('src', public + '/img/jian.png');
+            }
+        });
+        /**************共享 成员管理、设置鼠标事件**************/
+        $(".nav ul li .nav_item2").mouseover(function () {
+            $(".nav ul li .nav_item2").removeClass('active');
+            $(this).addClass('active');
+            $(".nav ul li .nav_item2").removeClass('action');
+            $(this).prev().addClass('action');
+        });
+        $(".nav_item2").mouseout(function () {
+            $(".nav_item2").removeClass('active');
+            $(".nav_item2").removeClass('action');
+        });
+        /**************项目管理、日志下li的鼠标事件**************/
+        $(".nav_item_li").mouseover(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(this).addClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(this).prev().addClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+            $(this).find('img').attr('src', public + '/img/sj2.png');
+        });
+        $(".nav_item_li").mouseout(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+        });
+        /***************项目概况等三个切换***************/
+//		$('.pit_nav li').click(function(){
+//			$(this).addClass("active").siblings().removeClass();
+//			$(".pit_bottom>div").hide().eq($('.pit_nav li').index(this)).show();
+//		});
+        $(".apc_top_cont").click(function () {
+            $(".add_project_cont").hide();
+            $(".index_right").show();
+        });
+        $(".add_project").click(function () {
+            $(".index_right").hide();
+            $(".apc_cont").show();
+            $(".add_project_cont").show();
+            $(".project_cont").show();
+        });
+        /*****************项目库选择事件****************/
+        $(".pc_item li span").click(function () {
+            $(".pc_item li span").removeClass('active');
+            $(this).addClass('active');
+            var project_stage_id = $(this).attr("data-id");
+
+            $('.new_save').click(function () {
+
+
+                var project_name = $('.project_name').val();
+                var project_brief = $('.project_brief').val();
+                var project_company = $('.project_company').val();
+                var project_category = $('.project_category').val();
+                var project_investment = $('.project_investment').val();
+                var valuation = $('.project_valuation').val();
+                var mobile = $('.project_mobile').val();
+                var time1 = $('.time1').val();
+                var time2 = $('.time2').val();
+                var ucenter = $('.ucenter_id').val();
+                var suggestion = $('.suggestion').val();
+                if (project_name == null || project_name == "" || project_stage_id == null || project_stage_id == "") {
+
+                    alert("请把资料填写完整");
+                    return false;
+                }
+
+
+                $.ajax(
+                        {
+                            url: "{:url('Project/add')}",
+                            data: {
+                                name: project_name,
+                                brief: project_brief,
+                                company_name: project_company,
+                                investment_stage: project_investment,
+                                valuation: valuation,
+                                mobile: mobile,
+                                charge_user: ucenter,
+                                ucenter_id: ucenter,
+                                stage_id: project_stage_id,
+                                time1: time1,
+                                time2: time2,
+                                category_id: project_category,
+                                suggestion: suggestion
+
+                            },
+                            dataType: 'json',
+                            method: 'post',
+                            success: function (data) {
+                                if (data == 1) {
+                                    var url = "{:url('index')}"
+                                    window.location.href = url;
+                                } else {
+
+                                    alert("shibai ");
+                                }
+
+                            }
+                        }
+                )
+
+
+            })
+
+        });
+
+
+        //行业筛选
+        $('.select_category').change(function () {
+
+            var project_stage_id = $('.project_stage_id').val();
+            var cetegory_id = $('.select_category').val();
+            var url = "{:url('Project/index')}";
+            url = url.substr(0, (url.length - 5));
+            url = url + "/stage_id/" + project_stage_id + "/category/" + cetegory_id + ".html";
+            window.location.href = url;
+
+
+        })
+
+        //跟进人筛选
+
+        $('.select_charge').change(function () {
+
+            var project_stage_id = $('.project_stage_id').val();
+            var charge_id = $('.select_charge').val();
+            var cetegory_id = $('.project_category_id').val();
+            var url = "{:url('Project/index')}";
+            url = url.substr(0, (url.length - 5));
+            url = url + "/stage_id/" + project_stage_id + "/category/" + cetegory_id + "/charge_id/" + charge_id + ".html";
+            window.location.href = url;
+
+
+        })
+
+        //退出
+        $('.logout').click(function () {
+
+            window.location.href = "{:url('Ucenter/logout')}"
+        })
+
+    });
+
+</script>
+</body>
+</html>

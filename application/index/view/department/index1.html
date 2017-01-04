@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="logo.ico">
+    <title>机构管理</title>
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/zui.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/css.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/iconfont.css">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body style="background:#ececec">
+<div class="bj"></div>
+<header>
+    <div class="head-top">
+        <div class="head-top-cont">
+            <h2>{$organization.name}</h2>
+        </div>
+    </div>
+    <div class="head-bottom">
+        {volist name="menu_result" id="menu_res"}
+        {if condition="$menu_res.id eq 2"}
+        <a href="{:url($menu_res['url'])}" class="active">{$menu_res.title}</a>{else/}
+
+        <a href="{:url($menu_res['url'])}">{$menu_res.title}</a>
+        {/if}
+        <!--<a href="{:url('index')}" class="active">项目管理</a>-->
+        <!--<a href="{:url('Department/index')}">机构设置</a>-->
+        <!--<a href="{:url('Ucenter/index')}">成员管理</a>-->
+        {/volist}
+        <h3>您好，{$userInfo.user_name}<span class="out">退出</span></h3>
+
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="orgn">
+        <div class="orgn_cont">
+            <div class="orgn_top">
+                <h2>
+                    <span>机构名称</span>
+                </h2>
+                <input type="hidden" value="{$organization.id}" class="orgn_id_input"/>
+                <input type="text" value="{$organization.name}" class="orgn_top_input"/>
+                <button class="orgn_top_button">保存</button>
+            </div>
+            <div class="orgn_bottom orgn_top">
+                <h2>
+                    <span>项目库</span>
+                </h2>
+                <div class="orgn_bottom_top">
+                    <button class="obt_add">添加新项目库</button>
+                    <button class="obt_compile">编辑名称</button>
+                    <button class="obt_delete">删除</button>
+                </div>
+                <div class="orgn_bottom_cont">
+                    {volist name="projectStage" id="pr_st"}
+                    <div class="obc_item" data-id="{$pr_st.id}" data-name="{$pr_st.name}"
+                         data-order_id="{$pr_st.order_id}">
+                        <i class="iconfont">&#xe656;</i>
+                        <span>{$pr_st.name}</span>
+                    </div>
+                    {/volist}
+
+
+                </div>
+            </div>
+            <div class="add_orgn">
+                <input type="text" value="" placeholder="项目库名称" class="stage_name"/>
+                <input type="tel" value="" placeholder="排序  例如：2" class="stage_order"/>
+                <button class="add_orgn_cancel">取消</button>
+                <button class="add_orgn_yes">确定</button>
+            </div>
+
+            <div class="add_orgn1">
+                <input type="text" value="" placeholder="项目库名称" class="stage_name1"/>
+                <input type="tel" value="" placeholder="排序  例如：2" class="stage_order1"/>
+                <button class="add_orgn_cancel1">取消</button>
+                <button class="add_orgn_yes1">确定</button>
+            </div>
+            <div class="project-delete-cont">
+                <h4>你确定要删除此项目库</h4>
+                <div class="pdc-cancel">取消</div>
+                <div class="pdc-yes">确定</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //选中项目库后的操作
+        $(".obc_item").click(function () {
+            $(".obc_item").removeClass('active');
+            $(this).addClass('active');
+            var stage_id = $(this).attr('data-id');
+            var stage_name = $(this).attr('data-name');
+            var stage_order = $(this).attr('data-order_id');
+            //删除项目库
+            $(".obt_delete").click(function () {
+                $(".project-delete-cont").show();
+                $(".bj").show();
+
+                //点击确定按钮
+                $(".pdc-yes").click(function () {
+                    $.ajax(
+                            {
+                                url: "{:url('ProjectStage/delete')}",
+
+                                data: {id: stage_id},
+
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+
+                                    if (data == 1) {
+
+                                        window.location.reload();
+                                    } else {
+
+                                        alert("删除失败")
+                                    }
+
+                                }
+                            }
+                    )
+
+                });
+
+                //点击取消按钮
+                $(".pdc-cancel").click(function () {
+                    window.location.reload();
+                });
+
+            });
+
+            //重命名
+
+            $(".obt_compile").click(function () {
+                $('.stage_name1').val(stage_name);
+                $('.stage_order1').val(stage_order);
+                $(".add_orgn1").show();
+                $(".bj").show();
+                $('.add_orgn_yes1').click(function () {
+                    var stage_name = $('.stage_name1').val();
+                    var stage_order = $('.stage_order1').val();
+                    if (!isNaN(stage_order)) {
+
+
+                        $.ajax(
+                                {
+                                    url: "{:url('ProjectStage/edit')}",
+
+                                    data: {name: stage_name, order_id: stage_order, id: stage_id},
+
+                                    dataType: 'json',
+                                    method: 'post',
+                                    success: function (data) {
+                                       $('.stage_name1').val();
+                                        $('.stage_order1').val();
+                                        $(".add_orgn1").hide();
+                                        $(".bj").hide()
+                                        if(data==1){
+
+                                            window.location.reload();
+
+                                        }else {
+
+                                            window.location.reload();
+
+                                        }
+
+                                    }
+                                }
+                        )
+                    } else {
+
+                        alert("必须是数字")
+                    }
+                })
+
+            });
+
+
+        });
+        $(".obt_add").click(function () {
+            $(".add_orgn").show();
+            $(".bj").show()
+        });
+        $(".bj").click(function () {
+            $(".add_orgn").hide();
+            $(".bj").hide()
+        });
+        $(".add_orgn_cancel").click(function () {
+            $(".add_orgn").hide();
+            $(".bj").hide()
+        });
+        $(".add_orgn_cancel1").click(function () {
+            $(".add_orgn1").hide();
+            $(".bj").hide()
+        });
+//    	$(".obt_delete").click(function(){
+//    		$(".project-delete-cont").show();
+//    		$(".bj").show();
+//    	});
+    })
+
+    //用户退出
+    $('.out').click(function () {
+        window.location.href = "{:url('Ucenter/logout')}"
+
+    })
+
+    //新建项目阶段
+    $('.add_orgn_yes').click(function () {
+        var stage_name = $('.stage_name').val();
+        var stage_order = $('.stage_order').val();
+        if (!isNaN(stage_order)) {
+
+            $.ajax(
+                    {
+                        url: "{:url('ProjectStage/add')}",
+
+                        data: {name: stage_name, order: stage_order},
+
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (data) {
+
+                            if (data >0) {
+
+
+                                window.location.reload();
+                            } else {
+
+                                alert("shibai")
+                            }
+
+
+                        }
+                    }
+            )
+        } else {
+
+            alert("请输入数字");
+        }
+
+    })
+
+    //修改机构名称
+    $('.orgn_top_button').click(function () {
+
+        var org_name    =   $('.orgn_top_input').val();
+        var org_id      =   $('.orgn_id_input').val();
+
+        $.ajax(
+                {
+                    url: "{:url('Department/deitOrganization')}",
+
+                    data: {name: org_name, id: org_id},
+
+                    dataType: 'json',
+                    method: 'post',
+                    success: function (data) {
+                        $(".add_orgn").hide();
+                        $(".bj").hide()
+                        if (data == 1) {
+
+
+                            window.location.reload();
+                        } else {
+
+                            alert("shibai")
+                        }
+
+
+                    }
+                }
+        )
+    })
+</script>
+</body>
+</html>

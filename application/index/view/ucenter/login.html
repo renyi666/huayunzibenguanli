@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link rel="shortcut icon" href="logo.ico">
+	<title>登录</title>
+	<link rel="stylesheet" href="__PUBLIC__/css/zui.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/main.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+	<!--[if lt IE 9]>
+	<script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<!--[if IE 6]>
+	<script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>
+		/* EXAMPLE */
+		DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+		/* string argument can be any CSS selector */
+		/* .png_bg example is unnecessary */
+		/* change it to what suits you! */
+	</script>
+	<![endif]-->
+
+</head>
+<body>
+<div class="login">
+	<div class="login-cont">
+		<h2>华运资本项目管理系统</h2>
+		<div class="lc_info">
+			<img src="__PUBLIC__/img/login_bj.png" />
+			<div class="lci-cont">
+				<input type="tel" value="" placeholder="输入手机号" class="login-user"/>
+				<input type="password" value="" placeholder="输入密码" class="login-password"/>
+				<div class="login-cerror"></div>
+				<button class="user-login">登录</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/js.js" ></script>
+<script type="text/javascript">
+	$("body").css("min-height",document.documentElement.clientHeight-75);
+	$(".login-cont,.login-bj").height($("body").height());
+	$(".login-user,.login-password").focus(function(){
+		$(".login-cerror").hide();
+	});
+	/*****登录点击事件*****/
+	$(".user-login").click(function(){
+		var userName		=	$(".login-user").val();
+		var userPassword	=	$(".login-password").val();
+		/******判断手机号密码是否为空*******/
+		if(userName==''||userName==null||userName==undefined||userPassword==''||userPassword==null||userPassword==undefined){
+			$(".login-cerror").show()
+					.text('用户名或密码为空！')
+					.css("margin-top","-35px");
+		}else if(userName && /^1[3|4|5|7|8]\d{9}$/.test(userName)){
+
+
+
+			/***手机号格式判断*/
+		$(".login-cerror").hide()
+				.css('margin-top',"0");
+//			$.ajax(
+//							{
+//
+//								url: "{:url('Ucenter/check')}",
+//								data: {mobile: userName, password: userPassword},
+//								dataType: 'json',
+//								method: 'post',
+//								success: function (data) {
+//
+//							if (data.status == 1) {
+//								window.location.href = "{:url('Project/index')}"
+//
+//							} else {
+//								$(".login-cerror").show()
+//										.text(data.info);
+//
+//							}
+//						}
+//					}
+//			)
+
+			$.ajax(
+					{
+
+						url: "{:url('Ucenter/check')}",
+								data: {mobile: userName, password: userPassword},
+								dataType: 'json',
+								method: 'post',
+								success: function (data) {
+
+							if (data.status == 1) {
+								window.location.href = "{:url('Project/index')}"
+
+							} else {
+								$(".login-cerror").show()
+										.text(data.info).css("margin-top","-35px");;
+
+
+							}}
+
+					}
+			)
+		}else{
+			$(".login-cerror").show()
+					.text('请输入正确的手机号！')
+					.css("margin-top","-35px");
+		}
+	});
+	/**********忘记密码点击事件**********/
+	$(".forget-password").click(function(){
+		$(this).hide();
+		$(".lci-password").hide();
+		$(".user-login").hide();
+		$(".login-cerror").hide();
+		$(".lci-cont-top h4").text("重置密码");
+		$(".lci-cont-top h5").show();
+		$(".controls").show();
+		$(".new-password").show();
+		$(".user-yes").show();
+		$(".login-verify").val('');
+		$(".np-info").val('');
+	});
+	/******返回点击事件******/
+	$(".lci-cont-top h5").click(function(){
+		$(this).hide();
+		$(".login-cerror").hide();
+		$(".controls").hide();
+		$(".new-password").hide();
+		$(".user-yes").hide();
+		$(".forget-password").show();
+		$(".lci-password").show();
+		$(".user-login").show();
+		$(".lci-cont-top h4").text("账号登录");
+	});
+	/**********忘记密码--》完成点击 事件***********/
+	$(".user-yes").click(function(){
+		var userName	=	$(".login-user").val();
+		var userNwep	=	$(".np-info").val();
+		var userYanz	=	$(".login-verify").val();
+		/********判断用户名是否为空********/
+		if(userName==''||userName==null||userName==undefined){
+			$(".login-cerror").show()
+					.text('请输入手机号！');
+			return;
+		}else{
+			if(userName && /^1[3|4|5|7|8]\d{9}$/.test(userName)){
+
+			}else{
+				$(".login-cerror").show()
+						.text('请输入正确的手机号！');
+			}
+		}
+		/********判断验证码是否为空********/
+		if(userYanz==''||userYanz==null||userYanz==undefined){
+			$(".login-cerror").show()
+					.text('请输入验证码！');
+			return;
+		}
+		/********判断新密码是否为空********/
+		if(userNwep==''||userNwep==null||userNwep==undefined){
+			$(".login-cerror").show()
+					.text('请输入新密码！');
+			return;
+		}
+		$(".lci-cont-top h5").hide();
+		$(".login-cerror").hide();
+		$(".controls").hide();
+		$(".new-password").hide();
+		$(".user-yes").hide();
+		$(".forget-password").show();
+		$(".lci-password").show();
+		$(".user-login").show();
+		$(".lci-cont-top h4").text("账号登录");
+
+	})
+	/*获取验证码*/
+	$(".get-code").click(function(){
+		var userName	=	$(".login-user").val();
+		if(userName==''||userName==null||userName==undefined){
+			$(".login-cerror").show()
+					.text('请输入手机号！');
+			return;
+		}else{
+			if(userName && /^1[3|4|5|7|8]\d{9}$/.test(userName)){
+
+			}else{
+				$(".login-cerror").show()
+						.text('请输入正确的手机号！');
+			}
+		}
+		resetCode();
+
+	})
+	//倒计时
+	function resetCode(){
+		$('#J_getCode').hide();
+		$('#J_second').html('60');
+		$('#J_resetCode').show();
+		var second =60;
+		var timer = null;
+		timer = setInterval(function(){
+			second -= 1;
+			if(second >0 ){
+				$('#J_second').html(second);
+			}else{
+				clearInterval(timer);
+				$('#J_getCode').show();
+				$('#J_resetCode').hide();
+			}
+		},1000);
+	}
+</script>
+</body>
+</html>

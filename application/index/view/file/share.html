@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="华运、华运资本、投资、项目管理、管理系统、投资公司" />
+    <meta name="description" content="" />
+    <link rel="shortcut icon" href="logo.ico">
+    <title>华运资本项目管理系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/zui.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/webuploader.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+   <header>
+   		<div class="row head_top">
+   			<div class="col-xs-11" style="width: 100%;">
+   				<div class="head_top_cont">
+   					<img src="__PUBLIC__/img/index_bj.png" class="img-responsive">
+	   				<div class="logo">
+	   					<div class="logo_cont">
+	   						<img src="__PUBLIC__/img/logo.png">
+	   						<h2>华运资本项目管理系统</h2>
+	   					</div>
+	   				</div>
+	   			</div>	
+   			</div>
+   		</div>
+   		<div class="head_bottom">
+   			<div class="head_bottom_cont">
+   				<div class="exit">
+	   				<img src="__PUBLIC__/img/exit.png">
+	   				<h4>退出</h4>
+	   			</div>
+	   			<div class="login_user">
+	   				<img src="Vimg/user_icon.png">
+	   				<h4>你好，系统管理员</h4>
+	   			</div>
+   			</div>
+   		</div>
+   </header>
+   <div class="container-fluid">
+	   	<div class="index_container">
+	   		<div class="nav">
+	   			<ul>
+	   				<li>
+	   					<div class="nav_item">
+	   						<img src="__PUBLIC__/img/jian.png">
+	   						<h4>项目管理</h4>
+	   					</div>
+	   					<ul>
+	   						<li class="nav_item_li">
+	   							<a href="index.html">
+	   								<div class="li_item">
+		   								<img src="img/sj2.png">
+		   								<h5>投后项目</h5>
+		   							</div>
+	   							</a>
+	   						</li>
+	   						<li class="nav_item_li">
+	   							<a href="">
+	   								<div class="li_item act">
+		   								<img src="img/sj1.png">
+		   								<h5>拟投项目</h5>
+		   							</div>
+	   							</a>
+	   						</li>
+	   						<li class="nav_item_li">
+	   							<a href="">
+	   								<div class="li_item">
+		   								<img src="img/sj1.png">
+		   								<h5>追踪项目</h5>
+		   							</div>
+	   							</a>
+	   						</li>
+	   					</ul>
+	   				</li>
+	   				<li>
+	   					<div class="nav_item">
+	   						<img src="__PUBLIC__/img/jian.png">
+	   						<h4>日志</h4>
+	   					</div>
+	   					<ul>
+	   						<li class="nav_item_li">
+	   							<a href="ribao.html">
+	   								<div class="li_item">
+		   								<img src="__PUBLIC__/img/sj1.png">
+		   								<h5>日报</h5>
+		   							</div>
+	   							</a>
+	   						</li>
+	   						<li class="nav_item_li">
+	   							<a href="zhoubao.html">
+	   								<div class="li_item">
+		   								<img src="__PUBLIC__/img/sj1.png">
+		   								<h5>周报</h5>
+		   							</div>
+	   							</a>
+	   						</li>
+	   					</ul>
+	   				</li>
+	   				<li>
+	   					<a href="share.html">
+	   						<div class="nav_item2 open">
+		   						<img src="__PUBLIC__/img/jia.png">
+		   						<h4>共享</h4>
+		   					</div>
+	   					</a>
+	   				</li>
+	   				<li>
+	   					<a href="member.html">
+	   						<div class="nav_item2">
+		   						<img src="__PUBLIC__/img/jia.png">
+		   						<h4>成员管理</h4>
+		   					</div>
+	   					</a>
+	   				</li>
+	   				<li>
+	   					<a href="set.html">
+	   						<div class="nav_item2">
+		   						<img src="__PUBLIC__/img/jia.png">
+		   						<h4>设置</h4>
+		   					</div>
+	   					</a>
+	   				</li>
+	   				<li>
+	   					<a href="set_user.html">
+	   						<div class="nav_item2">
+		   						<img src="__PUBLIC__/img/jia.png">
+		   						<h4>账号设置</h4>
+		   					</div>
+	   					</a>
+	   				</li>
+	   			</ul>
+	   		</div>
+	   		<div class="cont_right">
+	   			<div class="add_project_cont">
+	   					<div class="pit_bottom">
+	   						<div class=" folder" style="display: block;">
+	   							<div class="folder_cont" style="border: none;padding-bottom:0;">
+	   								<div class="folder-top" style="border: none;">
+			    						<div class="folder-delete">删除</div>
+			    						<div class="folder-ren">重命名</div>
+			    						<div class="folder-add">新建文件夹</div>
+										<div class="folder-upload">
+			    							 <div id="fileList" class="uploader-list"></div>
+			   								 <div id="filePicker" style="width: 95px;height:31px">上传文件</div>
+										</div>
+			    					</div>
+			    					<div class="folder-bottom" style="border:1px solid #c9c9c9;padding-bottom:30px">
+			    						<table>
+			    							<thead>
+			    								<tr>
+			    									<th class="td">名称</th>
+			    									<th>修改时间</th>
+			    									<th>发布人</th>
+			    								</tr>
+			    							</thead>
+			    							<tbody>
+			    								<tr>
+			    									<td class="td">
+			    										<div class="td_left">
+			    											<div data-div="1"></div>
+			    											<img src="img/w.png" >
+			    											<span class="folder_span">word文档.docx</span>
+			    										</div>
+			    										 <div class="progress">
+												            <span class="text">0%</span>
+												            <span class="percentage"></span>
+												        </div>
+												        <div class="info"></div>
+			    									</td>
+			    									<td>2016/7/18  16:58</td>
+			    									<td>Tom</td>
+			    								</tr>
+			    								<tr>
+			    									<td class="td">
+			    										<div class="td_left">
+			    											<div data-div="1"></div>
+			    											<img src="img/t.png" >
+			    											<span class="folder_span">文本</span>
+			    										</div>
+			    										 <div class="progress">
+												            <span class="text">0%</span>
+												            <span class="percentage"></span>
+												        </div>
+												        <div class="info"></div>
+			    									</td>
+			    									<td>2016/7/18  16:58</td>
+			    									<td>Tom</td>
+			    								</tr>
+			    								<tr>
+			    									<td class="td">
+			    										<div class="td_left">
+			    											<div data-div="1"></div>
+			    											<img src="img/tp.png" >
+			    											<span class="folder_span">图片</span>
+			    										</div>
+			    										 <div class="progress">
+												            <span class="text">0%</span>
+												            <span class="percentage"></span>
+												        </div>
+												        <div class="info"></div>
+			    									</td>
+			    									<td>2016/7/18  16:58</td>
+			    									<td>Tom</td>
+			    								</tr>
+			    								<tr>
+			    									<td class="td">
+			    										<div class="td_left">
+			    											<div data-div="1"></div>
+			    											<img src="img/p.png" >
+			    											<span class="folder_span">ppt</span>
+			    										</div>
+			    										 <div class="progress">
+												            <span class="text">0%</span>
+												            <span class="percentage"></span>
+												        </div>
+												        <div class="info"></div>
+			    									</td>
+			    									<td>2016/7/18  16:58</td>
+			    									<td>Tom</td>
+			    								</tr>
+			    								<tr>
+			    									<td class="td">
+			    										<div class="td_left">
+			    											<div data-div="1"></div>
+			    											<img src="img/ptf.png" >
+			    											<span class="folder_span">pdf</span>
+			    										</div>
+			    										 <div class="progress">
+												            <span class="text">0%</span>
+												            <span class="percentage"></span>
+												        </div>
+												        <div class="info"></div>
+			    									</td>
+			    									<td>2016/7/18  16:58</td>
+			    									<td>Tom</td>
+			    								</tr>
+			    								<tr>
+			    									<td class="td">
+			    										<div class="td_left">
+			    											<div data-div="1"></div>
+			    											<img src="img/wjj.png" >
+			    											<span class="folder_span">文件夹</span>
+			    										</div>
+			    										 <div class="progress">
+												            <span class="text">0%</span>
+												            <span class="percentage"></span>
+												        </div>
+												        <div class="info"></div>
+			    									</td>
+			    									<td>2016/7/18  16:58</td>
+			    									<td>Tom</td>
+			    								</tr>
+			    								<tr>
+			    									<td class="td">
+			    										<div class="td_left">
+			    											<div data-div="1"></div>
+			    											<img src="img/ys.png" >
+			    											<span class="folder_span">压缩包</span>
+			    										</div>
+			    										 <div class="progress">
+												            <span class="text">0%</span>
+												            <span class="percentage"></span>
+												        </div>
+												        <div class="info"></div>
+			    									</td>
+			    									<td>2016/7/18  16:58</td>
+			    									<td>Tom</td>
+			    								</tr>
+			    								<tr>
+			    									<td class="td">
+			    										<div class="td_left">
+			    											<div data-div="1"></div>
+			    											<img src="img/x.png">
+			    											<span class="folder_span">表格表格表格表格表格表格表格表格表格表格表格表格表格表格</span>
+			    										</div>
+			    										 <div class="progress">
+												            <span class="text">0%</span>
+												            <span class="percentage"></span>
+												        </div>
+												        <div class="info"></div>
+			    									</td>
+			    									<td>2016/7/18  16:58</td>
+			    									<td>Tom</td>
+			    								</tr>
+			    							</tbody>
+			    						</table>
+			    					</div>
+	   							</div>
+	   							<div class="page">
+					   				<div class="page_right">
+					   					<h4>首页</h4>
+					   					<h4><</h4>
+					   					<h4 class="active">1</h4>
+					   					<h4>2</h4>
+					   					<h4 class="action">...</h4>
+					   					<h4>3</h4>
+					   					<h4>4</h4>
+					   					<h4>尾页</h4>
+					   				</div>
+					   				<h3>共100页，当前第&nbsp;1&nbsp;页</h3>
+					   			</div>
+	   						</div>
+	   						<div class="add_event">
+	   							<div class="fh">
+	   								<img src="img/fh2.png">
+	   								返回上一级
+	   							</div>
+	   							<form action="">
+	   								<div class="pc_item">
+	   									<span>事件名称：</span>
+	   									<input type="text" class="pc_input" value=""/>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>投资经理：</span>
+	   									<input type="text" class="pc_input2" value=""/>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>投资项目：</span>
+	   									<input type="text" class="pc_input2" value=""/>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>参与人员：</span>
+	   									<input type="text" class="pc_input2" value=""/>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>事件对象：</span>
+	   									<input type="text" class="pc_input2" value=""/>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>时间：</span>
+	   									<div class="doc-dd">
+											<input name="act_start_time" type="text" class="text-box" value="" readonly="readonly"/>
+										</div>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>目的：</span>
+	   									<input type="text" class="pc_input2" value=""/>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>事件概要：</span>
+	   									<textarea></textarea>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>事件记录：</span>
+	   									<textarea></textarea>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>结论意见：</span>
+	   									<textarea></textarea>
+	   								</div>
+	   								<div class="pc_item">
+	   									<span>主观意见：</span>
+	   									<textarea></textarea>
+	   								</div>
+	   								<div class="pc_item">
+	   									<button type="button">保存</button>
+	   								</div>
+	   							</form>
+	   						</div>
+	   					</div>
+	   				</div>
+	   			</div>
+	   		</div>
+	   	</div>
+   </div>
+    
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="__PUBLIC__/js/webuploader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/js.js" ></script>
+
+<!-- 统计代码 start -->
+<script type="text/javascript">
+	$(".ui-icon-circle-triangle-e").text('>');
+	$( "input[name='act_start_time'],input[name='act_stop_time']" ).datetimepicker();
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F96790c81142777e7724407f030936c10' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<!-- 统计代码 end -->
+
+<script type="text/javascript">
+	$(function(){
+		var public = "__PUBLIC__";
+		/************项目管理、日志二级菜单点击事件***********/
+		$(".nav_item").click(function () {
+			var ul = $(this).siblings('ul');
+			var display = $(this).siblings('ul').css('display');
+			if (display == "block") {
+				ul.hide();
+				$(this).find('img').attr('src', public + '/img/jia.png');
+			} else {
+				ul.show();
+				$(this).find('img').attr('src', public + '/img/jian.png');
+			}
+		});
+		/**************共享 成员管理、设置鼠标事件**************/
+		$(".nav ul li .nav_item2").mouseover(function () {
+			$(".nav ul li .nav_item2").removeClass('active');
+			$(this).addClass('active');
+			$(".nav ul li .nav_item2").removeClass('action');
+			$(this).prev().addClass('action');
+		});
+		$(".nav_item2").mouseout(function () {
+			$(".nav_item2").removeClass('active');
+			$(".nav_item2").removeClass('action');
+		});
+		/**************项目管理、日志下li的鼠标事件**************/
+		$(".nav_item_li").mouseover(function () {
+			$(".nav_item_li").siblings().removeClass('active');
+			$(this).addClass('active');
+			$(".nav_item_li").siblings().removeClass('action');
+			$(this).prev().addClass('action');
+			$(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+			$(this).find('img').attr('src', public + '/img/sj2.png');
+		});
+		$(".nav_item_li").mouseout(function () {
+			$(".nav_item_li").siblings().removeClass('active');
+			$(".nav_item_li").siblings().removeClass('action');
+			$(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+		});
+		/***************项目概况等三个切换***************/
+//		$('.pit_nav li').click(function(){
+//			$(this).addClass("active").siblings().removeClass();
+//			$(".pit_bottom>div").hide().eq($('.pit_nav li').index(this)).show();
+//		});
+		$(".apc_top_cont").click(function () {
+			$(".add_project_cont").hide();
+			$(".index_right").show();
+		});
+		$(".add_project").click(function () {
+			$(".index_right").hide();
+			$(".apc_cont").show();
+			$(".add_project_cont").show();
+			$(".project_cont").show();
+		});
+		var uploader = WebUploader.create({
+	
+		    // 选完文件后，是否自动上传。
+		    auto: true,
+		
+		    // swf文件路径
+		    swf: 'js/Uploader.swf',
+		
+		    // 文件接收服务端。
+		    server: 'http://test.beikeshushe.net/admin.php?s=/File/upload/session_id/32m16ft94akk1r5qurt345mkk2.html',
+		    // 选择文件的按钮。可选。
+		    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+		    pick: '#filePicker',
+		
+		   resize: false,
+		});
+		uploader.on( 'uploadProgress', function( file, percentage ) {
+		    var $li = $( '#'+file.id ),
+		        $percent = $li.find('.progress .progress-bar');
+			console.log($li)
+		    // 避免重复创建
+		    if ( !$percent.length ) {
+		        $percent = $('<div class="progress progress-striped active">' +
+		          '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+		          '</div>' +
+		        '</div>').appendTo( $li ).find('.progress-bar');
+		    }
+		
+		    $li.find('p.state').text('上传中');
+		
+		    $percent.css( 'width', percentage * 100 + '%' );
+		});
+		uploader.on( 'uploadSuccess', function( file ) {
+		    $( '#'+file.id ).find('p.state').text('已上传');
+		});
+		uploader.on( 'uploadError', function( file ) {
+		    $( '#'+file.id ).find('p.state').text('上传出错');
+		    console.log('bbb');
+		});
+		
+		uploader.on( 'uploadComplete', function( file ) {
+		    $( '#'+file.id ).find('.progress').fadeOut();
+		    console.log('qqq');
+		});
+	
+	
+    	
+   });
+</script>
+</body>
+</html>

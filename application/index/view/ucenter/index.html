@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="华运、华运资本、投资、项目管理、管理系统、投资公司"/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="__PUBLIC__/img/logo.ico">
+    <title>华运资本项目管理系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/zui.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/webuploader.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="__PUBLIC__/js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+<div class="bj"></div>
+<header>
+    <div class="row head_top">
+        <div class="col-xs-11" style="width: 100%;">
+            <div class="head_top_cont">
+                <img src="__PUBLIC__/img/index_bj.png" class="img-responsive">
+                <div class="logo">
+                    <div class="logo_cont">
+                        <img src="__PUBLIC__/img/logo.png">
+                        <h2>华运资本项目管理系统</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head_bottom">
+        <div class="head_bottom_cont">
+            <div class="exit">
+                <img src="__PUBLIC__/img/exit.png">
+                <h4 class="logout">退出</h4>
+            </div>
+            <div class="login_user">
+                <img src="__PUBLIC__/img/user_icon.png">
+                <h4>你好，{$userInfo.user_name}</h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="index_container">
+        <div class="nav">
+            <ul>
+                {if condition="$menu_res.0 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>项目管理</h4>
+                    </div>
+                    <ul>
+
+
+                        {volist name="projectStage" id="stage"}
+
+                        <li class="nav_item_li">
+                            <a href="{:url('Project/index',['stage_id'=>$stage['id'],'stage_judge'=>1])}">
+                                <div class="li_item">
+
+                                    <img src="__PUBLIC__/img/sj1.png">
+
+                                    <h5>{$stage.name}
+                                        {volist name="messagestageLog" id="messagestage"}
+                                        {if condition="$stage.id eq $messagestage.stage_id"}(+{$messagestage.stagenum}){/if}
+                                        {/volist}</h5>
+                                </div>
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.5 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>日志</h4>
+                    </div>
+                    <ul>
+                        {volist name="logtype" id="logtype"}
+                        <li class="nav_item_li">
+                            <a href="{:url('Log/index',['type_id'=>$logtype['id']])}">
+                                <div class="li_item">
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    <h5>{$logtype.log_type}</h5>
+                                </div>
+
+
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.4 eq 1"}
+                <li>
+                    <a href="{:url('Newfile/share')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>共享</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.2 eq 1"}
+                <li>
+                    <a href="#">
+                        <div class="nav_item2 open">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>成员管理</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.1 eq 1"}
+                <li>
+                    <a href="{:url('Department/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.3 eq 1"}
+                <li>
+                    <a href="{:url('Account/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>账号设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+            </ul>
+        </div>
+        <div class="cont_right">
+            <div class="add-user">
+                <div class="add-user-head">
+                    <div class="auh-button">
+                        创建账号
+                    </div>
+                </div>
+                <div class="add-user-tab">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>账号</th>
+                            <th>直属上级</th>
+                            <th class="active">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="list" id="list"}
+
+                        <tr>
+
+                            <td>{$list.user_name}</td>
+                            <td>{$list.mobile}</td>
+                            <td>
+                                {if condition="$list.remark neq 1"}
+
+                                {$list.remark_name}
+                                {/if}
+                            </td>
+
+
+                            <td class="operation">
+                                {if condition="$list.status eq 1"}
+                                <h4 data-id="{$list['id']}" data-status="{$list['status']}" style="color: #323232;">
+                                    停用</h4>
+                                {else/}
+
+                                <h4 data-id="{$list['id']}" data-status="{$list['status']}"
+                                    style="color: #999;background:#ccc">启用</h4>
+                                {/if}
+
+                                <h5 data-id="{$list['id']}" data-status="{$list['status']}"
+                                    data-name="{$list['user_name']}" data-no="{$list['user_no']}"
+                                    data-mobile="{$list['mobile']}">编辑</h5>
+
+                            </td>
+                        </tr>
+
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="add-user-info">
+                    <div class="aui-head">
+                        <div class="aui-head-cont">
+                            账号注册
+                        </div>
+                    </div>
+                    <div class="aui-info">
+                        <form>
+                            <input type="text" id="user-name" placeholder="姓名" value=""/>
+                            <input type="tel" id="user-number" placeholder="手机号" value=""/>
+                            <input type="password" id="user-password" placeholder="初始密码" value=""/>
+
+                            <select id="remark">
+                                <option value="null">直属上级</option>
+                                <option value="1">超级管理员</option>
+                                {volist name="ucenter_data" id="ucenter_d"}
+
+                                <option value="{$ucenter_d.id}" }>{$ucenter_d.user_name}</option>
+
+                                {/volist}
+                            </select>
+                            <button type="button" class="aui-button">确定</button>
+                            <div class="login-cerror">必填项不可为空</div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="add-user-info1">
+                <div class="aui-head1">
+                    <div class="aui-head-cont1">
+                        账号编辑
+                    </div>
+                </div>
+                <div class="aui-info1">
+                    <form>
+
+                        <input type="text" id="user-name1" placeholder="姓名" value=""/>
+                        <input type="tel" id="user-number1" placeholder="手机号" value=""/>
+                        <input type="hidden" id="user-id1" value=""/>
+                        <select id="remark1">
+                            <option value="null">直属上级</option>
+                            <option value="1">超级管理员</option>
+                            {volist name="ucenter_data" id="ucenter_d"}
+
+                            <option value="{$ucenter_d.id}" }>{$ucenter_d.user_name}</option>
+
+                            {/volist}
+                        </select>
+                        <button type="button" class="aui-button1">确定</button>
+                        <div class="cerror01" style="display: none">必填项不可为空</div>
+                        <div class="cerror21" style="display: none">工号格式为数字</div>
+                        <div class="cerror11"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="__PUBLIC__/js/webuploader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        var public = "__PUBLIC__";
+        /************项目管理、日志二级菜单点击事件***********/
+        $(".nav_item").click(function () {
+            var ul = $(this).siblings('ul');
+            var display = $(this).siblings('ul').css('display');
+            if (display == "block") {
+                ul.hide();
+                $(this).find('img').attr('src', public + '/img/jia.png');
+            } else {
+                ul.show();
+                $(this).find('img').attr('src', public + '/img/jian.png');
+            }
+        });
+        /**************共享 成员管理、设置鼠标事件**************/
+        $(".nav ul li .nav_item2").mouseover(function () {
+            $(".nav ul li .nav_item2").removeClass('active');
+            $(this).addClass('active');
+            $(".nav ul li .nav_item2").removeClass('action');
+            $(this).prev().addClass('action');
+        });
+        $(".nav_item2").mouseout(function () {
+            $(".nav_item2").removeClass('active');
+            $(".nav_item2").removeClass('action');
+        });
+        /**************项目管理、日志下li的鼠标事件**************/
+        $(".nav_item_li").mouseover(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(this).addClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(this).prev().addClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+            $(this).find('img').attr('src', public + '/img/sj2.png');
+        });
+        $(".nav_item_li").mouseout(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+        });
+        /***************项目概况等三个切换***************/
+//		$('.pit_nav li').click(function(){
+//			$(this).addClass("active").siblings().removeClass();
+//			$(".pit_bottom>div").hide().eq($('.pit_nav li').index(this)).show();
+//		});
+        $(".apc_top_cont").click(function () {
+            $(".add_project_cont").hide();
+            $(".index_right").show();
+        });
+        $(".add_project").click(function () {
+            $(".index_right").hide();
+            $(".apc_cont").show();
+            $(".add_project_cont").show();
+            $(".project_cont").show();
+        });
+        //创建账号的点击事件
+        $(".auh-button").click(function () {
+            $(".bj").show();
+            $(".add-user-info").show();
+            $("#job-number").val('');
+            $("#user-name").val('');
+            $("#user-number").val('');
+            $("#user-password").val('');
+            $("#remark").val('');
+        });
+        $(".bj").click(function () {
+            $(".bj").hide();
+            $(".add-user-info").hide();
+        });
+        $("#job-number,#user-name,#user-password,#remark,#uploader-demo").focus(function () {
+            $(".login-cerror").hide()
+        });
+        $("#job-number1,#user-name1,#user-password1,#remark1,#uploader-demo1").focus(function () {
+            $(".cerror01").hide()
+        });
+        //创建账号-》确定按钮点击事件
+        $(".aui-button").click(function () {
+            $(".cerror2").hide();
+            var remark = $("#remark").val();
+            var userName = $("#user-name").val();
+            var userNumber = $("#user-number").val();
+            var userPassword = $("#user-password").val();
+            //判断工号、姓名、手机号等是否为空
+            if (userName == '' || userName == null || userName == undefined || userPassword == '' || userPassword == null || userPassword == undefined || remark == null || userNumber == '' || userNumber == null || userNumber == undefined) {
+                $(".login-cerror").show();
+                $(".login-cerror").css("width", "210px")
+                        .css("margin-left", "0")
+                        .css("text-align", "center");
+            } else if (userNumber && /^1[3|4|5|8]\d{9}$/.test(userNumber)) {
+                //判断电话号码格式正确时，添加tr（用户）
+
+
+//				$(".bj").hide();
+//				$(".add-user-info").hide();
+//				$(".operation").unbind();
+
+
+                $.ajax(
+                        {
+                            url: '{:url('Ucenter/register')}',
+                        data:{user_name:userName, mobile:userNumber, password:userPassword, remark:remark},
+                dataType: 'json', method:'post', success:function (data) {
+
+                    if (data.status == 1) {
+
+
+                        window.location.reload();
+
+
+                    } else {
+
+                        alert(data.info);
+                    }
+                }
+            }
+            )
+
+
+
+//				var tr =	$('<tr></tr>');
+//
+//				var html='<td class="td1">'+userName+'</td>'+
+//    					 '<td class="td1">'+userPassword+'</td>'+
+//    					 '<td class="td2">'+remark+'</td>'
+//    				tr.append(html);
+//    				$(".add-user-tab table tbody").append(tr);
+//    			var td	=	$('<td></td>');
+//    			var h4  =   $('<h4></h4>');
+//    			td.addClass('operation');
+//						td.appendTo(tr);
+//						td.attr('data-operation','0');
+//					h4.appendTo(td);
+//					h4.text('停用');
+//				var h5 =   $('<h5></h5>');
+//    			td.addClass('operation');
+//						td.appendTo(tr)
+//						td.attr('data-operation','0');
+//					h5.appendTo(td);
+//					h5.text('编辑');
+//    			$(".bj").hide();
+//    			$(".add-user-info").hide();
+//    			$(".operation").unbind();
+                //操作停用以及启用的点击事件
+
+            } else {
+                //判断电话号码格式错误时
+                $(".login-cerror").show();
+                $(".login-cerror").text("手机号格式错误");
+                $(".login-cerror").css("width", "210px")
+                        .css("margin-top", "10px")
+                        .css("margin-left", "0")
+                        .css("text-align", "center");
+            }
+        })
+
+        $(".operation h4").click(function () {
+            var number = $(this).attr('data-operation');
+            console.log(number);
+//			if(number==0){
+//				$(this).attr('data-operation','1');
+//				$(this).text('启用');
+//				$(this).siblings().css("color","#999");
+//				$(this).siblings().css("border","1px solid #ccc");
+//				$(this).css("background","#ccc");
+//			}else{
+//				$(this).attr('data-operation','0');
+//				$(this).text('停用');
+//				$(this).css("background","#63441b");
+//				$(this).siblings().css("color","#323232");
+//				$(this).siblings().css("border","1px solid #63441b");
+//			}
+        });
+        $(".operation h5").click(function () {
+
+            var user_id = $(this).attr('data-id');
+            var user_name = $(this).attr('data-name');
+            var user_no = $(this).attr('data-no');
+            var user_mobile = $(this).attr('data-mobile');
+            var user_remark = $(this).attr('data-remark');
+            if (user_id == 1) {
+
+                alert("超级管理员不能编辑");
+
+            } else {
+
+                $(".bj").show();
+                $(".add-user-info1").show();
+
+                $("#job-id1").val(user_id);
+                $("#user-name1").val(user_name);
+                $("#user-number1").val(user_mobile);
+                $("#user-id1").val(user_id);
+                $("#remark1").val(user_remark);
+                $(".bj").click(function () {
+                    $(".bj").hide();
+                    $(".add-user-info1").hide();
+                });
+            }
+        });
+        //编辑用户确定按钮
+        $(".aui-button1").click(function () {
+            $(".cerror21").hide();
+            var userName1 = $("#user-name1").val();
+            var userNumber1 = $("#user-number1").val();
+            var user_id = $("#user-id1").val();
+            var userRemark1 = $("#remark1").val();
+
+            if (userName1 == '' || userName1 == null || userName1 == undefined || userRemark1 == '' || userRemark1 == null || userRemark1 == undefined || userNumber1 == '' || userNumber1 == null || userNumber1 == undefined) {
+                $(".cerror01").show();
+                $(".cerror01").css("width", "210px")
+                        .css("margin-top", "10px")
+                        .css("margin-left", "0")
+                        .css("text-align", "center");
+
+            } else if (userNumber1 && /^1[3|4|5|8]\d{9}$/.test(userNumber1)) {
+                //判断电话号码格式正确时，添加tr（用户）
+
+                if (user_id == userRemark1) {
+                    alert("不能选择自己")
+
+                } else {
+
+                    $.ajax(
+                            {
+                                url: "{:url('Ucenter/editUcenter')}",
+                                data: {user_name: userName1, mobile: userNumber1, remark: userRemark1, id: user_id},
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+                                    if (data.status == "success") {
+
+
+                                        window.location.reload();
+
+
+//
+                                    } else {
+
+                                        console.log(data)
+//										alert(data.msg);
+                                    }
+                                }
+
+
+                            })
+                }
+            } else {
+                //判断电话号码格式错误时
+                $(".cerror11").show();
+                $(".cerror11").text("手机号格式错误");
+                $(".cerror11").css("width", "210px")
+                        .css("margin-top", "10px")
+                        .css("margin-left", "0")
+                        .css("text-align", "center");
+            }
+
+        })
+        //禁启用用户
+        $(".operation h4").click(function () {
+            var number = $(this).attr('data-status');
+
+            var id = $(this).attr('data-id');
+            console.log(number);
+            console.log(id);
+            $.ajax(
+                    {
+                        url: "{:url('Ucenter/change')}",
+                        data: {status: number, user_id: id},
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (data) {
+
+                            if (data == 1) {
+
+                                window.location.reload();
+
+
+                            } else if (data == -1) {
+                                alert("超级管理员账号不能修改");
+                                window.location.reload();
+                            } else {
+                                if (data == -2) {
+                                    alert("当前用户禁止禁用")
+                                    window.location.reload();
+
+                                } else {
+                                    alert("修改失败")
+                                    window.location.reload();
+
+                                }
+
+                            }
+
+
+                        }
+                    }
+            )
+
+
+        });
+        //退出
+        $('.logout').click(function () {
+
+            window.location.href = "{:url('Ucenter/logout')}"
+        })
+
+    });
+</script>
+</body>
+</html>

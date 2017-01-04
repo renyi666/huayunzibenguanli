@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="shortcut icon" href="logo.ico">
+    <title>共享</title>
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/zui.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/css.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/iconfont.css">
+   
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="__PUBLIC__/Project/js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body style="background:#ececec">
+	<div class="bj"></div>
+    <header>
+    	<div class="head-top">
+    		<div class="head-top-cont">
+    			<h2>华运资本</h2>
+    		</div>
+    	</div>
+    	<div class="head-bottom">
+			{volist name="menu_result" id="menu_res"}
+			{if condition="$menu_res.id eq 7"}
+			<a href="{:url($menu_res['url'])}" class="active">{$menu_res.title}</a>{else/}
+
+			<a href="{:url($menu_res['url'])}">{$menu_res.title}</a>
+			{/if}
+			<!--<a href="{:url('index')}" class="active">项目管理</a>-->
+			<!--<a href="{:url('Department/index')}">机构设置</a>-->
+			<!--<a href="{:url('Ucenter/index')}">成员管理</a>-->
+			{/volist}
+			<h3>您好，{$userInfo.user_name}<span class="out">退出</span></h3>
+    	</div>
+    </header>
+    <div class="container-fluid">
+    	<div class="project-info">
+
+    		<div class="pi-top">
+    			<div class="pit-nav">
+    				<div class="folder-top">
+                        <div class="folder-delete">删除</div>
+                        <div class="folder-ren">重命名</div>
+                        <div class="folder-add">新建文件夹</div>
+                        <div class="folder-upload">
+							<form action="{:url('File/upload1')}" enctype="multipart/form-data" method="post" class="form_upload">
+								<div class="folder-upload_info">上传文件</div>
+
+								<input type="file" value="" name="file"class="upload_file"/>
+							</form>
+
+                        </div>
+                    </div>
+    			</div>
+    			<div class="pit-bottom">
+    				
+    				<div class="folder" style="display:block">
+    					
+    					<div class="folder-bottom">
+    						<table>
+    							<thead>
+    								<tr>
+    									<th class="td">名称</th>
+    									<th>修改时间</th>
+    									<th>发布人</th>
+    								</tr>
+    							</thead>
+    							<tbody>
+								{volist name="result" id="res"}
+    								<tr>
+    									<td class="td">
+    										<input type="checkbox" name="choose" class="folder-checkbox"value="{$res.id}"/>
+											{if condition ="$res.type_number eq 1"}
+											<img src="__PUBLIC__/img/Picture.png" style="width:50px">
+											{elseif condition="$res.type_number eq 2"}
+											<img src="__PUBLIC__/img/Word.png" style="width:50px">
+											{elseif condition="$res.type_number eq 3"}
+											<img src="__PUBLIC__/img/pdf.png" style="width: 40px;">
+											{elseif condition="$res.type_number eq 4"}
+											<img src="__PUBLIC__/img/PPT.png" style="width: 50px;">
+											{elseif condition="$res.type_number eq 5"}
+											<i class="iconfont">&#xe611;</i>
+											{elseif condition="$res.type_number eq 6"}
+
+											<img src="__PUBLIC__/img/biao.png" style="width: 40px;">
+											{else/}<img src="__PUBLIC__/img/f4.png" style="width: 40px;">{/if}
+
+											{if condition="$res.type_number eq 0"}
+											<a class="folder_span " contenteditable="false" id="isfolder"  href="{:url('Newfile/editFolder',array('id'=>$res['id']))}">{$res.name}</a>
+											{else/}
+											<a class="folder_span" contenteditable="false" href="{$res.save_path}">{$res.name}</a>{/if}
+
+    									</td>
+    									<td>{:date('Y-m-d H:i:s',$res['create_time'])}</td>
+    									<td>{$res.user_name}</td>
+    								</tr>
+								{/volist}
+
+    							</tbody>
+    						</table>
+    					</div>
+						<div class="page">
+
+							<ul class="pager pager-loose">
+								{$result->render()}
+
+							</ul>
+
+						</div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="project-delete-cont">
+    			<h4>你确定要删除整个项目</h4>
+    			<div class="pdc-cancel">取消</div>
+    			<div class="pdc-yes">确定</div>
+    		</div>
+			<div class="add-user-info">
+				<div class="aui-head">
+					<div class="aui-head-cont">
+						重命名
+					</div>
+				</div>
+				<div class="aui-info">
+					<form>
+						<input type="text" id="job-number" placeholder="请在此填写" value=""/>
+						<button type="button" class="aui-button">确定</button>
+					</form>
+				</div>
+			</div>
+    	</div>
+    </div>
+    
+    
+    
+<script src="__PUBLIC__/kindeditor/kindeditor-all-min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/js/js.js" type="text/javascript"></script>
+<script type="text/javascript">
+$("body").css("min-height",document.documentElement.clientHeight-75);
+$(".ie-bottom").height($("body").height()-200);
+KindEditor.create('textarea.kindeditor', {
+    basePath: '__PUBLIC__/kindeditor/',
+    bodyClass : 'article-content',
+    resizeType : 1,
+    allowPreviewEmoticons : false,
+    allowImageUpload : false,
+    minHeight:200,
+    items : [
+        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+        'insertunorderedlist', '|', 'emoticons', 'image', 'link'
+    ]
+});
+$(".touz,.wenj").click(function(){
+	$(".project-delete").hide()
+});
+$("#project").click(function(){
+	$(".project-delete").show()
+});
+
+//文件上传
+$('.upload_file').change(function () {
+
+	form_submit();
+})
+function form_submit() {
+
+	$(".form_upload").submit();
+}
+
+//删除文件
+$(".folder-delete").click(function () {
+
+	var obj1 = document.getElementsByName("choose");
+
+	var check_val1 = [];
+	for(k1 in obj1){
+		if(obj1[k1].checked)
+			check_val1.push(obj1[k1].value);
+	}
+	console.log(check_val1);
+
+	if(check_val1.length==0){
+		alert("未选定事件");
+
+	}else {
+		$.ajax(
+				{
+					url: "{:url('File/deleteFolder1')}",
+					data: {id:check_val1},
+					dataType: 'json',
+					method: 'post',
+					success: function (data) {
+						if(data>0){
+							window.location.reload();
+
+						}else {
+							alert("fail")
+						}
+
+					}
+				}
+		)
+	}
+
+})
+
+//重命名
+$(".folder-ren").click(function () {
+
+	var obj2 = document.getElementsByName("choose");
+	var checkBox 			=	$('input[name=choose]');
+	checkBox.each(function () {
+		$(this).next().next().attr('contenteditable','ture');
+	});
+	var check_val2 = [];
+	for(var k2 in obj2){
+		if(obj2[k2].checked)
+			check_val2.push(obj2[k2].value);
+	}
+	console.log(check_val2)
+
+	if(check_val2.length!=1){
+		alert("只能选择一个");
+
+	}else {
+
+		var file_id	=	check_val2['0'];
+		$(".add-user-info").show();
+
+		$('.aui-button').click(function () {
+			var name	=	$('#job-number').val();
+
+			$.ajax(
+					{
+						url: "{:url('File/reName1')}",
+						data: {id:file_id,title:name},
+						dataType: 'json',
+						method: 'post',
+						success: function (data) {
+							$(".add-user-info").hide();
+							window.location.reload();
+
+						}
+					}
+			)
+
+		})
+
+
+
+
+
+	}
+
+})
+
+
+
+//新建文件夹
+$('.folder-add').click(function () {
+
+	var project_id	=$('.id').val();
+
+
+	$.ajax(
+			{
+				url: "{:url('Newfile/addFolder1')}",
+				data: {id:project_id},
+				dataType: 'json',
+				method: 'post',
+				success: function (data) {
+					if(data==1) {
+
+						window.location.reload();
+					}else {
+
+						alert("shibai ");
+					}
+
+				}
+			}
+	)
+
+})
+
+</script>
+</body>
+</html>

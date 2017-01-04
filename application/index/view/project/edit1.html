@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="logo.ico">
+    <title>创建项目</title>
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/zui.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/Project/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Project/css/jquery-ui.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/css.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/iconfont.css">
+
+
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+    <style>
+        .ui-timepicker-div .ui-widget-header {
+            margin-bottom: 8px;
+        }
+
+        .ui-timepicker-div dl {
+            text-align: left;
+        }
+
+        .ui-timepicker-div dl dt {
+            float: left;
+            clear: left;
+            padding: 0 0 0 5px;
+        }
+
+        .ui-timepicker-div dl dd {
+            width: 200px;;
+            margin: 0 10px 10px 29%;
+        }
+
+        .ui-timepicker-div td {
+            font-size: 90%;
+        }
+
+        .ui-tpicker-grid-label {
+            background: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ui-timepicker-rtl {
+            direction: rtl;
+        }
+
+        .ui-timepicker-rtl dl {
+            text-align: right;
+            padding: 0 5px 0 0;
+        }
+
+        .ui-timepicker-rtl dl dt {
+            float: right;
+            clear: right;
+        }
+
+        .ui-timepicker-rtl dl dd {
+            margin: 0 45% 10px 10px;
+        }
+    </style>
+</head>
+<body style="background:#ececec">
+<div class="bj"></div>
+<header>
+    <div class="head-top">
+        <div class="head-top-cont">
+            <h2>{$organization.name}</h2>
+        </div>
+    </div>
+    <div class="head-bottom">
+        {volist name="menu_result" id="menu_res"}
+        {if condition="$menu_res.id eq 1"}
+        <a href="{:url($menu_res['url'])}" class="active">{$menu_res.title}</a>{else/}
+
+        <a href="{:url($menu_res['url'])}">{$menu_res.title}</a>
+        {/if}
+        <!--<a href="{:url('index')}" class="active">项目管理</a>-->
+        <!--<a href="{:url('Department/index')}">机构设置</a>-->
+        <!--<a href="{:url('Ucenter/index')}">成员管理</a>-->
+        {/volist}
+        <h3>您好，{$userInfo.user_name}<span class="out">退出</span></h3>
+
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="project-info">
+        <a href="{:url('Project/index')}" class="address"><-- 返回项目列表</a>
+        <div class="pi-top" style="display: none">
+            <div class="pit-nav">
+                <ul>
+                    <li class="xiangm" id="project">
+                        项目概况
+                    </li>
+                    <li class="touz" id="touz">
+                        投资事件<span></span>
+                    </li>
+                    <li class="wenj" id="wenj">
+                        文件夹<span></span>
+                    </li>
+
+                </ul>
+                <div class="project-delete">删除项目</div>
+                <!--<div class="project-member">-->
+                <!--项目成员<i></i>-->
+                <!--</div>-->
+            </div>
+
+            <div class="pit-bottom" id="pit-bottom">
+                <div class="project-message">
+                    <form>
+                        {volist name="pr_result" id="pr_result"}
+                        <input type="hidden" class="id" value="{$pr_result.id}">
+                        <label>项目名称：</label><input type="text" value="{$pr_result.name}" id="project-name"/>
+                        <label>项目简介：</label><textarea id="project-info">{$pr_result.brief}</textarea>
+                        <label>企业全称：</label><input type="text" value="{$pr_result.company_name}" id="company-name"/>
+
+                        <div class="select">
+                            <label>行业分类：</label>
+                            <select id="trade">
+                                <option value="null">请选择</option>
+                                {volist name="category" id="ca"}
+                                <option value="{$ca.id}" {if condition="$ca.id eq $pr_result.category_id" } selected {
+                                /if}>{$ca.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="select">
+                            <label>发展阶段：</label>
+                            <select id="develop">
+                                <option>请选择</option>
+                                {volist name="investment" id="in"}
+                                <option value="{$in.id}" {if condition="$in.id eq $pr_result.investment_stage" }
+                                        selected {
+                                /if}>{$in.investment_name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="select">
+                            <label>地点：</label>
+                            <select id="address">
+                                <option>请选择</option>
+                                {volist name="province" id="pr"}
+                                <option value="{$pr.id}" {if condition="$pr.id eq $pr_result.province_id" } selected {
+                                /if}>{$pr.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="select">
+                            <label>优先级：</label>
+                            <select id="order">
+                                <option>请选择</option>
+                                {volist name="priority" id="pri"}
+                                <option value="{$pri.id}" {if condition="$pri.id eq $pr_result.priority_id" } selected {
+                                /if}>{$pri.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <label>估值：</label><input type="text" value="{$pr_result.valuation}" id="project-money"/>
+                        <div class="select">
+                            <label>跟进人：</label>
+                            <select disabled="disabled" id="principal">
+                                <option value="{$userInfo.id}">{$userInfo.user_name}</option>
+
+                            </select>
+                        </div>
+                        <div class="select">
+                            <label>项目库：</label>
+                            <select id="projects">
+                                <option>请选择</option>
+                                {volist name="projectStage" id="stage"}
+                                <option value="{$stage.id}" {if condition="$stage.id eq $pr_result.stage_id" } selected
+                                        {
+                                /if}>{$stage.name}</option>
+
+                                {/volist}
+                            </select>
+                        </div>
+                        {/volist}
+                        <button class="project-yes" type="button">保存</button>
+                        <div class="login-cerror" style="padding-left:100px;"></div>
+                    </form>
+                </div>
+                <div class="invest-event">
+                    <div class="ie-top">
+                        <div class="delete-event">删除事件</div>
+                        <div class="add-event">添加事件</div>
+                    </div>
+                    <div class="ie-bottom">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>事件名称</th>
+                                <th>修改时间</th>
+                                <th>发布人</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="ev_result" id="ev"}
+                            <tr>
+                                <td class="td" style="text-align: left">
+                                    <input type="checkbox" name="choose" class="event-checkbox" value="{$ev.id}"/>
+                                    <span class="even-compile" data-id="{$ev.id}" data-ucenter_id='{$ev.ucenter_id}'data-project_id='{$ev.project_id}'
+                                          data-project_name="{$ev.project_name}" data-name="{$ev.name}" data-ucenter_name='{$ev.ucenter_name}' data-participants='{$ev.participants}'data-event_object='{$ev.event_object}'data-event_time='{$ev.event_time}'data-aim='{$ev.aim}'data-log='{$ev.log}'data-conclusion='{$ev.conclusion}'data-opintion='{$ev.opintion}'>{$ev.name}</span>
+                                </td>
+                                <td>{:date('Y-m-d H:i:s',$ev['update_time'])}</td>
+                                <td>{$ev.employee_name}</td>
+                            </tr>
+                            {/volist}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!--<div class="add-event-cont">-->
+                        <!--<form>-->
+                            <!--<div class="even-title">-->
+                                <!--<input type="text" value="" placeholder="事件名称" class="event_name"/>-->
+                               <!---->
+                                <!--<input type="hidden" value="" class="event_id">-->
+                            <!--</div>-->
+                            <!--<textarea id="content" name="content" class="form-control kindeditor" style="height:150px;"-->
+                                      <!--value="" placeholder="事件内容"></textarea>-->
+                            <!--<div class="even-button">-->
+                                <!--<div class="even-yes">确定</div>-->
+                                <!--<div class="even-cancel">取消</div>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                    <!--<div class="add-event-cont1">-->
+                    <!--<form>-->
+                    <!--<div class="even-title">-->
+                    <!--<input type="text" value="" placeholder="事件名称" class="event_name1"/>-->
+                    <!--</div>-->
+                    <!--<textarea id="content1" name="content" class="form-control kindeditor" style="height:150px;" value="" placeholder="事件内容"></textarea>-->
+                    <!--<div class="even-button">-->
+                    <!--<div class="even-yes1">确定</div>-->
+                    <!--<div class="even-cancel1">取消</div>-->
+                    <!--</div>-->
+                    <!--</form>-->
+                    <!--</div>-->
+                </div>
+
+                <div class="folder">
+                    <div class="folder-top">
+                        <div class="folder-delete">删除</div>
+                        <div class="folder-ren">重命名</div>
+                        <div class="folder-add">新建文件夹</div>
+                        <div class="folder-upload">
+                            <form action="{:url('File/upload')}" enctype="multipart/form-data" method="post"
+                                  class="form_upload">
+                                <div class="folder-upload_info">上传文件</div>
+                                <input type="text" value="{$pr_result.id}" name="id">
+                                <input type="file" value="" name="file" class="upload_file"/>
+                            </form>
+                        </div>
+
+                        <!--<div class="folder-upload">-->
+                            <!--<div id="fileList" class="uploader-list"></div>-->
+                            <!--<div id="filePicker" style="width: 120px;height:45px;">选择文件</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="folder-bottom">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="td">名称</th>
+                                <th>修改时间</th>
+                                <th>发布人</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="file_result" id="file_res"}
+                            <tr>
+                                <td class="td">
+
+                                    <input type="checkbox" name="choose1" class="folder-checkbox"
+                                           value="{$file_res.id}"/>
+                                    {if condition ="$file_res.type_number eq 1"}
+                                    <img src="__PUBLIC__/img/Picture.png" style="width:50px">
+                                    {elseif condition="$file_res.type_number eq 2"}
+                                    <img src="__PUBLIC__/img/Word.png" style="width:50px">
+                                    {elseif condition="$file_res.type_number eq 3"}
+                                    <img src="__PUBLIC__/img/pdf.png" style="width: 40px;">
+                                    {elseif condition="$file_res.type_number eq 4"}
+                                    <img src="__PUBLIC__/img/PPT.png" style="width: 50px;">
+                                    {elseif condition="$file_res.type_number eq 5"}
+                                    <i class="iconfont">&#xe611;</i>
+                                    {elseif condition="$file_res.type_number eq 6"}
+
+                                    <img src="__PUBLIC__/img/biao.png" style="width: 40px;">
+                                    {else/}<img src="__PUBLIC__/img/f4.png" style="width: 40px;">{/if}
+
+                                    {if condition="$file_res.type_number eq 0"}
+                                    <a class="folder_span " contenteditable="false" id="isfolder"
+                                       href="{:url('Project/editFolder',array('id'=>$file_res['id'],'project_id'=>$pr_result['id']))}">{$file_res.name}</a>
+                                    {else/}
+                                    <a class="folder_span" contenteditable="false" href="{$file_res.save_path}">{$file_res.name}</a>{/if}
+                                    <!--<div class="progress">-->
+                                        <!--<span class="text">0%</span>-->
+                                        <!--<span class="percentage"></span>-->
+                                    <!--</div><div class="info"></div>-->
+                                </td>
+
+                                <td>{:date('Y-m-d H:i:s',$file_res['create_time'])}</td>
+                                <td>{$file_res.user_name}</td>
+                            </tr>
+                            {/volist}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="page">
+
+                        <ul class="pager pager-loose">
+                            {$file_result->render()}
+
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="add-event-cont">
+                    <form>
+                        <input type="hidden" value="" class="panduan">
+                        <input type="hidden" value="" class="event_id">
+                        <input type="hidden" value="{$pr_result.id}" class="project_id">
+                        <div class="even-title">
+                            <label>事件名称：</label>
+                            <input type="text" value="" class="event_name" />
+                        </div>
+                        <div class="even-title">
+                            <label>投资经理：</label>
+                            <input type="text" value="{$userInfo.user_name}"  data-id="{$userInfo.id}" class="ucenter_name" readonly="readonly" />
+                        </div>
+                        <div class="even-title">
+                            <label>项目名称：</label>
+                            <input type="text" value="{$pr_result.name}" class="project_name" readonly="readonly"/>
+                        </div>
+                        <div class="even-title">
+                            <label>参与人员：</label>
+                            <input type="text" value=""  class="participants1"/>
+                        </div>
+                        <div class="even-title">
+                            <label>事件对象：</label>
+                            <input type="text" value=""  class="event_object"/>
+                        </div>
+                        <div class="even-title">
+                            <label>时间：</label>
+                            <div class="doc-dd">
+                                <input name="act_start_time" type="text" class="text-box" value=""  placeholder="点击获取时间" style="cursor:pointer;"/>
+                            </div>
+                        </div>
+                        <div class="even-title">
+                            <label>目的：</label>
+                            <input type="text" value="" class="aim" />
+                        </div>
+                        <div class="even-title">
+                            <label>事件记录：</label>
+                            <textarea class="log"></textarea>
+                        </div>
+                        <div class="even-title">
+                            <label>结论意见：</label>
+                            <textarea class="conclusion"></textarea>
+                        </div>
+                        <div class="even-title">
+                            <label>主管意见：</label>
+                            <textarea class="opintion"></textarea>
+                        </div>
+                        <div class="even-button">
+                            <div class="even-yes">确定</div>
+                            <div class="even-cancel">取消</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="project-delete-cont">
+            <h4>你确定要删除整个项目</h4>
+            <div class="pdc-cancel">取消</div>
+            <div class="pdc-yes">确定</div>
+        </div>
+    </div>
+</div>
+
+<div class="add-user-info">
+    <div class="aui-head">
+        <div class="aui-head-cont">
+            重命名
+        </div>
+    </div>
+    <div class="aui-info">
+        <form>
+            <input type="text" id="job-number" placeholder="请在此填写" value=""/>
+            <button type="button" class="aui-button">确定</button>
+        </form>
+    </div>
+</div>
+<script src="__PUBLIC__/kindeditor/kindeditor-all-min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.js"></script>
+<script src="__PUBLIC__/js/store.min.js"></script>
+<script src="__PUBLIC__/js/jquery.history.js"></script>
+<script src="__PUBLIC__/js/js.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="__PUBLIC__/js/webuploader.js"></script>
+<script src="__PUBLIC__/js/pjax.js"></script>
+<!-- 统计代码 start -->
+<script type="text/javascript">
+    $("input[name='act_start_time'],input[name='act_stop_time']").datetimepicker();
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F96790c81142777e7724407f030936c10' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 统计代码 end -->
+<script type="text/javascript">
+
+
+
+    $(function () {
+        var tishi = store.get('ceshi');
+        if (typeof(tishi) == "undefined") {
+
+            $('.xiangm').addClass("active").siblings().removeClass();
+
+        } else {
+
+            $('#' + tishi).addClass("active").siblings().removeClass();
+            $(".pit-bottom>div").hide().eq($('.pit-nav li').index($('#' + tishi))).show();
+            console.log(tishi);
+        }
+
+    });
+
+
+    $('.pi-top').show();
+
+
+    $('.pit-nav li').click(function () {
+        $(this).addClass("active").siblings().removeClass();
+        $(".pit-bottom>div").hide().eq($('.pit-nav li').index(this)).show();
+        var ceshi = $(this).attr('id');
+        store.set('ceshi', ceshi);
+
+
+    });
+    $("body").css("min-height", document.documentElement.clientHeight - 75);
+    $(".ie-bottom").height($("body").height() - 200);
+    window.editor = KindEditor.create('textarea.kindeditor', {
+        basePath: '__PUBLIC__/kindeditor/',
+        bodyClass: 'article-content',
+        resizeType: 1,
+        allowPreviewEmoticons: false,
+        allowImageUpload: false,
+        minHeight: 200,
+        items: [
+            'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+            'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+            'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+            'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+            'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+            'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+            'anchor', 'link', 'unlink', '|', 'about'
+        ]
+    });
+    //用户退出
+    $('.out').click(function () {
+
+        window.location.href = "{:url('Ucenter/logout')}"
+
+    })
+
+
+    $("#project-name,#project-info,#company-name,#trade,#develop,#address,#order,#project-money,#principal,#projects").focus(function () {
+        $(".login-cerror").hide();
+    })
+
+    //修改项目
+    $(".project-yes").click(function () {
+        var projectName = $("#project-name").val();
+        var projectInfo = $("#project-info").val();
+        var companyName = $("#company-name").val();
+        var trade = $("#trade").val();
+        var develop = $("#develop").val();
+        var address = $("#address").val();
+        var order = $("#order").val();
+        var projectMoney = $("#project-money").val();
+        var principal = $("#principal").val();
+        var projects = $("#projects").val();
+        var project_id = $(".id").val();
+        if (projectName == '' || projectName == null || projectName == undefined || projectInfo == '' || projectInfo == null || projectInfo == undefined || companyName == '' || companyName == null || companyName == undefined || trade == '' || trade == null || trade == undefined || develop == '' || develop == null || develop == undefined) {
+            $(".login-cerror").show()
+                    .text('所填项不能为空');
+            return;
+        }
+        else if (address == '' || address == null || address == undefined || order == '' || order == null || order == undefined || projectMoney == '' || projectMoney == null || projectMoney == undefined || principal == '' || principal == null || principal == undefined || projects == '' || projects == null || projects == undefined) {
+            $(".login-cerror").show()
+                    .text('所填项不能为空');
+            return;
+        } else {
+
+
+            console.log(projectName);
+            console.log(projectInfo);
+            console.log(companyName);
+            console.log(trade);
+            console.log(develop);
+            console.log(address);
+            console.log(order);
+            console.log(projectMoney);
+            console.log(principal);
+
+            $.ajax(
+                    {
+                        url: "{:url('Project/editProject')}",
+
+                        data: {
+                            name: projectName,
+                            brief: projectInfo,
+                            company_name: companyName,
+                            category_id: trade,
+                            investment_stage: develop,
+                            province_id: address,
+                            priority_id: order,
+                            valuation: projectMoney,
+                            stage_id: projects,
+                            ucenter_id: principal,
+                            charge_user: principal,
+                            id: project_id
+                        },
+
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (data) {
+
+                            if (data == 1) {
+                                window.location.reload();
+
+                            } else {
+                                alert("fail")
+                            }
+                        }
+                    }
+            )
+        }
+    });
+
+
+    //新建事件或者编辑事件提交
+    $(".even-yes").click(function () {
+        var aid = $(".project_id").val();
+
+
+        var panduan = $(".panduan").val();
+        var eventId = $(".event_id").val();
+
+        var event_name = $(".event_name").val();
+        var ucenterId  =   $('.ucenter_name').attr('data-id');
+        var ucenterName  =   $('.ucenter_name').val();
+
+        var projectName = $(".project_name").val();
+
+        var participants1 = $(".participants1").val();
+
+        var eventobject = $(".event_object").val();
+
+        var time = $(".text-box").val();
+        var aim = $(".aim").val();
+        var log = $(".log").val();
+        var conclusion = $(".conclusion").val();
+        var opintion = $(".opintion").val();
+        var event_name = $(".event_name").val();
+
+        if (event_name == '' || event_name == null) {
+
+            alert("请填写完整");
+
+        } else {
+
+            if (panduan == "1") {
+                //如果等于一就是编辑事件
+
+                $.ajax(
+                        {
+                            url: "{:url('Event/editEvent')}",
+
+                            data: {id: eventId,
+                                ucenter_id:ucenterId,
+                                project_id: aid,
+                                name: event_name,
+
+                                ucenter_name:ucenterName,
+                                event_time:time,
+                                project_name:projectName,
+                                participants:participants1,
+                                event_object:eventobject,
+                                aim:aim,
+                                log:log,
+                                conclusion:conclusion,
+                                opintion:opintion
+                            },
+
+                            dataType: 'json',
+                            method: 'post',
+                            success: function (data) {
+
+                                if (data == 1) {
+                                    window.location.reload();
+
+                                } else {
+                                    alert("fail")
+                                }
+                            }
+                        }
+                )
+
+            } else {
+                //如果为空就是新建事件
+
+                $.ajax(
+                        {
+                            url: "{:url('Event/newEvent')}",
+
+                            data: {
+                                project_id: aid,
+                                name: event_name,
+
+                                ucenter_name:ucenterName,
+                                event_time:time,
+                                project_name:projectName,
+                                participants:participants1,
+                                event_object:eventobject,
+                                aim:aim,
+                                log:log,
+                                conclusion:conclusion,
+                                opintion:opintion
+
+
+
+
+
+
+                            },
+
+                            dataType: 'json',
+                            method: 'post',
+                            success: function (data) {
+
+
+                                if (data == 1) {
+
+                                   window.location.reload();
+
+                                } else {
+
+                                    alert("新建失败");
+
+                                }
+                            }
+                        }
+                )
+            }
+        }
+    })
+
+    //编辑项目
+    $(".even-compile").click(function(){
+
+        var name = $(this).attr('data-name');
+        var eventId = $(this).attr('data-id');
+        var ucenter_id = $(this).attr('data-ucenter_id');
+        var ucenter_name = $(this).attr('data-ucenter_name');
+
+        var project_name = $(this).attr('data-project_name');
+
+        var participants = $(this).attr('data-participants');
+        var event_object = $(this).attr('data-event_object');
+        var event_time = $(this).attr('data-event_time');
+        var aim = $(this).attr('data-aim');
+        var log = $(this).attr('data-log');
+        var conclusion = $(this).attr('data-conclusion');
+        var opintion = $(this).attr('data-opintion');
+
+        $('.event_name').val(name);
+        $('.ucenter_name').val(ucenter_name);
+
+        $('.project_name').val(project_name);
+        $('.participants1').val(participants);
+        $('.event_object').val(event_object);
+
+        $('.text-box').val(event_time);
+        $('.aim').val(aim);
+        $('.log').val(log);
+        $('.conclusion').val(conclusion);
+        $('.opintion').val(opintion);
+        $('.panduan').val("1");
+
+
+
+       $('.event_id').val(eventId);
+
+
+
+
+
+
+        $(".add-event-cont").show();
+        $(".folder").hide();
+        $(".invest-event").hide();
+        $(".project-message").hide();
+    });
+    //删除项目
+    $(".pdc-yes").click(function () {
+
+        var project_id = $(".id").val();
+        $.ajax(
+                {
+                    url: "{:url('Project/deleteProject')}",
+
+                    data: {id: project_id},
+
+                    dataType: 'json',
+                    method: 'post',
+                    success: function (data) {
+
+                        if (data == 1) {
+                            window.location.href = "{:url('Project/index')}"
+                        } else {
+                            alert("修改失败");
+                        }
+                    }
+                }
+        )
+    })
+    $(".touz,.wenj").click(function () {
+        $(".project-delete").hide()
+    });
+    $("#project").click(function () {
+        $(".project-delete").show()
+    });
+
+
+    //删除事件
+    $(".delete-event").click(function () {
+
+        var obj = document.getElementsByName("choose");
+
+        var check_val = [];
+        for (k in obj) {
+            if (obj[k].checked)
+                check_val.push(obj[k].value);
+        }
+        console.log(check_val);
+
+        if (check_val.length == 0) {
+            alert("未选定事件");
+
+        } else {
+
+            $.ajax(
+                    {
+                        url: "{:url('Event/deleteEvent')}",
+
+                        data: {id: check_val},
+
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (data) {
+
+                            if (data > 0) {
+                                window.location.reload();
+
+                            } else {
+                                alert("fail")
+                            }
+                        }
+                    }
+            )
+        }
+    })
+    //点击事件名称，编辑事件
+
+//    $(".even-compile").click(function () {
+//        $(".add-event-cont").show();
+//        $(".bj").show();
+//        var content = $(this).attr('data-content');
+//        var name = $(this).attr('data-name');
+//        var eventId = $(this).attr('data-id');
+//
+//        console.log(content);
+//        $('.event_name').val(name);
+//
+//        window.editor.html(content);
+//        $(".panduan").val('1');
+//        $(".event_id").val(eventId);
+//
+//    });
+    //文件上传
+    $('.upload_file').change(function () {
+
+        form_submit();
+    })
+    function form_submit() {
+        $(".form_upload").submit();
+    }
+
+    //删除文件
+    $(".folder-delete").click(function () {
+
+        var obj1 = document.getElementsByName("choose1");
+
+        var check_val1 = [];
+        for (k1 in obj1) {
+            if (obj1[k1].checked)
+                check_val1.push(obj1[k1].value);
+        }
+        console.log(check_val1);
+
+        if (check_val1.length == 0) {
+            alert("未选定事件");
+
+        } else {
+            $.ajax(
+                    {
+                        url: "{:url('File/deleteFolder')}",
+                        data: {id: check_val1},
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (data) {
+                            if (data > 0) {
+                                window.location.reload();
+
+                            } else {
+                                alert("fail")
+                            }
+
+                        }
+                    }
+            )
+        }
+
+    })
+
+    //重命名
+    $(".folder-ren").click(function () {
+
+        var obj2 = document.getElementsByName("choose1");
+        var checkBox = $('input[name=choose1]');
+        checkBox.each(function () {
+            $(this).next().next().attr('contenteditable', 'ture');
+        });
+        var check_val2 = [];
+        for (var k2 in obj2) {
+            if (obj2[k2].checked)
+                check_val2.push(obj2[k2].value);
+        }
+        console.log(check_val2)
+        if (check_val2.length != 1) {
+            alert("只能选择一个");
+
+        } else {
+
+            var file_id = check_val2['0'];
+            $(".add-user-info").show();
+
+            $('.aui-button').click(function () {
+                var name = $('#job-number').val();
+
+                $.ajax(
+                        {
+                            url: "{:url('File/reName')}",
+                            data: {id: file_id, title: name},
+                            dataType: 'json',
+                            method: 'post',
+                            success: function (data) {
+                                $(".add-user-info").hide();
+                                window.location.reload();
+
+                            }
+                        }
+                )
+
+            })
+
+
+        }
+
+    })
+
+
+    //新建文件夹
+    $('.folder-add').click(function () {
+
+        var project_id = $('.id').val();
+
+
+        $.ajax(
+                {
+                    url: "{:url('File/addFolder')}",
+                    data: {id: project_id},
+                    dataType: 'json',
+                    method: 'post',
+                    success: function (data) {
+                        if (data == 1) {
+
+                            window.location.reload();
+                        } else {
+
+                            alert("shibai ");
+                        }
+
+                    }
+                }
+        )
+
+    })
+    $(function(){
+    var uploader = WebUploader.create({
+
+        // 选完文件后，是否自动上传。
+        auto: true,
+
+        // swf文件路径
+        swf: '__PUBLIC__/js/Uploader.swf',
+
+        // 文件接收服务端。
+        server: '{:url('File/upload')}',
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+
+        resize: false
+    });
+    uploader.on( 'uploadProgress', function( file, percentage ) {
+
+        var $li = $( '#'+file.id ),
+                $percent = $li.find('.progress .progress-bar');
+        console.log($li)
+        // 避免重复创建
+        if ( !$percent.length ) {
+            $percent = $('<div class="progress progress-striped active">' +
+                    '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                    '</div>' +
+                    '</div>').appendTo( $li ).find('.progress-bar');
+        }
+
+        $li.find('p.state').text('上传中');
+
+        $percent.css( 'width', percentage * 100 + '%' );
+    });
+    uploader.on( 'uploadSuccess', function( file ) {
+
+        $( '#'+file.id ).find('p.state').text('已上传');
+    });
+    uploader.on( 'uploadError', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传出错');
+
+        console.log('bbb');
+    });
+
+    uploader.on( 'uploadComplete', function( file ) {
+        $( '#'+file.id ).find('.progress').fadeOut();
+        console.log('qqq');
+    });
+    });
+</script>
+</body>
+</html>

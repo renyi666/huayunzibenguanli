@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="shortcut icon" href="logo.ico">
+    <title>创建项目</title>
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/zui.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/css.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/iconfont.css">
+   
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body style="background:#ececec">
+	<div class="bj"></div>
+    <header>
+    	<div class="head-top">
+    		<div class="head-top-cont">
+    			<h2>{$organization.name}</h2>
+    		</div>
+    	</div>
+		<div class="head-bottom">
+			{volist name="menu_result" id="menu_res"}
+			{if condition="$menu_res.id eq 1"}
+			<a href="{:url($menu_res['url'])}" class="active">{$menu_res.title}</a>{else/}
+
+			<a href="{:url($menu_res['url'])}">{$menu_res.title}</a>
+			{/if}
+			<!--<a href="{:url('index')}" class="active">项目管理</a>-->
+			<!--<a href="{:url('Department/index')}">机构设置</a>-->
+			<!--<a href="{:url('Ucenter/index')}">成员管理</a>-->
+			{/volist}
+			<h3>您好，{$userInfo.user_name}<span class="out">退出</span></h3>
+
+		</div>
+    </header>
+    <div class="container-fluid">
+    	<div class="project-info">
+    		<a href="{:url('Project/index')}" class="address"><-- 返回项目列表</a>
+    		<div class="pi-top">
+    			<div class="pit-nav">
+    				<ul>
+    					<li class="active">
+    						项目概况
+    					</li>
+    					<!--<li>-->
+    						<!--投资事件<span>（+2）</span>-->
+    					<!--</li>-->
+    					<!--<li>-->
+    						<!--文件夹<span>（+3）</span>-->
+    					<!--</li>-->
+    					
+    				</ul>
+    				<!--<div class="project-delete">删除项目</div>-->
+    				<!--<div class="project-member">-->
+    					<!--项目成员<i>6</i>-->
+    				<!--</div>-->
+    			</div>
+    			<div class="pit-bottom">
+    				<div class="project-message">
+    					<form>
+    						<label>项目名称：</label><input type="text" value="" id="project-name"/>
+    						<label>项目简介：</label><textarea id="project-info"></textarea>
+    						<label>企业全称：</label><input type="text" value="" id="company-name"/>
+    						<div class="select">
+    							<label>行业分类：</label>
+	    						<select id="trade">
+	    							<option value="null">请选择</option>
+									{volist name="category" id="ca"}
+	    							<option value="{$ca.id}">{$ca.name}</option>
+	    							{/volist}
+	    						</select>
+    						</div>
+    						<div class="select">
+	    						<label>发展阶段：</label>
+	    						<select id="develop">
+	    							<option>请选择</option>
+									{volist name="investment" id="in"}
+	    							<option value="{$in.id}">{$in.investment_name}</option>
+	    							{/volist}
+	    						</select>
+	    					</div>
+	    					<div class="select">
+	    						<label>地点：</label>
+	    						<select id="address">
+	    							<option>请选择</option>
+									{volist name="province" id="pr"}
+									<option value="{$pr.id}">{$pr.name}</option>
+									{/volist}
+	    						</select>
+	    					</div>
+	    					<div class="select">
+	    						<label>优先级：</label>
+	    						<select id="order">
+	    							<option>请选择</option>
+									{volist name="priority" id="pri"}
+									<option value="{$pri.id}">{$pri.name}</option>
+									{/volist}
+	    						</select>
+	    					</div>
+    						<label>估值：</label><input type="text" value="" id="project-money"/>	
+    						<div class="select">
+	    						<label>跟进人：</label>
+	    						<select disabled="disabled" id="principal">
+	    							<option value="{$userInfo.id}">{$userInfo.user_name}</option>
+
+	    						</select>
+	    					</div>
+    						<div class="select">
+	    						<label>项目库：</label>
+	    						<select id="projects">
+	    							<option>请选择</option>
+									{volist name="projectStage" id="stage"}
+	    							<option value="{$stage.id}">{$stage.name}</option>
+
+									{/volist}
+	    						</select>
+	    					</div>
+	    					<button class="project-yes" type="button">保存</button>
+	    					<div class="login-cerror" style="padding-left:100px;"></div>
+    					</form>
+    				</div>
+    				<!--<div class="invest-event">-->
+    					<!--<div class="ie-top">-->
+    						<!--<div class="delete-event">删除事件</div>-->
+    						<!--<div class="add-event">添加事件</div>-->
+    					<!--</div>-->
+    					<!--<div class="ie-bottom">-->
+    						<!--<table>-->
+    							<!--<thead>-->
+    								<!--<tr>-->
+    									<!--<th>事件名称</th>-->
+    									<!--<th>修改时间</th>-->
+    									<!--<th>发布人</th>-->
+    								<!--</tr>-->
+    							<!--</thead>-->
+    							<!--<tbody>-->
+    								<!--<tr>-->
+    									<!--<td>-->
+    										<!--<input type="checkbox" name="choose" class="event-checkbox"/>-->
+    										<!--<span class="even-compile">背景调查</span>-->
+    									<!--</td>-->
+    									<!--<td>2016/7/18  16:58</td>-->
+    									<!--<td>Tom</td>-->
+    								<!--</tr>-->
+    								<!--<tr>-->
+    									<!--<td>-->
+    										<!--<input type="checkbox" name="choose" class="event-checkbox"/>-->
+    										<!--<span class="even-compile">背景调查</span>-->
+    									<!--</td>-->
+    									<!--<td>2016/7/18  16:58</td>-->
+    									<!--<td>Tom</td>-->
+    								<!--</tr>-->
+    								<!--<tr>-->
+    									<!--<td>-->
+    										<!--<input type="checkbox" name="choose" class="event-checkbox"/>-->
+    										<!--<span class="even-compile">背景调查</span>-->
+    									<!--</td>-->
+    									<!--<td>2016/7/18  16:58</td>-->
+    									<!--<td>Tom</td>-->
+    								<!--</tr>-->
+    								<!--<tr>-->
+    									<!--<td>-->
+    										<!--<input type="checkbox" name="choose" class="event-checkbox"/>-->
+    										<!--<span class="even-compile">背景调查</span>-->
+    									<!--</td>-->
+    									<!--<td>2016/7/18  16:58</td>-->
+    									<!--<td>Tom</td>-->
+    								<!--</tr>-->
+    							<!--</tbody>-->
+    						<!--</table>-->
+    					<!--</div>-->
+    					<!---->
+    					<!--<div class="add-event-cont">-->
+    						<!--<form>-->
+    							<!--<div class="even-title">-->
+    								<!--<input type="text" value="" placeholder="事件名称"/>-->
+    							<!--</div>-->
+    							<!--<textarea id="content" name="content" class="form-control kindeditor" style="height:150px;" value="" placeholder="事件内容"></textarea>-->
+    							<!--<div class="even-button">-->
+    								<!--<div class="even-yes">确定</div>-->
+    								<!--<div class="even-cancel">取消</div>-->
+    							<!--</div>-->
+    						<!--</form>-->
+    					<!--</div>-->
+    				<!--</div>-->
+    				<!--<div class="folder">-->
+    					<!--<div class="folder-top">-->
+    						<!--<div class="folder-delete">删除</div>-->
+    						<!--<div class="folder-ren">重命名</div>-->
+    						<!--<div class="folder-add">新建文件夹</div>-->
+    						<!--<div class="folder-upload">上传文件</div>-->
+    					<!--</div>-->
+    					<!--<div class="folder-bottom">-->
+    						<!--<thead>-->
+    								<!--<tr>-->
+    									<!--<th>名称</th>-->
+    									<!--<th>修改时间</th>-->
+    									<!--<th>发布人</th>-->
+    								<!--</tr>-->
+    							<!--</thead>-->
+    							<!--<tbody>-->
+    								<!--<tr>-->
+    									<!--<td>-->
+    										<!--<input type="checkbox" name="choose" class="folder-checkbox"/>-->
+    										<!--<span class="even-compile">背景调查</span>-->
+    									<!--</td>-->
+    									<!--<td>2016/7/18  16:58</td>-->
+    									<!--<td>Tom</td>-->
+    								<!--</tr>-->
+    								<!--<tr>-->
+    									<!--<td>-->
+    										<!--<input type="checkbox" name="choose" class="event-checkbox"/>-->
+    										<!--<span class="even-compile">背景调查</span>-->
+    									<!--</td>-->
+    									<!--<td>2016/7/18  16:58</td>-->
+    									<!--<td>Tom</td>-->
+    								<!--</tr>-->
+    								<!--<tr>-->
+    									<!--<td>-->
+    										<!--<input type="checkbox" name="choose" class="event-checkbox"/>-->
+    										<!--<span class="even-compile">背景调查</span>-->
+    									<!--</td>-->
+    									<!--<td>2016/7/18  16:58</td>-->
+    									<!--<td>Tom</td>-->
+    								<!--</tr>-->
+    								<!--<tr>-->
+    									<!--<td>-->
+    										<!--<input type="checkbox" name="choose" class="event-checkbox"/>-->
+    										<!--<span class="even-compile">背景调查</span>-->
+    									<!--</td>-->
+    									<!--<td>2016/7/18  16:58</td>-->
+    									<!--<td>Tom</td>-->
+    								<!--</tr>-->
+    							<!--</tbody>-->
+    						<!--</table>-->
+    					<!--</div>-->
+    				<!--</div>-->
+    			</div>
+    		</div>
+    		<!--<div class="project-delete-cont">-->
+    			<!--<h4>你确定要删除整个项目</h4>-->
+    			<!--<div class="pdc-cancel">取消</div>-->
+    			<!--<div class="pdc-yes">确定</div>-->
+    		<!--</div>-->
+    	</div>
+    </div>
+    
+    
+    
+<script src="__PUBLIC__/kindeditor/kindeditor-all-min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/js/js.js" type="text/javascript"></script>
+<script type="text/javascript">
+	//用户退出
+	$('.out').click(function () {
+
+		window.location.href="{:url('Ucenter/logout')}"
+
+	})
+
+
+	$("#project-name,#project-info,#company-name,#trade,#develop,#address,#order,#project-money,#principal,#projects").focus(function(){
+		$(".login-cerror").hide();
+	})
+	$(".project-yes").click(function(){
+		var projectName		=	$("#project-name").val();
+		var projectInfo		=	$("#project-info").val();
+		var companyName		=	$("#company-name").val();
+		var trade			=	$("#trade").val();
+		var develop			=	$("#develop").val();
+		var address			=	$("#address").val();
+		var order			=	$("#order").val();
+		var projectMoney	=	$("#project-money").val();
+		var principal		=	$("#principal").val();
+		var projects		=	$("#projects").val();
+		if(projectName==''||projectName==null||projectName==undefined||projectInfo==''||projectInfo==null||projectInfo==undefined||companyName==''||companyName==null||companyName==undefined||trade==''||trade==null||trade==undefined||develop==''||develop==null||develop==undefined){
+			$(".login-cerror").show()
+					.text('所填项不能为空');
+			return;
+		}
+		else if(address==''||address==null||address==undefined||order==''||order==null||order==undefined||projectMoney==''||projectMoney==null||projectMoney==undefined||principal==''||principal==null||principal==undefined||projects==''||projects==null||projects==undefined){
+			$(".login-cerror").show()
+					.text('所填项不能为空');
+			return;
+		}else {
+
+
+			console.log(projectName);
+			console.log(projectInfo);
+			console.log(companyName);console.log(trade);
+			console.log(develop);console.log(address);
+			console.log(order);
+			console.log(projectMoney);
+			console.log(principal);
+			console.log(projects);
+			$.ajax(
+					{
+						url: "{:url('Project/add')}",
+
+						data: {name : projectName ,brief:projectInfo,company_name:companyName,category_id:trade,investment_stage:develop,province_id:address,priority_id:order,valuation:projectMoney,stage_id:projects,ucenter_id:principal,charge_user:principal},
+
+						dataType: 'json',
+						method: 'post',
+						success: function (data) {
+
+
+							if(data['status']==1){
+										var url="{:url('Project/edit')}";
+										var url1	=url.substr(0,(url.length-5));
+
+
+
+										url=	url1+"/id/"+data.id;
+
+									window.location.href=url;
+
+							}else {
+
+
+								alert("新建失败");
+							}
+
+
+
+
+						}
+					}
+
+			)
+
+
+		}
+
+
+
+	});
+
+	$("body").css("min-height",document.documentElement.clientHeight-75);
+$(".ie-bottom").height($("body").height()-200);
+KindEditor.create('textarea.kindeditor', {
+    basePath: 'kindeditor/',
+    bodyClass : 'article-content',
+    resizeType : 1,
+    allowPreviewEmoticons : false,
+    allowImageUpload : false,
+    minHeight:200,
+    items : [
+        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+        'insertunorderedlist', '|', 'emoticons', 'image', 'link'
+    ]
+});
+</script>
+</body>
+</html>

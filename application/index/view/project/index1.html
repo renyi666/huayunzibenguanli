@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="favicon.ico" rel="shortcut icon">
+    <title>项目库</title>
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/zui.css">
+	<Link rel="Shortcut Icon" href="favicon.ico" >
+	<link rel="stylesheet" href="__PUBLIC__/Project/css/bootstrap.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/css.css">
+    <link rel="stylesheet" href="__PUBLIC__/Project/css/iconfont.css">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="__PUBLIC__/js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body style="background:#ececec">
+    <header>
+    	<div class="head-top">
+    		<div class="head-top-cont">
+    			<h2>{$organization.name}</h2>
+
+    		</div>
+    	</div>
+    	<div class="head-bottom">
+			{volist name="menu_result" id="menu_res"}
+			{if condition="$menu_res.id eq 1"}
+			<a href="{:url($menu_res['url'])}" class="active">{$menu_res.title}</a>{else/}
+
+			<a href="{:url($menu_res['url'])}">{$menu_res.title}</a>
+			{/if}
+    		<!--<a href="{:url('index')}" class="active">项目管理</a>-->
+    		<!--<a href="{:url('Department/index')}">机构设置</a>-->
+    		<!--<a href="{:url('Ucenter/index')}">成员管理</a>-->
+			{/volist}
+			<h3>您好，{$userInfo.user_name}<span class="out">退出</span></h3>
+
+    	</div>
+
+    </header>
+    <div class="container-fluid">
+    	<div class="contant">
+    		<div class="cont-top">
+    			<nav  class="ct-nav">
+    				<ul>
+						{volist name="projectStage" id="stage"}
+
+						<li {if condition ="$project_stage_id.id eq $stage.id"}class="active"{/if}>
+							<a href="{:url('index',['stage_id'=>$stage['id']])}">{$stage.name}</a>
+						</li>
+						{/volist}
+
+    				</ul>
+    				<a href="{:url('Project/newproject')}"class="add-project">创建项目</a>
+						<div class="choose">
+    					<i class="iconfont">&#xe703;</i>
+    					<span>筛选</span>
+    				</div>
+    			</nav>
+
+    			<div class="ct-item">
+    				<dl class="ct-item-info">
+    					<dt class="industry-title">行业：
+
+							{if condition = "$data.category eq NULL"}
+
+							<a href="{:url('index',['category'=>'0','investment'=>$data['investment'],'province'=>$data['province'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" class="active">全部</a></dt>
+
+						{else/}
+
+						<a href="{:url('index',['category'=>'0','investment'=>$data['investment'],'province'=>$data['province'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" >全部</a></dt>
+						{/if}
+
+    					<dd class="industry">
+    						<ul class="industry-group">
+								{volist name="category" id="ca"}
+
+								{if condition = "$data.category eq $ca.id"}
+    							<li class="industry-item">
+    								<a href="{:url('index',['category'=>$ca['id'],'province'=>$data['province'],'investment'=>$data['investment'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" class="active">{$ca.name}</a>
+    							</li>
+								{else/}
+									<li class="industry-item">
+										<a href="{:url('index',['category'=>$ca['id'],'province'=>$data['province'],'investment'=>$data['investment'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" >{$ca.name}</a>
+								</li>
+								{/if}
+
+								{/volist}
+
+    						</ul>
+    					</dd>
+
+    				</dl>
+    				<dl class="ct-item-info">
+    					<dt class="financing-title">融资阶段：
+
+							{if condition = "$data.investment eq NULL"}
+							<a href="{:url('index',['investment'=>'0','province'=>$data['province'],'category'=>$data['category'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" class="active">全部</a></dt>
+						{else/}<a href="{:url('index',['investment'=>'0','province'=>$data['province'],'category'=>$data['category'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" >全部</a></dt>
+						{/if}
+
+    					<dd class="financing">
+    						<ul class="financing-group">
+								{volist name="investment" id="in"}
+
+								{if condition = "$data.investment eq $in.id"}
+
+    							<li class="financing-item">
+    								<a href="{:url('index',['investment'=>$in['id'],'province'=>$data['province'],'category'=>$data['category'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" class="active">{$in.investment_name}</a>
+    							</li>
+								{else/}
+								<li class="financing-item">
+									<a href="{:url('index',['investment'=>$in['id'],'province'=>$data['province'],'category'=>$data['category'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}">{$in.investment_name}</a>
+								</li>
+								{/if}
+								{/volist}
+
+    						</ul>
+    					</dd>
+    				</dl>
+    				<dl class="ct-item-info city">
+    					<dt class="city-title">所在地：
+							{if condition = "$data.province eq NULL"}
+							<a href="{:url('index',['province'=>'0','investment'=>$data['investment'],'category'=>$data['category'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" class="active">全部</a></dt>
+						{else/}
+						<a href="{:url('index',['province'=>'0','investment'=>$data['investment'],'category'=>$data['category'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" >全部</a></dt>
+						{/if}
+
+						<dd class="city-cont">
+    						<ul class="city-group">
+
+								{volist name="province" id="pr"}
+								{if condition = "$data.province eq $pr.id"}
+    							<li class="city-item">
+    								<a href="{:url('index',['province'=>$pr['id'],'category'=>$data['category'],'investment'=>$data['investment'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" class="active">{$pr.name}</a>
+    							</li>
+								{else/}
+
+								<li class="city-item">
+									<a href="{:url('index',['province'=>$pr['id'],'category'=>$data['category'],'investment'=>$data['investment'],'stage_id'=>$data['stage_id'],'priority_id'=>$data['priority_id']])}" >{$pr.name}</a>
+								</li>
+								{/if}
+								{/volist}
+
+    						</ul>
+    					</dd>
+    					<button class="more-city"><i class="iconfont">&#xe603;</i></button>
+    				</dl>
+    				<dl class="ct-item-info priority">
+    					<dt class="priority-title">优先级：
+							{if condition = "$data.priority_id eq NULL"}
+							<a href="{:url('index',['priority_id'=>'0','province'=>$data['province'],'category'=>$data['category'],'investment'=>$data['investment'],'stage_id'=>$data['stage_id']])}" class="active">全部</a></dt>
+						{else/}<a href="{:url('index',['priority_id'=>'0','province'=>$data['province'],'category'=>$data['category'],'investment'=>$data['investment'],'stage_id'=>$data['stage_id']])}" >全部</a></dt>
+						{/if}
+    					<dd class="priority-cont">
+    						<ul class="priority-group">
+								{volist name="priority" id="pri"}
+								{if condition = "$data.priority_id eq $pri.id"}
+    							<li class="priority-item">
+    								<a href="{:url('index',['province'=>$data['province'],'category'=>$data['category'],'investment'=>$data['investment'],'stage_id'=>$data['stage_id'],'priority_id'=>$pri['id']])}"class="active">{$pri.name}</a>
+    							</li>
+								{else/}
+								<li class="priority-item">
+									<a href="{:url('index',['province'=>$data['province'],'category'=>$data['category'],'investment'=>$data['investment'],'stage_id'=>$data['stage_id'],'priority_id'=>$pri['id']])}">{$pri.name}</a>
+								</li>
+								{/if}
+								{/volist}
+
+    						</ul>
+    					</dd>
+    				</dl>
+    			</div>
+    		</div>
+    		<div class="cont-bottom">
+    			<div class="cb-nav">
+    				<div class="cbn-item float_l" style="width:490px;">
+    					项目名称
+    				</div>
+    				<div class="cbn-item float_l">
+    					更新时间
+    				</div>
+    				<div class="cbn-item float_l">
+    					跟进人
+    					<select class="charge_choose">
+							<option value="0">全部</option>
+							{if condition="$charge_issert eq 1"}
+							{volist name="charge" id="ch"}
+    						<option value="{$ch.1}">{$ch.0}</option>
+							{/volist}
+							{/if}
+    					</select>
+    				</div>
+    				<!--<div class="cbn-item float_l">-->
+    					<!--优先级-->
+    				<!--</div>-->
+    			</div>
+
+    			<div class="cb-info">
+    				<ul>
+						{volist name="result" id="res"}
+    					<li>
+    						<div class="cni-item" style="width:490px;text-align: left;">
+    							<div class="cbn-item-info">
+    								<a href="{:url('Project/edit',array('id'=>$res['id']))}">{$res.name}</a>
+    								<span></span>
+    								<h5>{$res.brief}</h5>
+    							</div>
+    						</div>
+    						<div class="cni-item">
+
+    							<h4>{:date('Y-m-d H:i:s',$res['update_time'])}</h4>
+    						</div>
+    						<div class="cni-item">
+    							<h4>{$res.ename}</h4>
+    						</div>
+    						<!--<div class="cni-item" style="text-align: center;">-->
+    							<!--<h4>仅投资人可</h4>-->
+    						<!--</div>-->
+    					</li>
+
+						{/volist}
+
+    				</ul>
+    			</div>
+    			<!--<div class="page">-->
+    				<!--<ul class="pager pager-loose">-->
+						<!--<li class="previous"><a href="">< 上一页</a></li>-->
+						<!--<li><a href="">1</a></li>-->
+						<!--<li class="active"><a href="">2</a></li>-->
+						<!--<li><a href="">3</a></li>-->
+						<!--<li><a href="">4</a></li>-->
+					    <!--<li><a href="">5</a></li>-->
+						<!--<li class="next"><a href="">下一页 ></a></li>-->
+
+					<!--</ul>-->
+    			<!--</div>-->
+				<div class="page">
+
+					<ul class="pager pager-loose">
+						{$result->render()}
+
+					</ul>
+
+				</div>
+    		</div>
+
+    	</div>
+    </div>
+    
+
+    
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/js.js" ></script>
+	<script src="__PUBLIC__/js/store.min.js"></script>
+<script type="text/javascript">
+	$(".ct-item").toggle()
+    $(function(){
+		store.clear()
+		var page_cur = 1; //当前页
+		var page=0;
+		var i=0;
+		$(".ct-item").toggle()
+    	$(".choose").click(function(){
+    		$(".ct-item").toggle()
+    	})
+
+		$(".charge_choose").change(function () {
+			getData();
+		})
+
+
+		//获取当前页数据
+			function getData(page) {
+			var stage_id1	=	{:$data['stage_id']};
+
+			var category1	=	{:$data['category']};
+			var investment1	=	{:$data['investment']};
+			var province1	=	{:$data['province']};
+			var priority_id1	=	{:$data['priority_id']};
+			 charge_id1	=	$(".charge_choose").val();
+			if(category1==null){
+				category1='0';
+			}
+			if(investment1==null){
+				investment1='0';
+			}
+			if(province1==null){
+				province1='0';
+			}
+			if(priority_id1==null){
+				priority_id1='0';
+			}
+
+
+
+			$.ajax(
+					{
+						url: "{:url('Return1/index')}",
+						data: {stage_id : stage_id1 ,category:category1,investment:investment1,province:province1,priority_id:priority_id1,charge_id:charge_id1,page:page },
+						dataType: 'json',
+						method: 'post',
+						success: function (data) {
+
+							var total_num	=	data.total;//总数据
+							var	page_size = data.per_page; //每页数量
+							 page_cur =data.current_page; //当前页
+							var number1	=	total_num/page_size;
+							var number2	=	total_num%page_size;
+					if(number2==0){
+
+						var  page_total_num =number1;
+					}else {
+						var  page_total_num =parseInt(number1)+1;
+
+					}
+
+//							var  page_total_num = 2; //总页数
+							console.log(data)
+							console.log(charge_id1);
+							$(".cb-info").empty();
+
+							$(".cb-info").html(data);
+
+
+								console.log(data.data);
+
+								var ul			=	$('<ul></ul>');
+								$.each(data.data,function (k,v) {
+									console.log(v);
+									var html=
+
+											'<li>'+
+											'<div class="cni-item" style="width:490px;text-align: left;">'+
+											'<div class="cbn-item-info">'+
+											'<a href="#">'+v.name+'</a>'+
+									'<span></span>'+
+									'<h5>'+v.brief+'</h5>'+
+									'</div>'+
+									'</div>'+
+									'<div class="cni-item">'+
+											'<h4>'+v.update_time+'</h4>'+
+
+									'</div>'+
+									'<div class="cni-item">'+
+											'<h4>'+v.ename+'</h4>'+
+									'</div>'
+//									'<div class="cni-item" style="text-align: center;">'+
+//											'<h4>仅投资人可</h4>'+
+//											'</div>'+
+//											'</li>'
+
+									ul.append(html);
+								})
+								$(".cb-info").append(ul);
+
+
+
+
+
+					if (page_cur > page_total_num) page_cur = page_total_num; //当前页大于最大页数
+					if (page_cur < 1) page_cur = 1; //当前页小于1
+					 var page_str = "<div class='page1'><ul class='pager pager-loose'><ul class='pagination'>";
+					if (page_cur == 1) { //若是第一页
+						page_str += "<li class='disabled'><span>上一页</span></li>";
+					} else {
+						page_str += "<li><a href='javascript:void(0)' data-page='" + (page_cur - 1) + "'>上一页</a></li>";
+					}
+
+					//循环输出页码
+		for(i=0;i<page_total_num;i++){
+		console.log(i);
+		var i1	=	i+1;
+			if(page_cur==i1){
+
+				page_str +="<li class='active'><a href='javascript:void(0)' data-page='" + i1 + "'>"+i1+"</a></li>";
+			}else {
+
+				page_str +="<li><a href='javascript:void(0)' data-page='" + i1 + "'>"+i1+"</a></li>";
+			}
+
+
+	}
+					if (page_cur >= page_total_num) { //若是最后页
+						page_str += "<li class='disabled'><span>下一页</span></li>";
+					} else {
+						page_str += "<li><span><a href='javascript:void(0)' data-page='" + (parseInt(page_cur) + 1) + "'>下一页</a></span></li></ul></ul></div> ";
+					}
+					$(".page").html(page_str);
+
+
+
+
+
+
+
+			}
+			}
+
+
+			)
+
+		}
+
+
+
+
+	$(".page1 a").live('click',function() { //live 向未来的元素添加事件处理器,不可用bind
+
+		var page = $(this).attr("data-page"); //获取当前页
+		console.log(page);
+		getData(page)
+
+	});
+
+
+//用户退出
+$('.out').click(function () {
+
+window.location.href="{:url('Ucenter/logout')}"
+
+})
+
+
+
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="华运、华运资本、投资、项目管理、管理系统、投资公司"/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="__PUBLIC__/img/logo.ico">
+    <title>华运资本项目管理系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/zui.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/webuploader.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/mymine.css">
+
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+<header>
+    <div class="bj"></div>
+    <div class="row head_top">
+        <div class="col-xs-11" style="width: 100%;">
+            <div class="head_top_cont">
+                <img src="__PUBLIC__/img/index_bj.png" class="img-responsive">
+                <div class="logo">
+                    <div class="logo_cont">
+                        <img src="__PUBLIC__/img/logo.png">
+                        <h2>华运资本项目管理系统</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head_bottom">
+        <div class="head_bottom_cont">
+            <div class="exit">
+                <img src="__PUBLIC__/img/exit.png">
+                <h4 class="logout">退出</h4>
+            </div>
+            <div class="login_user">
+                <img src="__PUBLIC__/img/user_icon.png">
+                <h4>你好，{$userInfo.user_name}</h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="index_container">
+        <div class="nav">
+            <ul>
+                {if condition="$menu_res.0 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>项目管理</h4>
+                    </div>
+                    <ul>
+                        <input type="hidden" class="project_stage_id" value="{$project_stage_id}">
+
+
+                        {volist name="projectStage" id="stage"}
+
+                        <li class="nav_item_li {if condition ='$project_stage_id eq $stage.id'}open{/if}">
+                            <a href="{:url('index',['stage_id'=>$stage['id'],'stage_judge'=>1])}">
+                                <div class="li_item">
+                                    {if condition ="$project_stage_id eq $stage.id"}
+                                    <img src="__PUBLIC__/img/sj2.png">
+                                    {else/}
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    {/if}
+                                    <h5>{$stage.name}
+                                        {volist name="messagestageLog" id="messagestage"}
+                                        {if condition="$stage.id eq $messagestage.stage_id"}(+{$messagestage.stagenum}){/if}
+                                        {/volist}</h5>
+                                </div>
+                            </a>
+                        </li>
+                        {/volist}
+
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.5 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>日志</h4>
+                    </div>
+                    <ul>
+                        {volist name="logtype" id="logtype"}
+                        <li class="nav_item_li">
+                            <a href="{:url('Log/index',['type_id'=>$logtype['id']])}">
+                                <div class="li_item">
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    <h5>{$logtype.log_type}</h5>
+                                </div>
+
+
+                            </a>
+                        </li>
+                        {/volist}
+
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.4 eq 1"}
+                <li>
+                    <a href="{:url('Newfile/share')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>共享</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.2 eq 1"}
+                <li>
+                    <a href="{:url('Ucenter/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>成员管理</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.1 eq 1"}
+                <li>
+                    <a href="{:url('Department/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.3 eq 1"}
+                <li>
+                    <a href="{:url('Account/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>账号设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+            </ul>
+        </div>
+        <div class="cont_right">
+            <div class="add_project_cont">
+                <div class="apc_top">
+                    <a href="{:url('index',['stage_id'=>$project_stage_id])}">
+                        <div class="apc_top_cont">
+                            <img src="__PUBLIC__/img/fh.png">
+                            <h5>返回</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="apc_cont">
+                    <div class="pit_nav">
+                        <ul>
+                            <li class="active">
+                                项目概况
+                            </li>
+                            <li>
+                                投资事件
+                            </li>
+                            <li>
+                                文件夹
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pit_bottom">
+                        <div class="project_cont">
+                            <form action="">
+                                <div class="pc_item">
+                                    <span>事件名称：</span>
+                                    <input type="hidden" class="now_ucenter_id" value="{$userInfo.id}">
+                                    <input type="hidden" class="default_ucenter_id" value="{$pr_result.ucenter_id}">
+                                    <input type="hidden" class="project_id" value="{$pr_result.id}">
+                                    <input type="text" class="pc_input project_name" value="{$pr_result.name}" {if
+                                           condition="$pr_result.ucenter_id neq $userInfo.id" }readonly{/if}/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>项目介绍：</span>
+                                    <textarea class="project_brief" {if
+                                              condition="$pr_result.ucenter_id neq $userInfo.id" }readonly{/if}>{$pr_result.brief}</textarea>
+                                </div>
+                                <div class="pc_item">
+                                    <span>企业全称：</span>
+                                    <input type="text" class="pc_input project_company"
+                                           value="{$pr_result.company_name}" {if
+                                           condition="$pr_result.ucenter_id neq $userInfo.id" }readonly{/if}/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>行业分类：</span>
+
+                                    <select class="project_category">
+                                        {volist name="category" id="ca"}
+
+                                        <option value="{$ca.id}" {if condition="$ca.id eq $pr_result.category_id"
+                                                }selected{
+                                        /if}>{$ca.name}</option>
+                                        {/volist}
+
+                                    </select>
+
+                                </div>
+                                <div class="pc_item">
+                                    <span>发展阶段：</span>
+                                    <select class="active project_investment">
+
+                                        {volist name="investment" id="inve"}
+                                        <option value="{$inve.id}" {if
+                                                condition="$inve.id eq $pr_result.investment_stage" }selected{
+                                        /if}>{$inve.investment_name}</option>
+
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="pc_item">
+                                    <span>融资要求：</span>
+                                    <input type="text" class="pc_input project_valuation"
+                                           value="{$pr_result.valuation}" {if
+                                           condition="$pr_result.ucenter_id neq $userInfo.id" }readonly{/if}/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>联系电话：</span>
+                                    <input type="text" class="pc_input2 project_mobile" value="{$pr_result.mobile}"
+                                           placeholder="电话、微信、QQ等" {if
+                                           condition="$pr_result.ucenter_id neq $userInfo.id" }readonly{/if}/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>时间：</span>
+                                    <div class="doc-dd">
+                                        <input name="act_start_time" type="text" class="text-box time1"
+                                               value="{:date('Y-m-d H:i',$pr_result.time1)}" readonly="readonly"/>
+                                    </div>
+                                </div>
+                                <div class="pc_item">
+                                    <span>更新时间：</span>
+                                    <div class="doc-dd">
+                                        <input name="act_start_time" type="text" class="text-box time2"
+                                               value="{:date('Y-m-d H:i',$pr_result.time2)}" readonly="readonly"/>
+                                    </div>
+                                </div>
+                                <div class="pc_item">
+                                    <span>跟进人：</span>
+                                    <select class="active ucenter_id">
+                                        <option value="{$pr_result.ucenter_id}">{$pr_result.ucenter_name}</option>
+
+                                    </select>
+                                </div>
+                                <div class="pc_item">
+                                    <span>项目库：</span>
+                                    <ul>
+
+                                        {volist name="projectStage" id="ps"}
+                                        <li>
+                                            <span id="new_project_stage_id" data-id="{$ps.id}"
+                                                  class="{if condition='$project_stage_id eq $ps.id'}active{/if}"></span>
+                                            <h5>{$ps.name}</h5>
+                                        </li>
+                                        {/volist}
+
+                                    </ul>
+                                </div>
+                                <div class="pc_item">
+                                    <span>初审意见：</span>
+                                    <textarea class="suggestion" {if condition="$pr_result.ucenter_id neq $userInfo.id"
+                                              }readonly{/if}>{$pr_result.suggestion}</textarea>
+                                </div>
+                                {if condition="$userInfo.id eq $pr_result.ucenter_id "}
+                                <div class="pc_item">
+                                    <button type="button" class="new_save">保存</button>
+                                </div>
+                                {/if}
+                            </form>
+                        </div>
+                        <div class="touz">
+                            <div class="touz_cont">
+                                <div class="touz_cont_top">
+                                    <div class="tct_delete">
+                                        删除
+                                    </div>
+                                    <div class="tct_add">
+                                        添加事件
+                                    </div>
+                                </div>
+                                <div class="touz_cont_table">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th class="active">项目名称</th>
+                                            <th>发布时间</th>
+                                            <th>发布人</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="ev_result" id="ev"}
+                                        <tr>
+                                            <td class="active" data-id="{$ev.id}" data-ucenter_name="{$ev.ucenter_name}"
+                                                data-project_name="{$ev.project_name}"
+                                                data-ucenter_id="{$ev.ucenter_id}" data-name="{$ev.name}"
+                                                data-content="{$ev.content}" data-project_id="{$ev.project_id}"
+                                                data-event_time="{$ev.event_time}" data-aim="{$ev.aim}"
+                                                data-log="{$ev.log}" data-conclusion="{$ev.conclusion}"
+                                                data-opintion="{$ev.opintion}" data-participants="{$ev.participants}"
+                                                data-event_object="{$ev.event_object}">
+
+                                                <!--<div class="tct_title">-->
+                                                <!--<div data-div="1" class="aa"></div>-->
+                                                <!--<h4>{$ev.name}</h4>-->
+                                                <!--</div>-->
+
+                                                <!--<h5>{$ev.content}</h5>-->
+                                                <div class="tct_check">
+                                                    <div data-div="1" class="aa" data-id="{$ev.id}"
+                                                         value="{$ev.id}"></div>
+                                                </div>
+                                                <div class="tct_title" data-id="{$ev.id}"
+                                                     data-ucenter_name="{$ev.ucenter_name}"
+                                                     data-project_name="{$ev.project_name}"
+                                                     data-ucenter_id="{$ev.ucenter_id}" data-name="{$ev.name}"
+                                                     data-content="{$ev.content}" data-project_id="{$ev.project_id}"
+                                                     data-event_time="{$ev.event_time}" data-aim="{$ev.aim}"
+                                                     data-log="{$ev.log}" data-conclusion="{$ev.conclusion}"
+                                                     data-opintion="{$ev.opintion}"
+                                                     data-participants="{$ev.participants}"
+                                                     data-event_object="{$ev.event_object}">
+                                                    <h4>{$ev.name}</h4>
+                                                    <h5>{$ev.content}</h5>
+                                                </div>
+                                            </td>
+                                            {if condition="$ev.event_time eq ''"}<td>{:date("Y/m/d H:i",$ev.event_time)}</td>{else/}
+
+                                            <td>{$ev.event_time}</td>{/if}
+                                            <td>{$ev.ucenter_name}</td>
+                                        </tr>
+                                        {/volist}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="page">
+                                <div class="page_right">
+
+                                    {$ev_result->render()}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" folder">
+                            <div class="folder_cont">
+                                <div class="folder-top">
+                                    <!--<div class="fh1">-->
+                                        <!--<img src="__PUBLIC__/img/fh2.png">-->
+                                        <!--返回上一级-->
+                                    <!--</div>-->
+                                    <div class="progress">
+                                        <span class="text">上传中</span>
+                                        <span class="percentage"></span>
+                                    </div>
+                                    <div class="info"></div>
+                                    <div class="folder-delete">删除</div>
+                                    <div class="folder-ren">重命名</div>
+                                    <div class="folder-add">新建文件夹</div>
+                                    <div class="folder-upload">
+                                        <div id="fileList" class="uploader-list"></div>
+                                        <div id="filePicker" style="width: 95px;height:31px">上传文件</div>
+                                    </div>
+                                </div>
+                                <div class="folder-bottom">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th class="td">名称</th>
+                                            <th>修改时间</th>
+                                            <th>发布人</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="file_result" id="file_res"}
+                                        <tr>
+                                            <td class="td">
+                                                <div class="td_left">
+                                                    <div data-div="1" class="bb" data-id="{$file_res.id}"></div>
+
+
+                                                    {if condition ="$file_res.type_number eq 1"}
+                                                    <img src="__PUBLIC__/img/tp.png">
+                                                    {elseif condition="$file_res.type_number eq 2"}
+                                                    <img src="__PUBLIC__/img/w.png">
+                                                    {elseif condition="$file_res.type_number eq 3"}
+                                                    <img src="__PUBLIC__/img/ptf.png">
+                                                    {elseif condition="$file_res.type_number eq 4"}
+                                                    <img src="__PUBLIC__/img/p.png">
+                                                    {elseif condition="$file_res.type_number eq 5"}
+                                                    <img src="__PUBLIC__/img/t.png">
+                                                    {elseif condition="$file_res.type_number eq 6"}
+
+                                                    <img src="__PUBLIC__/img/x.png">
+                                                    {elseif condition="$file_res.type_number eq 7"}
+
+                                                    <img src="__PUBLIC__/img/ys.png">
+                                                    {else/}<img src="__PUBLIC__/img/wjj.png">{/if}
+
+
+                                                    {if condition="$file_res.type_number eq 0"}
+                                                    <a class="folder_span " contenteditable="false" id="isfolder"
+                                                       href="{:url('Project/editFolder',array('id'=>$file_res['id'],'project_id'=>$pr_result['id']))}">{$file_res.name}</a>
+                                                    {else/}
+                                                    <a class="folder_span" contenteditable="false"
+                                                       href="{$file_res.save_path}">{$file_res.name}</a>{/if}
+                                                    <!--<span class="folder_span">{$file_res.name}</span>-->
+                                                </div>
+                                                <!--<div class="progress">-->
+                                                <!--<span class="text">0%</span>-->
+                                                <!--<span class="percentage"></span>-->
+                                                <!--</div>-->
+                                                <!--<div class="info"></div>-->
+                                            </td>
+                                            <td>{:date('Y/m/d H:i',$file_res.create_time)}</td>
+                                            <td>{$file_res.user_name}</td>
+                                        </tr>
+                                        {/volist}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="page">
+                                <div class="page_right">
+
+                                    {$file_result->render()}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add_event">
+                            <div class="fh">
+                                <img src="__PUBLIC__/img/fh2.png">
+                                返回上一级
+                            </div>
+                            <form action="">
+                                <div class="pc_item">
+                                    <span>事件名称：</span>
+                                    <input type="hidden" class="event_id" value="">
+                                    <input type="hidden" class="user_name" value="{$userInfo.user_name}">
+                                    <input type="text" class="pc_input event_name" value=""/>
+                                    <input type="hidden" class="event_ucenter_id" value="{$userInfo.id}">
+
+                                </div>
+                                <div class="pc_item">
+                                    <span>投资经理：</span>
+                                    <input type="text" class="pc_input2 event_ucenter_name" value=""/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>投资项目：</span>
+                                    <input type="text" class="pc_input2 event_project_name" value="{$pr_result.name}"
+                                           readonly/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>参与人员：</span>
+                                    <input type="text" class="pc_input2 event_participants" value=""/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>事件对象：</span>
+                                    <input type="text" class="pc_input2 event_object" value=""/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>时间：</span>
+                                    <div class="doc-dd">
+                                        <input name="act_start_time" type="text" class="text-box event_time" value=""
+                                               readonly="readonly"/>
+                                    </div>
+                                </div>
+                                <div class="pc_item">
+                                    <span>目的：</span>
+                                    <input type="text" class="pc_input2 event_aim" value=""/>
+                                </div>
+                                <div class="pc_item">
+                                    <span>事件概要：</span>
+                                    <textarea class="event_content"></textarea>
+                                </div>
+                                <div class="pc_item">
+                                    <span>事件记录：</span>
+                                    <textarea class="event_log"></textarea>
+                                </div>
+                                <div class="pc_item">
+                                    <span>结论意见：</span>
+                                    <textarea class="conclusion"></textarea>
+                                </div>
+                                <div class="pc_item">
+                                    <span>主管意见：</span>
+                                    <textarea class="opintion"></textarea>
+                                </div>
+
+                                <div class="pc_item">
+                                    <button type="button" class="event_save">保存</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="add-user-info" style="top:400px;width: 320px;">
+                <div class="aui-info" style="width: 320px;">
+                    <form>
+                        <input type="hidden" class="rename_file" value="">
+                        <input type="text" id="user-name" placeholder="文件夹名称" value="" style="width: 280px;"/>
+                        <button type="button" class="aui-button" style="width: 260px;">确定</button>
+                        <div class="login-cerror">必填项不可为空</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery.pjax.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="__PUBLIC__/js/webuploader.js"></script>
+<script src="__PUBLIC__/js/store.min.js"></script>
+
+<!--<script type="text/javascript" src="js/js.js" ></script>-->
+
+<!-- 统计代码 start -->
+<script type="text/javascript">
+    $(".ui-icon-circle-triangle-e").text('>');
+    $("input[name='act_start_time'],input[name='act_stop_time']").datetimepicker();
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F96790c81142777e7724407f030936c10' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 统计代码 end -->
+
+<script type="text/javascript">
+
+    var now_ucenter_id  =   $('.now_ucenter_id').val();
+    var  old_ucenter_id =   $('.default_ucenter_id').val();
+
+    //假如不是自己的项目,自动隐去操作
+    if(now_ucenter_id!=old_ucenter_id){
+
+       $('.folder-top').hide();
+        $('.touz_cont_top').hide();
+    }
+    var xi_num  =   store.get("xiangmu_num");
+    if(xi_num!=null&&xi_num!=""){
+
+        $('.pit_nav li').eq(xi_num).addClass("active").siblings().removeClass();
+
+
+        $(".pit_bottom>div").hide().eq($('.pit_nav li').index($('.pit_nav li').eq(xi_num))).show();
+
+    }else {
+
+    }
+    $(function () {
+        var public = "__PUBLIC__";
+        /************项目管理、日志二级菜单点击事件***********/
+        $(".nav_item").click(function () {
+            var ul = $(this).siblings('ul');
+            var display = $(this).siblings('ul').css('display');
+            if (display == "block") {
+                ul.hide();
+                $(this).find('img').attr('src', public + '/img/jia.png');
+            } else {
+                ul.show();
+                $(this).find('img').attr('src', public + '/img/jian.png');
+            }
+        });
+        /**************共享 成员管理、设置鼠标事件**************/
+        $(".nav ul li .nav_item2").mouseover(function () {
+            $(".nav ul li .nav_item2").removeClass('active');
+            $(this).addClass('active');
+            $(".nav ul li .nav_item2").removeClass('action');
+            $(this).prev().addClass('action');
+        });
+        $(".nav_item2").mouseout(function () {
+            $(".nav_item2").removeClass('active');
+            $(".nav_item2").removeClass('action');
+        });
+        /**************项目管理、日志下li的鼠标事件**************/
+        $(".nav_item_li").mouseover(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(this).addClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(this).prev().addClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+            $(this).find('img').attr('src', public + '/img/sj2.png');
+        });
+        $(".nav_item_li").mouseout(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+        });
+        /***************项目概况等三个切换***************/
+        $('.pit_nav li').click(function () {
+            $(this).addClass("active").siblings().removeClass();
+            $(".pit_bottom>div").hide().eq($('.pit_nav li').index(this)).show();
+
+
+            var xiangmu_num  =   $(this).index();
+            store.set('xiangmu_num',xiangmu_num);
+
+
+        });
+        $(".apc_top_cont").click(function () {
+            $(".add_project_cont").hide();
+            $(".index_right").show();
+            $(".add_event").hide();
+            $(".project_cont").hide();
+            $(".touz").hide();
+            $(".folder").hide();
+            $(".pit_nav li").removeClass('active');
+        });
+        $(".add_project").click(function () {
+            $(".index_right").hide();
+            $(".apc_cont").show();
+            $(".add_project_cont").show();
+            $(".project_cont").show();
+            $(".pit_nav>li").addClass('active');
+        });
+        /*****************项目库选择事件****************/
+        $(".pc_item li span").click(function () {
+            $(".pc_item li span").removeClass('active');
+            $(this).addClass('active');
+        });
+        /*********投资事件 字符控制*******************/
+        $(".touz_cont_table tr td h5").each(function () {
+            var span = $(this).text();
+            if (span.length > 25) {
+                var span = span.substr(0, 25);
+                $(this).text(span + '…');
+            }
+        });
+        $(".tct_check>div").click(function () {
+
+            var span = $(this).attr('data-div');
+            if (span == 1) {
+                $(this).addClass('active');
+                $(this).attr('data-div', "0");
+            } else {
+                $(this).removeClass('active');
+                $(this).attr('data-div', "1");
+            }
+        });
+        /*************添加事件**************/
+        $(".tct_add").click(function () {
+            $('.event_id').val("");
+            var user_name = $('.user_name').val();
+
+            $('.event_ucenter_name').val(user_name).attr("readonly", "readonly");
+
+
+            $('.event_content').val("");
+            $('.event_name').val("");
+            $('.event_ucenter_id').val("");
+
+
+            $('.event_time').val("");
+
+            $('.event_aim').val("");
+            $('.event_log').val("");
+            $('.conclusion').val("");
+            $('.opintion').val("");
+            $('.event_participants').val("");
+            $('.event_object').val("");
+
+
+            $(".add_event").show();
+            $(".project_cont").hide();
+            $(".touz").hide();
+            $(".folder").hide();
+        });
+        $(".touz_cont_table tbody .tct_title").click(function () {
+
+            var event_id = $(this).attr("data-id");
+            var event_content = $(this).attr("data-content");
+            var event_name = $(this).attr("data-name");
+            var event_ucenter_id = $(this).attr("data-ucenter_id");
+            var event_ucenter_name = $(this).attr("data-ucenter_name");
+
+            var event_time = $(this).attr("data-event_time");
+            var event_aim = $(this).attr("data-aim");
+            var event_log = $(this).attr("data-log");
+            var event_conclusion = $(this).attr("data-conclusion");
+            var event_opintion = $(this).attr("data-opintion");
+            var event_participants = $(this).attr("data-participants");
+            var event_object = $(this).attr("data-event_object");
+//不是自己的项目
+            if(now_ucenter_id!=old_ucenter_id){
+                $('.event_id').val(event_id);
+                $('.event_ucenter_name').val(event_ucenter_name).attr("readonly", "readonly");
+
+                $('.event_content').val(event_content).attr("readonly", "readonly");
+                $('.event_name').val(event_name).attr("readonly", "readonly");
+                $('.event_ucenter_id').val(event_ucenter_id).attr("readonly", "readonly");
+
+
+                $('.event_time').val(event_time).attr("readonly", "readonly");
+
+                $('.event_aim').val(event_aim).attr("readonly", "readonly");
+                $('.event_log').val(event_log).attr("readonly", "readonly");
+                $('.conclusion').val(event_conclusion).attr("readonly", "readonly");
+                $('.opintion').val(event_opintion);
+                $('.event_participants').val(event_participants).attr("readonly", "readonly");
+                $('.event_object').val(event_object).attr("readonly", "readonly");
+
+            }else {
+
+
+                $('.event_id').val(event_id);
+                $('.event_ucenter_name').val(event_ucenter_name).attr("readonly", "readonly");
+
+                $('.event_content').val(event_content);
+                $('.event_name').val(event_name);
+                $('.event_ucenter_id').val(event_ucenter_id);
+
+
+                $('.event_time').val(event_time);
+
+                $('.event_aim').val(event_aim);
+                $('.event_log').val(event_log);
+                $('.conclusion').val(event_conclusion);
+                $('.opintion').val(event_opintion);
+                $('.event_participants').val(event_participants);
+                $('.event_object').val(event_object);
+            }
+
+
+
+            $(".add_event").show();
+            $(".project_cont").hide();
+            $(".touz").hide();
+            $(".folder").hide();
+        });
+        $(".fh").click(function () {
+            $(".add_event").hide();
+            $(".project_cont").hide();
+            $(".touz").show();
+            $(".folder").hide();
+        });
+        /*********文件夹字符控制*******************/
+        $(".td_left .folder_span").each(function () {
+            var span = $(this).text();
+            if (span.length > 20) {
+                var span = span.substr(0, 20);
+                $(this).text(span + '…');
+            }
+        });
+        $(".td_left>div").click(function () {
+            var span = $(this).attr('data-div');
+            if (span == 1) {
+                $(this).addClass('active');
+                $(this).attr('data-div', "0");
+            } else {
+                $(this).removeClass('active');
+                $(this).attr('data-div', "1");
+            }
+        });
+        $('#filePicker').click(function () {
+            $('.progress').show();
+
+        })
+
+
+        var project_id111 = $('.project_id').val();
+        var url_f = "{:url('File/upload')}";
+        url_f = url_f.substr(0, url_f.length - 5);
+        url_f = url_f + "/id/" + project_id111;
+        console.log(project_id111);
+//        $('.progress').show();
+        var uploader = WebUploader.create({
+
+                    // 选完文件后，是否自动上传。
+                    auto: true,
+
+                    // swf文件路径
+                    swf: '__PUBLIC__/js/Uploader.swf',
+
+                    // 文件接收服务端。
+                    server: url_f,
+                    // 选择文件的按钮。可选。
+                    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                    pick: '#filePicker',
+                    resize: false,
+                })
+                ;
+        $('#filePicker').click(function () {
+            $('.progress').show();
+
+        })
+        uploader.on('uploadProgress', function (file, percentage) {
+            var percent = $('.progress span');
+            console.log("ccc");
+            // 避免重复创建
+            if (!percent.length) {
+
+                percent = $('<div class="progress progress-striped active">' +
+                        '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                        '</div>' +
+                        '</div>').find('.progress');
+
+            }
+
+
+            percent.css('width', percentage * 100 + '%');
+        });
+        uploader.on('uploadSuccess', function (file) {
+            console.log(file)
+            console.log("zheshiceshi")
+
+            $('#' + file.id).find('p.state').text('已上传');
+            window.location.reload();
+        });
+        uploader.on('uploadError', function (file) {
+            $('#' + file.id).find('p.state').text('上传出错');
+            console.log("fail")
+        });
+
+        uploader.on('uploadComplete', function (file) {
+            $('#' + file.id).find('.progress').fadeOut();
+
+        });
+
+
+        //编辑项目信息
+        $('.new_save').click(function () {
+
+            var project_id = $('.project_id').val();
+            var project_name = $('.project_name').val();
+            var project_brief = $('.project_brief').val();
+            var project_company = $('.project_company').val();
+            var project_categroy = $('.project_category').val();
+            var project_investment = $('.project_investment').val();
+            var project_valuation = $('.project_valuation').val();
+            var project_mobile = $('.project_mobile').val();
+            var project_time1 = $('.time1').val();
+            var project_time2 = $('.time2').val();
+            var project_charge = $('.ucenter_id').val();
+            var project_stage = $("#new_project_stage_id.active").attr("data-id");
+            var project_suggestion = $('.suggestion').val();
+
+
+            $.ajax(
+                    {
+                        url: "{:url('Project/editProject')}",
+                        data: {
+                            id: project_id,
+                            name: project_name,
+                            brief: project_brief,
+                            company_name: project_company,
+                            investment_stage: project_investment,
+                            valuation: project_valuation,
+                            mobile: project_mobile,
+                            charge_user: project_charge,
+                            ucenter_id: project_charge,
+                            stage_id: project_stage,
+                            time1: project_time1,
+                            time2: project_time2,
+                            category_id: project_categroy,
+                            suggestion: project_suggestion
+
+                        },
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (data) {
+                            if (data == 1) {
+                                var url =   "{:url('index')}"
+                                window.location.href=url;
+                            } else {
+
+                                alert("shibai ");
+                            }
+
+                        }
+                    }
+            )
+
+
+        })
+
+
+        //新建或者编辑项目
+        $('.event_save').click(function () {
+
+
+            var project_id = $('.project_id').val();
+            var event_ucenter_name = $('.event_ucenter_name').val();
+            var event_content = $('.event_content').val();
+            var event_name = $('.event_name').val();
+            var event_project_name = $('.event_project_name').val();
+            var event_time = $('.event_time').val();
+            var event_aim = $('.event_aim').val();
+            var event_log = $('.event_log').val();
+            var conclusion = $('.conclusion').val();
+            var opintion = $('.opintion').val();
+            var event_participants = $('.event_participants').val();
+            var event_id = $('.event_id').val();
+
+            var event_object = $('.event_object').val();
+            var ucenter_id = $('.event_ucenter_id').val();
+            var opintion = $(".opintion").val();
+            if (event_id != null && event_id != "" && !isNaN(event_id)) {
+
+
+                $.ajax(
+                        {
+                            url: "{:url('Event/editEvent')}",
+                            data: {
+                                id: event_id,
+                                project_id: project_id,
+                                name: event_name,
+                                ucenter_id: ucenter_id,
+                                ucenter_name: event_ucenter_name,
+                                project_name: event_project_name,
+                                event_time: event_time,
+                                aim: event_aim,
+                                log: event_log,
+                                conclusion: conclusion,
+                                opintion: opintion,
+                                participants: event_participants,
+                                event_object: event_object,
+
+
+                            },
+                            dataType: 'json',
+                            method: 'post',
+                            success: function (data) {
+                                if (data == 1) {
+
+                                    window.location.reload();
+                                } else {
+
+                                    alert("shibai ");
+                                }
+
+                            }
+                        }
+                )
+
+
+            } else {
+                //这是新建
+                //zheshibianji
+
+                $.ajax(
+                        {
+                            url: "{:url('Event/newEvent')}",
+                            data: {
+                                project_id: project_id,
+                                name: event_name,
+                                ucenter_id: ucenter_id,
+                                ucenter_name: event_ucenter_name,
+                                project_name: event_project_name,
+                                event_time: event_time,
+                                aim: event_aim,
+                                log: event_log,
+                                conclusion: conclusion,
+                                opintion: opintion,
+                                participants: event_participants,
+                                event_object: event_object,
+
+
+                            },
+                            dataType: 'json',
+                            method: 'post',
+                            success: function (data) {
+                                if (data == 1) {
+
+                                    window.location.reload();
+                                } else {
+
+                                    alert("shibai ");
+                                }
+
+                            }
+                        }
+                )
+
+
+            }
+
+
+        })
+
+        //删除事件
+        $(".tct_delete").click(function () {
+
+            if(now_ucenter_id==old_ucenter_id){
+
+                var obj = $('.aa.active')
+
+
+                console.log(obj)
+
+
+                var check_val = [];
+                obj.each(function () {
+                            check_val.push($(this).data("id"));
+
+                        }
+                )
+
+                console.log(check_val)
+                if (check_val.length == 0) {
+                    alert("未选定事件");
+
+                } else {
+
+                    $.ajax(
+                            {
+                                url: "{:url('Event/deleteEvent')}",
+
+                                data: {id: check_val},
+
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+
+                                    if (data > 0) {
+                                        window.location.reload();
+
+                                    } else {
+                                        alert("fail")
+                                    }
+                                }
+                            }
+                    )
+                }
+
+            }else {
+
+                alert("不能操作非自己的项目")
+            }
+
+        })
+
+        //新建文件夹
+        $('.folder-add').click(function () {
+
+            $('.add-user-info').show();
+            $('.bj').show();
+
+
+        })
+
+//重命名
+        $('.folder-ren').click(function () {
+            var obj = $('.bb.active')
+
+
+            var check_val2 = [];
+            obj.each(function () {
+                        check_val2.push($(this).data("id"));
+
+                    }
+            )
+            console.log(check_val2)
+            if (check_val2.length != 1) {
+
+                alert("只能选择一个");
+            } else {
+
+                var rename_file_id = check_val2['0'];
+                console.log(rename_file_id);
+                $('.rename_file').val(rename_file_id);
+                $('.add-user-info').show();
+                $('.bj').show();
+            }
+
+
+        })
+        $("#user-name").focus(function () {
+            $(".login-cerror").hide();
+        });
+        $(".bj").click(function () {
+            $(".add-user-info").hide();
+            $(this).hide()
+        });
+
+        //文件命名
+        $(".aui-button").click(function () {
+            var file_id = $('.rename_file').val();
+            var userName = $("#user-name").val();
+            //判断工号、姓名、手机号等是否为空
+            if (userName == '' || userName == null || userName == undefined) {
+                $(".login-cerror").show();
+                $(".login-cerror").css("width", "210px")
+                        .css("margin-left", "0")
+                        .css("text-align", "center");
+            } else {
+                //新建文件夹
+                if (file_id == null || file_id == "") {
+
+
+                    var project_id = $('.project_id').val();
+
+
+                    $.ajax(
+                            {
+                                url: "{:url('File/addFolder')}",
+                                data: {id: project_id, title: userName},
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+                                    if (data == 1) {
+
+                                        window.location.reload();
+                                    } else {
+
+                                        alert("shibai ");
+                                    }
+
+                                }
+                            }
+                    )
+
+
+                } else {
+                    $.ajax(
+                            {
+                                url: "{:url('File/reName')}",
+                                data: {id: file_id, title: userName},
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+                                    $(".add-user-info").hide();
+                                    window.location.reload();
+
+                                }
+                            }
+                    )
+
+                }
+            }
+        });
+
+        //删除文件
+        $(".folder-delete").click(function () {
+
+            if(now_ucenter_id==old_ucenter_id){
+
+                var obj3 = $('.bb.active')
+
+
+                var check_val3 = [];
+                obj3.each(function () {
+                            check_val3.push($(this).data("id"));
+
+                        }
+                )
+                if (check_val3.length == 0) {
+                    alert("未选定事件");
+
+                } else {
+                    $.ajax(
+                            {
+                                url: "{:url('File/deleteFolder')}",
+                                data: {id: check_val3},
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+                                    if (data > 0) {
+                                        window.location.reload();
+
+                                    } else {
+                                        alert("fail")
+                                    }
+
+                                }
+                            }
+                    )
+                }
+            }else {
+
+                alert("不能操作非自己的项目")
+            }
+
+
+        })
+        //退出
+        $('.logout').click(function () {
+
+            window.location.href = "{:url('Ucenter/logout')}"
+        })
+
+
+    });
+</script>
+</body>
+</html>

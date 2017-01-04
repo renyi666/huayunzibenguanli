@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="华运、华运资本、投资、项目管理、管理系统、投资公司"/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="__PUBLIC__/img/logo.ico">
+    <title>华运资本项目管理系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/zui.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/webuploader.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/mymine.css">
+
+    <!--[if lt IE 9]>
+
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="__PUBLIC__/js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+<header>
+    <div class="row head_top">
+        <div class="col-xs-11" style="width: 100%;">
+            <div class="head_top_cont">
+                <img src="__PUBLIC__/img/index_bj.png" class="img-responsive">
+                <div class="logo">
+                    <div class="logo_cont">
+                        <img src="__PUBLIC__/img/logo.png">
+                        <h2>华运资本项目管理系统</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head_bottom">
+        <div class="head_bottom_cont">
+            <div class="exit">
+                <img src="__PUBLIC__/img/exit.png">
+                <h4 class="logout">退出</h4>
+            </div>
+            <div class="login_user">
+                <img src="__PUBLIC__/img/user_icon.png">
+                <h4>你好，{$userInfo.user_name}</h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="index_container">
+        <div class="nav">
+            <ul>
+                {if condition="$menu_res.0 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>项目管理</h4>
+                    </div>
+                    <ul>
+                        {volist name="projectStage" id="stage"}
+
+                        <li class="nav_item_li">
+                            <a href="{:url('project/index',['stage_id'=>$stage['id'],'stage_judge'=>1])}">
+                                <div class="li_item">
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    <h5>{$stage.name} {volist name="messagestageLog" id="messagestage"}
+                                        {if condition="$stage.id eq $messagestage.stage_id"}(+{$messagestage.stagenum}){/if}
+                                        {/volist}</h5>
+                                </div>
+                            </a>
+                        </li>
+                        {/volist}
+
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.5 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>日志</h4>
+                    </div>
+                    <ul>
+                        {volist name="logtype" id="logtype"}
+                        <li class="nav_item_li {if condition ='$logtype.id eq $type_id'}open{/if}">
+
+                            {if condition="$logtype.id eq 1"}
+                            <a href="{:url('Log/index',['type_id'=>$logtype['id']])}">
+                                {else/}
+                                <a href="{:url('Log/zhoubao',['type_id'=>$logtype['id']])}">
+                                    {/if}
+                                <div class="li_item">
+                                    {if condition ='$logtype.id eq $type_id'}<img src="__PUBLIC__/img/sj2.png">
+
+
+                                    {else/}
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    {/if}
+
+                                    <h5>{$logtype.log_type}</h5>
+                                </div>
+
+
+                            </a>
+                        </li>
+                        {/volist}
+
+
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.4 eq 1"}
+                <li>
+                    <a href="{:url('Newfile/share')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>共享</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.2 eq 1"}
+                <li>
+                    <a href="{:url('Ucenter/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>成员管理</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.1 eq 1"}
+                <li>
+                    <a href="{:url('Department/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.3 eq 1"}
+                <li>
+                    <a href="{:url('Account/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>账号设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+            </ul>
+        </div>
+        <div class="cont_right">
+            <div class="index_right">
+                <div class="index_right_top">
+                    <div class="add_project">新增日报</div>
+                </div>
+                <div class="index_right_table ribao">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="active">名称</th>
+                            <th>发布时间</th>
+                            <th>发布人</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {volist name="result" id="res"}
+                        <tr>
+                        <td class="active" data-id="{$res.id}" data-ucenter_id="{$res.ucenter_id}"
+                            data-name="{$res.name}" data-time="{:date('Y-m-d H:i',$res.time)}"
+                            data-morning_content="{$res.morning_content}" data-morning_remark="{$res.morning_remark}"
+                            data-afternoon_content="{$res.afternoon_content}"
+                            data-afternoon_remark="{$res.afternoon_remark}">
+                            <h4 title="">{$res.name}</h4>
+                        </td>
+                            {if condition="$res.time eq ''"}<td>{:date("Y/m/d H:i",$res.create_time)}</td>{else/}
+                        <td>{:date("Y/m/d H:i",$res.time)}</td>{/if}
+                        <td>{$res.user_name}</td>
+
+
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="page">
+                    <div class="page_right">
+
+
+                        {$result->render()}
+
+                    </div>
+                </div>
+            </div>
+            <div class="add_ribao">
+                <div class="add_ribao_top">
+                    <img src="__PUBLIC__/img/fh.png"><span>返回日报列表</span>
+                </div>
+                <div class="add_ribao_top2">
+                    <div class="art2_item" style="margin-bottom:9px;">
+                        <span>标题：</span>
+                        <input type="text" value="" class="log_name"/>
+                        <!--判断是否是新建或者添加-->
+                        <!--默认是1.新建日志-->
+                        <input type="hidden" class="judge" value="1">
+                        <!--假如是零则说明是新建日志，方便后续判断-->
+                        <!--日志的id-->
+                        <input type="hidden" class="log_id" value="0">
+                        <input type="hidden" class="log_type_id" value="{$type_id}">
+                        <input type="hidden" class="ucenter_id" value="">
+                        <input type="hidden" class="userInfo_id" value="{$userInfo.id}">
+                    </div>
+                    <div class="art2_item">
+                        <span>日期：</span>
+                        <div class="doc-dd">
+                            <input name="act_start_time" type="text" class="text-box" value="" readonly="readonly"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="add_ribao_table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="active">事项</th>
+                            <th class="active2">工作内容</th>
+                            <th class="active3">备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="active">上午</td>
+                            <td class="active2"><textarea class="log_morning_content"></textarea></td>
+                            <td class="active3"><textarea class="log_morning_remark"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="active">下午</td>
+                            <td class="active2"><textarea class="log_afternoon_content"></textarea></td>
+                            <td class="active3"><textarea class="log_afternoon_remark"></textarea></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="arm_bottom">
+                        <div class="arm_bottom_save">保存</div>
+                        <div class="arm_bottom_cancel">取消</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="__PUBLIC__/js/webuploader.js"></script>
+
+<script type="text/javascript">
+    //
+    <!-- 日期代码 start -->
+    $(".ui-icon-circle-triangle-e").text('>');
+    $("input[name='act_start_time'],input[name='act_stop_time']").datetimepicker();
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F96790c81142777e7724407f030936c10' type='text/javascript'%3E%3C/script%3E"));
+    //
+    <!-- 日期代码 end -->
+
+    $(function () {
+        var public = "__PUBLIC__";
+        /************项目管理、日志二级菜单点击事件***********/
+        $(".nav_item").click(function () {
+            var ul = $(this).siblings('ul');
+            var display = $(this).siblings('ul').css('display');
+            if (display == "block") {
+                ul.hide();
+                $(this).find('img').attr('src', public + '/img/jia.png');
+            } else {
+                ul.show();
+                $(this).find('img').attr('src', public + '/img/jian.png');
+            }
+        });
+        /**************共享 成员管理、设置鼠标事件**************/
+        $(".nav ul li .nav_item2").mouseover(function () {
+            $(".nav ul li .nav_item2").removeClass('active');
+            $(this).addClass('active');
+            $(".nav ul li .nav_item2").removeClass('action');
+            $(this).prev().addClass('action');
+        });
+        $(".nav_item2").mouseout(function () {
+            $(".nav_item2").removeClass('active');
+            $(".nav_item2").removeClass('action');
+        });
+        /**************项目管理、日志下li的鼠标事件**************/
+        $(".nav_item_li").mouseover(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(this).addClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(this).prev().addClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+            $(this).find('img').attr('src', public + '/img/sj2.png');
+        });
+        $(".nav_item_li").mouseout(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+        });
+        /***************项目概况等三个切换***************/
+        $('.pit_nav li').click(function () {
+            $(this).addClass("active").siblings().removeClass();
+            $(".pit_bottom>div").hide().eq($('.pit_nav li').index(this)).show();
+        });
+        $(".apc_top_cont").click(function () {
+            $(".add_project_cont").hide();
+            $(".index_right").show();
+            $(".add_event").hide();
+            $(".project_cont").hide();
+            $(".touz").hide();
+            $(".folder").hide();
+            $(".pit_nav li").removeClass('active');
+        });
+        $(".add_project").click(function () {
+            rizhi_clear();
+            $(".index_right").hide();
+            $(".apc_cont").show();
+            $(".add_project_cont").show();
+            $(".project_cont").show();
+            $(".pit_nav>li").addClass('active');
+        });
+        /*****************项目库选择事件****************/
+        $(".pc_item li span").click(function () {
+            $(".pc_item li span").removeClass('active');
+            $(this).addClass('active');
+        });
+        /*********投资事件 字符控制*******************/
+        $(".touz_cont_table tr td h5").each(function () {
+            var span = $(this).text();
+            if (span.length > 25) {
+                var span = span.substr(0, 25);
+                $(this).text(span + '…');
+            }
+        });
+        $(".tct_title>div").click(function () {
+            var span = $(this).attr('data-div');
+            if (span == 1) {
+                $(this).addClass('active');
+                $(this).attr('data-div', "0");
+            } else {
+                $(this).removeClass('active');
+                $(this).attr('data-div', "1");
+            }
+        });
+        /*************添加事件**************/
+        $(".tct_add").click(function () {
+            $(".add_event").show();
+            $(".project_cont").hide();
+            $(".touz").hide();
+            $(".folder").hide();
+        });
+        $(".touz_cont_table tbody .active").click(function () {
+            $(".add_event").show();
+            $(".project_cont").hide();
+            $(".touz").hide();
+            $(".folder").hide();
+        });
+        $(".fh").click(function () {
+            $(".add_event").hide();
+            $(".project_cont").hide();
+            $(".touz").show();
+            $(".folder").hide();
+        });
+        /*********文件夹字符控制*******************/
+        $(".td_left span").each(function () {
+            var span = $(this).text();
+            if (span.length > 13) {
+                var span = span.substr(0, 13);
+                $(this).text(span + '…');
+            }
+        });
+        $(".td_left>div").click(function () {
+            var span = $(this).attr('data-div');
+            if (span == 1) {
+                $(this).addClass('active');
+                $(this).attr('data-div', "0");
+            } else {
+                $(this).removeClass('active');
+                $(this).attr('data-div', "1");
+            }
+        });
+
+        $(".add_project").click(function () {
+            $(".index_right").hide();
+            $(".add_ribao").show();
+            $('.judge').val("1");
+            $('.log_name').removeAttr("readonly");
+            $('.log_afternoon_content').removeAttr("readonly");
+            $('.log_afternoon_remark').removeAttr("readonly");
+            $('.log_morning_content').removeAttr("readonly");
+            $('.log_morning_remark').removeAttr("readonly");
+            $('.text-box').removeAttr("readonly");
+            $('.arm_bottom').show();
+        });
+
+
+        //编辑日志
+        $(".ribao .active").click(function () {
+
+//            当点击日志的时候，首先给judge赋值为2，这是编辑的状态
+            $('.judge').val("2");
+            var log_id = $(this).attr('data-id');
+            var log_name = $(this).attr('data-name');
+            var morning_content = $(this).attr('data-morning_content');
+
+            var morning_remark = $(this).attr('data-morning_remark');
+            var afternoon_content = $(this).attr('data-afternoon_content');
+            var afternoon_remark = $(this).attr('data-afternoon_remark');
+            var log_time = $(this).attr('data-time');
+            var ucenter_id = $(this).attr('data-ucenter_id');
+            var userInfoId  =   $('.userInfo_id').val();
+            console.log(userInfoId);
+            console.log(ucenter_id);
+            if(userInfoId==ucenter_id){
+
+
+                $('.log_name').val(log_name).removeAttr("readonly");
+                $('.log_afternoon_content').text(afternoon_content).removeAttr("readonly");
+                $('.log_afternoon_remark').text(afternoon_remark).removeAttr("readonly");
+                $('.log_morning_content').text(morning_content).removeAttr("readonly");
+                $('.log_morning_remark').text(morning_remark).removeAttr("readonly");
+                $('.text-box').val(log_time).removeAttr("readonly");
+                $('.log_id').val(log_id);
+                $('.ucenter_id').val(ucenter_id);
+
+            }else {
+
+
+                $('.log_name').val(log_name).attr("readonly","readonly");
+
+                $('.log_afternoon_content').text(afternoon_content).attr("readonly","readonly");
+                console.log(afternoon_content);
+                $('.log_afternoon_remark').text(afternoon_remark).attr("readonly","readonly");
+                console.log(afternoon_remark);
+                $('.log_morning_content').text(morning_content).attr("readonly","readonly");
+                console.log(morning_content);
+                $('.log_morning_remark').text(morning_remark).attr("readonly","readonly");
+                console.log(morning_remark);
+                $('.text-box').val(log_time).attr("readonly","readonly");
+
+
+
+
+                $('.log_id').val(log_id);
+                $('.ucenter_id').val(ucenter_id);
+                $('.arm_bottom').hide();
+
+            }
+
+
+
+            $(".index_right").hide();
+            $(".add_ribao").show();
+        });
+        $(".add_ribao_top").click(function () {
+            window.location.reload();
+            rizhi_clear();
+            $(".index_right").show();
+            $(".add_ribao").hide();
+        });
+
+        $(".arm_bottom_cancel").click(function () {
+            $(".index_right").show();
+            $(".add_ribao").hide();
+        });
+
+        //保存编辑
+        $('.arm_bottom_save').click(function () {
+
+            var log_id = $('.log_id').val();
+            var log_type_id = $('.log_type_id').val();
+            var judge = $('.judge').val();
+            var log_name = $('.log_name').val();
+            var log_time = $('.text-box').val();
+            var ucenter_id = $(".ucenter_id").val();
+            var log_afternoon_content = $('.log_afternoon_content').val();
+
+            var log_afternoon_remark = $('.log_afternoon_remark').val();
+            var log_morning_content = $('.log_morning_content').val();
+            var log_morning_remark = $('.log_morning_remark').val();
+            var userInfoId  =   $('.userInfo_id').val();
+            //判断judge的值,如果等于1 就是新建  等于2就是编辑
+
+            if (judge == "1") {
+
+                if(log_name==null||log_name==""){
+
+                    alert("不能为空")
+                }else {
+
+                    $.ajax(
+                            {
+                                url: "{:url('Log/addLog')}",
+
+                                data: {
+                                    name: log_name,
+                                    type_id: log_type_id,
+                                    time: log_time,
+                                    afternoon_content: log_afternoon_content,
+                                    afternoon_remark: log_afternoon_remark,
+                                    morning_content: log_morning_content,
+                                    morning_remark: log_morning_remark,
+
+                                },
+
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+
+                                    if (data == 1) {
+
+
+                                        rizhi_clear();
+
+                                        window.location.reload();
+
+
+                                    } else {
+                                        alert("fail")
+                                        console.log(data)
+                                    }
+                                }
+                            }
+                    )
+
+
+                }
+
+
+
+            } else {
+
+
+                if(userInfoId!=ucenter_id){
+                    alert("您不能编辑其他人的日志")
+                }else {
+
+
+                    $.ajax(
+                            {
+                                url: "{:url('Log/editLog')}",
+
+                                data: {
+                                    ucenter_id: ucenter_id,
+                                    name: log_name,
+                                    id: log_id,
+                                    type_id: log_type_id,
+                                    time: log_time,
+                                    afternoon_content: log_afternoon_content,
+                                    afternoon_remark: log_afternoon_remark,
+                                    morning_content: log_morning_content,
+                                    morning_remark: log_morning_remark,
+
+                                },
+
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+
+                                    if (data == 1) {
+
+
+                                        rizhi_clear();
+
+                                        window.location.reload();
+
+
+                                    } else {
+                                        alert("fail")
+                                        console.log(data)
+                                    }
+                                }
+                            }
+                    )
+
+                }
+
+            }
+
+
+        })
+
+        //清空内容
+        function rizhi_clear() {
+            $('.log_name').val("");
+            $('.log_id').val("");
+            $('.log_afternoon_content').text("");
+            $('.log_afternoon_remark').text("");
+            $('.log_morning_content').text("");
+            $('.log_morning_remark').text("");
+            $('.text-box').val("");
+            $('.log_name').removeAttr("readonly");
+            $('.log_afternoon_content').removeAttr("readonly");
+            $('.log_afternoon_remark').removeAttr("readonly");
+            $('.log_morning_content').removeAttr("readonly");
+            $('.log_morning_remark').removeAttr("readonly");
+            $('.text-box').removeAttr("readonly");
+        }
+
+        //退出
+        $('.logout').click(function () {
+
+            window.location.href = "{:url('Ucenter/logout')}"
+        })
+
+    })
+
+
+</script>
+</body>
+</html>

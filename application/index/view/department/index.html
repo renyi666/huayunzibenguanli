@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="华运、华运资本、投资、项目管理、管理系统、投资公司" />
+    <meta name="description" content="" />
+    <link rel="shortcut icon" href="__PUBLIC__/img/logo.ico">
+    <title>华运资本项目管理系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/zui.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/webuploader.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+<div class="bj"></div>
+<header>
+    <div class="row head_top">
+        <div class="col-xs-11" style="width: 100%;">
+            <div class="head_top_cont">
+                <img src="__PUBLIC__/img/index_bj.png" class="img-responsive">
+                <div class="logo">
+                    <div class="logo_cont">
+                        <img src="__PUBLIC__/img/logo.png">
+                        <h2>华运资本项目管理系统</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head_bottom">
+        <div class="head_bottom_cont">
+            <div class="exit">
+                <img src="__PUBLIC__/img/exit.png">
+                <h4 class="logout">退出</h4>
+            </div>
+            <div class="login_user">
+                <img src="__PUBLIC__/img/user_icon.png">
+                <h4>你好，{$userInfo.user_name}</h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="index_container">
+        <div class="nav">
+            <ul>
+                {if condition="$menu_res.0 eq 1"}
+
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>项目管理</h4>
+                    </div>
+                    <ul>
+
+                        {volist name="projectStage" id="stage"}
+
+                        <li class="nav_item_li">
+                            <a href="{:url('Project/index',['stage_id'=>$stage['id'],'stage_judge'=>1])}">
+                                <div class="li_item">
+
+                                    <img src="__PUBLIC__/img/sj1.png">
+
+                                    <h5>{$stage.name} {volist name="messagestageLog" id="messagestage"}
+                                        {if condition="$stage.id eq $messagestage.stage_id"}(+{$messagestage.stagenum}){/if}
+                                        {/volist}</h5>
+                                </div>
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.5 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>日志</h4>
+                    </div>
+                    <ul>
+                        {volist name="logtype" id="logtype"}
+                        <li class="nav_item_li">
+                            <a href="{:url('Log/index',['type_id'=>$logtype['id']])}">
+                                <div class="li_item">
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    <h5>{$logtype.log_type}</h5>
+                                </div>
+
+
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.4 eq 1"}
+                <li>
+                    <a href="{:url('Newfile/share')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>共享</h4>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:url('Ucenter/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>成员管理</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.2 eq 1"}
+                <li>
+                    <a href="#">
+                        <div class="nav_item2 open">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.3 eq 1"}
+                <li>
+                    <a href="{:url('Account/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>账号设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+            </ul>
+        </div>
+        <div class="cont_right">
+            <div class="add-user">
+                <div class="add-user-head">
+                    <div class="auh-button">
+                        添加项目库
+                    </div>
+                </div>
+                <div class="add-user-tab" id="set_project">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>项目库</th>
+                            <th class="active">操作</th>
+                            {volist name="projectStage" id="pr_st"}
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{$pr_st.name}</td>
+                            <td class="operation">
+                                <h4 data-id="{$pr_st.id}">删除</h4>
+                                <h5 data-id="{$pr_st.id}" data-order="{$pr_st.order_id}">编辑</h5>
+                            </td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="add-user-head" style="margin-top: 45px;">
+                    <div class="auh-button1">
+                        添加行业
+                    </div>
+                </div>
+                <div class="add-user-tab"id="set_hy">
+                    <table>
+                        <thead>
+
+                        <tr>
+                            <th>行业分类</th>
+                            <th class="active">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="category" id="cate"}
+                        <tr>
+                            <td>{$cate.name}</td>
+                            <td class="operation1">
+                                <h4 data-id="{$cate.id}">删除</h4>
+                                <h5 data-id="{$cate.id}">编辑</h5>
+                            </td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="add-user-info add_projects" id="aa">
+                    <div class="aui-head">
+                        <h4 class="aui-head-cont">
+                            添加项目库
+                        </h4>
+                    </div>
+                    <div class="aui-info">
+                        <form>
+                            <input type="hidden" class="user_stage_id" value="">
+                            <input type="text" id="user-name" placeholder="项目库名称" value=""/>
+                            <input type="tel" id="user-number" placeholder="排序" value=""/>
+                            <button type="button" class="aui-button">确定</button>
+                            <div class="login-cerror">必填项不可为空</div>
+                        </form>
+                    </div>
+                </div>
+                <div class="add-user-info add_projects" id="bb">
+                    <div class="aui-head">
+                        <h4 class="aui-head-cont">
+                            添加行业
+                        </h4>
+                    </div>
+                    <div class="aui-info">
+                        <form>
+                            <input type="hidden" class="user_category_id" value="">
+                            <input type="text" id="user-name1" placeholder="行业名称" value=""/>
+                            <!--<input type="tel" id="user-number1" placeholder="排序" value=""/>-->
+                            <button type="button" class="aui-button1">确定</button>
+                            <div class="login-cerror">必填项不可为空</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="__PUBLIC__/js/webuploader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/js.js" ></script>
+
+
+<script type="text/javascript">
+    $(function(){
+        var public = "__PUBLIC__";
+        /************项目管理、日志二级菜单点击事件***********/
+        $(".nav_item").click(function () {
+            var ul = $(this).siblings('ul');
+            var display = $(this).siblings('ul').css('display');
+            if (display == "block") {
+                ul.hide();
+                $(this).find('img').attr('src', public + '/img/jia.png');
+            } else {
+                ul.show();
+                $(this).find('img').attr('src', public + '/img/jian.png');
+            }
+        });
+        /**************共享 成员管理、设置鼠标事件**************/
+        $(".nav ul li .nav_item2").mouseover(function () {
+            $(".nav ul li .nav_item2").removeClass('active');
+            $(this).addClass('active');
+            $(".nav ul li .nav_item2").removeClass('action');
+            $(this).prev().addClass('action');
+        });
+        $(".nav_item2").mouseout(function () {
+            $(".nav_item2").removeClass('active');
+            $(".nav_item2").removeClass('action');
+        });
+        /**************项目管理、日志下li的鼠标事件**************/
+        $(".nav_item_li").mouseover(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(this).addClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(this).prev().addClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+            $(this).find('img').attr('src', public + '/img/sj2.png');
+        });
+        $(".nav_item_li").mouseout(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+        });
+        //添加项目库的点击事件
+        $(".auh-button").click(function(){
+            $(".bj").show();
+            $("#aa").show();
+            $("#user-name").val('');
+            $(".user_stage_id").val('');
+            $("#user-number").val('');
+        });
+        //添加行业的点击事件
+        $(".auh-button1").click(function(){
+            $(".bj").show();
+            $("#bb").show();
+            $("#user-name1").val('');
+            $("#user-number1").val('');
+            $('.user_stage_id').val('');
+        });
+        $(".bj").click(function(){
+            $(".bj").hide();
+            $(".add-user-info").hide();
+        });
+        $("#user-name").focus(function(){
+            $(".login-cerror").hide()
+        });
+        //项目库编辑
+        $(".operation h5").click(function(){
+            $(".bj").show();
+            $("#aa").show();
+            $("#user-name").val($(this).parent().prev().text());
+            $("#user-number").val($(this).attr("data-order"));
+            $('.user_stage_id').val($(this).attr("data-id"));
+
+
+        });
+        //行业分类编辑
+        $(".operation1 h5").click(function(){
+            $(".bj").show();
+            $("#aa").show();
+            $("#user-name").val($(this).parent().prev().text());
+            $("#user-number").val($(this).attr("data-order"));
+            $('.user_stage_id').val($(this).attr("data-id"));
+
+
+        });
+        $(".operation1 h5").click(function(){
+            $(".bj").show();
+            $("#bb").show();
+            $("#user-name1").val($(this).parent().prev().text());
+            $(".user_category_id").val($(this).attr("data-id"));
+        });
+        //添加项目库-》确定按钮点击事件
+        $(".aui-button").click(function(){
+            var userName		=	$("#user-name").val();
+            var userNumber		=	$("#user-number").val();
+            var stage_id    =   $('.user_stage_id').val();
+
+            //判断工号、姓名、手机号等是否为空
+            if(userName==''||userName==null||userName==undefined){
+                $(".login-cerror").show();
+                $(".login-cerror").css("width","210px")
+                        .css("margin-left","0")
+                        .css("text-align","left");
+            }else{
+                //为空说明是新建
+                    if(stage_id==null||stage_id==""){
+
+                        if (!isNaN(userNumber)) {
+
+                            $.ajax(
+                                    {
+                                        url: "{:url('ProjectStage/add')}",
+
+                                        data: {name: userName, order: userNumber},
+
+                                        dataType: 'json',
+                                        method: 'post',
+                                        success: function (data) {
+
+                                            if (data >0) {
+
+
+                                                window.location.reload();
+                                            } else {
+
+                                                alert("shibai")
+                                            }
+
+
+                                        }
+                                    }
+                            )
+                        } else {
+
+                            alert("请输入数字");
+                        }
+                    }else {
+
+                        if (!isNaN(userNumber)) {
+
+
+                            $.ajax(
+                                    {
+                                        url: "{:url('ProjectStage/edit')}",
+
+                                        data: {name: userName, order_id: userNumber, id: stage_id},
+
+                                        dataType: 'json',
+                                        method: 'post',
+                                        success: function (data) {
+                                            $('.stage_name1').val();
+                                            $('.stage_order1').val();
+                                            $(".add_orgn1").hide();
+                                            $(".bj").hide()
+                                            if(data==1){
+
+                                                window.location.reload();
+
+                                            }else {
+
+                                                window.location.reload();
+
+                                            }
+
+                                        }
+                                    }
+                            )
+                        } else {
+
+                            alert("必须是数字")
+                        }
+
+                    }
+
+                //操作
+                $(".operation h5").click(function(){
+                    $(".bj").show();
+                    $("#aa").show();
+                    $("#user-name").val($(this).parent().prev().text());
+                    $("#user-number").val();
+                });
+            }
+        })
+
+        //添加行业-》确定按钮点击事件
+        $(".aui-button1").click(function(){
+            var userName		=	$("#user-name1").val();
+            var id  =   $('.user_stage_id').val();
+
+//            var userNumber		=	$("#user-number1").val();
+            //判断工号、姓名、手机号等是否为空
+            if(userName==''||userName==null||userName==undefined){
+                $(".login-cerror").show();
+                $(".login-cerror").css("width","210px")
+                        .css("margin-left","0")
+                        .css("text-align","left");
+            }else{
+
+                //新建
+                if(id==null||id==""){
+
+                    $.ajax(
+                            {
+                                url: "{:url('Department/newCategory')}",
+
+                                data: {name: userName},
+
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+
+                                    if (data >0) {
+
+
+                                        window.location.reload();
+                                    } else {
+
+                                        alert("shibai")
+                                    }
+
+
+                                }
+                            }
+                    )
+
+                }else {
+                    //bianji
+
+
+
+                    $.ajax(
+                            {
+                                url: "{:url('Department/editCategory')}",
+
+                                data: {name: userName,id:id},
+
+                                dataType: 'json',
+                                method: 'post',
+                                success: function (data) {
+
+                                    if (data >0) {
+
+
+                                        window.location.reload();
+                                    } else {
+
+                                        alert("shibai")
+                                    }
+
+
+                                }
+                            }
+                    )
+
+
+                }
+
+                //操作
+                $(".operation1 h5").click(function(){
+                    $(".bj").show();
+                    $("#bb").show();
+                    $("#user-name1").val($(this).parent().prev().text());
+                    $("#user-number1").val();
+                });
+            }
+        })
+        //删除项目库
+        $(".operation h4").click(function(){
+            var stage_id    =   $(this).attr("data-id");
+            $.ajax(
+                    {
+                        url: "{:url('ProjectStage/delete')}",
+
+                        data: {id: stage_id},
+
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (data) {
+
+                            if (data == 1) {
+
+                                window.location.reload();
+                            } else {
+
+                                alert("删除失败")
+                            }
+
+                        }
+                    }
+            )
+        });
+        //删除行业分类
+        $(".operation1 h4").click(function(){
+            var stage_id    =   $(this).attr("data-id");
+            $.ajax(
+                    {
+                        url: "{:url('Department/deleteCategory')}",
+
+                        data: {id: stage_id},
+
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (data) {
+
+                            if (data == 1) {
+
+                                window.location.reload();
+                            } else {
+
+                                alert("删除失败")
+                            }
+
+                        }
+                    }
+            )
+        });
+        //退出
+        $('.logout').click(function () {
+
+            window.location.href = "{:url('Ucenter/logout')}"
+        })
+
+    });
+</script>
+</body>
+</html>
