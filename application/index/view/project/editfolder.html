@@ -77,7 +77,7 @@
                         <input type="hidden" class="project_id" value="{$project_id}">
                         <input type="hidden" class="folder_id" value="{$folder_id}">
                         <input type="hidden" class="old_ucenter_id" value="{$pr_result.ucenter_id}">
-                        <input type="text" class="now_ucenter_id" value="{$userInfo.id}">
+                        <input type="hidden" class="now_ucenter_id" value="{$userInfo.id}">
                         {volist name="projectStage" id="stage"}
 
                         <li class="nav_item_li {if condition ='$pr_result.stage_id eq $stage.id'}open{/if}">
@@ -165,7 +165,7 @@
         <div class="cont_right">
             <div class="add_project_cont">
                 <div class="apc_top">
-                    <a href="{:url('edit',['id'=>$project_id,'stage_id'=>$pr_result.stage_id])}">
+                    <a href="{:url('edit',['id'=>$project_id,'stage_id'=>$pr_result.stage_id,'message_judge'=>1])}">
                         <div class="apc_top_cont">
                             <img src="__PUBLIC__/img/fh.png">
                             <h5>返回</h5>

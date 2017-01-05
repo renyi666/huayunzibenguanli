@@ -100,7 +100,7 @@ class File extends Controller
                     $data['type_number'] = "5";//类型为记事本
 
                 }
-                if ($data['ext'] == "excel" || $data['ext'] == "xlsx") {
+                if ($data['ext'] == "excel" || $data['ext'] == "xlsx"||$data['ext'] == "xls") {
 
                     $data['type_number'] = "6";//类型为excel
 
