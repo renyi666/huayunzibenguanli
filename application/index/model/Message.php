@@ -20,8 +20,14 @@ class Message extends  Model
      */
     public  function addMessage($parm){
         $list   =   session('supresult');
+        $userInfo = session('user');
+        $where['user_id'] = $userInfo['id'];
+        $groupUserM =new AuthGroupUser();
+        $result =   $groupUserM->getOneUser($where);
+        if($result['group_id']==1||$result['group_id']==2){
 
-
+            return 1;
+        }
         foreach ($list as $key=>$value){
 
             $parm['to'] =   $value;
