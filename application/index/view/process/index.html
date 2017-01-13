@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="华运、华运资本、投资、项目管理、管理系统、投资公司"/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="__PUBLIC__/img/logo.ico">
+    <title>华运资本项目管理系统</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/zui.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/webuploader.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5 shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--[if IE 6]>
+    <script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>
+        /* EXAMPLE */
+        DD_belatedPNG.fix('img,.mail,.header-top-left,.header-top-right ul li a:hover,.aaa,.ztxw-right');
+
+        /* string argument can be any CSS selector */
+        /* .png_bg example is unnecessary */
+        /* change it to what suits you! */
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+<header>
+    <div class="row head_top">
+        <div class="col-xs-11" style="width: 100%;">
+            <div class="head_top_cont">
+                <img src="__PUBLIC__/img/index_bj.png" class="img-responsive">
+                <div class="logo">
+                    <div class="logo_cont">
+                        <img src="__PUBLIC__/img/logo.png">
+                        <h2>华运资本项目管理系统</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head_bottom">
+        <div class="head_bottom_cont">
+            <div class="exit">
+                <img src="__PUBLIC__/img/exit.png">
+                <h4 class="logout" >退出</h4>
+            </div>
+            <div class="login_user">
+                <img src="__PUBLIC__/img/user_icon.png">
+                <h4>你好，{$userInfo.user_name}</h4>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="index_container">
+        <div class="nav">
+            <ul>
+                {if condition="$menu_res.0 eq 1"}
+
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>项目管理</h4>
+                    </div>
+                    <ul>
+                        <!--选择的阶段id-->
+
+
+                        {volist name="projectStage" id="stage"}
+
+                        <li class="nav_item_li">
+                            <a href="{:url('Project/index',['stage_id'=>$stage['id'],'stage_judge'=>1])}">
+                                <div class="li_item">
+
+                                    <img src="__PUBLIC__/img/sj1.png">
+
+                                    <h5>{$stage.name}
+                                        {volist name="messagestageLog" id="messagestage"}
+                                        {if condition="$stage.id eq $messagestage.stage_id"}(+{$messagestage.stagenum}){/if}
+                                        {/volist}</h5>
+                                </div>
+                            </a>
+                        </li>
+                        {/volist}
+
+                    </ul>
+                </li>
+                {/if}
+                {if condition="$menu_res.5 eq 1"}
+                <li>
+                    <div class="nav_item">
+                        <img src="__PUBLIC__/img/jian.png">
+                        <h4>日志</h4>
+                    </div>
+                    <ul>
+
+                        {volist name="logtype" id="logtype"}
+                        <li class="nav_item_li">
+                            <a href="{:url('Log/index',['type_id'=>$logtype['id']])}">
+                                <div class="li_item">
+                                    <img src="__PUBLIC__/img/sj1.png">
+                                    <h5>{$logtype.log_type}</h5>
+                                </div>
+
+
+                            </a>
+                        </li>
+                        {/volist}
+
+                    </ul>
+                </li>
+                {/if}
+                <li>
+                    <a href="{:url('Process/index')}">
+                        <div class="nav_item2 open">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>事项进度表</h4>
+                        </div>
+                    </a>
+                </li>
+                {if condition="$menu_res.4 eq 1"}
+                <li>
+                    <a href="{:url('Newfile/share')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>共享</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.2 eq 1"}
+                <li>
+                    <a href="{:url('Ucenter/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>成员管理</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.1 eq 1"}
+                <li>
+                    <a href="{:url('Department/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+                {if condition="$menu_res.3 eq 1"}
+                <li>
+                    <a href="{:url('Account/index')}">
+                        <div class="nav_item2">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>账号设置</h4>
+                        </div>
+                    </a>
+                </li>
+                {/if}
+            </ul>
+        </div>
+        <div class="cont_right">
+            <div class="index_right">
+                <div class="index_right_top">
+                    <div class="add_project">新增事项</div>
+                </div>
+                <div class="index_right_table ribao">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="active">事项名称</th>
+                            <th>时间</th>
+                            <th>发布人</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="processresult" id="prores"}
+                        <tr>
+                            <td class="active" data-id="{$prores.id}" data-name="{$prores.name}"
+                                data-content="{$prores.content}" data-charge_user="{$prores.charge_user}"
+                                data-beizhu="{$prores.beizhu}">
+                                <h4 title="">{$prores.name}</h4>
+                            </td>
+                            <td>{:date('Y/m/d',$prores.create_time)}</td>
+                            <td>{$prores.fabuname}</td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page">
+                    <div class="page_right">
+
+                        {$processresult->render()}
+
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" value="" class="processId">
+            <div class="add_ribao">
+                <div class="add_ribao_top">
+                    <img src="__PUBLIC__/img/fh.png"><span>返回事项列表</span>
+                </div>
+                <div class="add_ribao_top2">
+                    <div class="art2_item" style="margin-bottom:9px;">
+                        <span>事件名称：</span>
+                        <input type="text" value="" class="name"/>
+                    </div>
+                    <div class="art2_item" style="margin-bottom:9px;">
+                        <span>备注：</span>
+                        <input type="text" value="" class="beizhu"/>
+                    </div>
+                    <div class="art2_item" style="margin-bottom:9px;">
+                        <span>主要负责人：</span>
+                        <input type="text" value="" class="charge_user"/>
+                    </div>
+                </div>
+                <div class="add_ribao_mid">
+                    <div class="arm_top">
+                        事件进度
+                    </div>
+                    <div class="arm_bottom">
+                        <textarea class="active content" style="height: 200px;"></textarea>
+                        <div class="arm_bottom_save">保存</div>
+                        <div class="arm_bottom_cancel">取消</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="__PUBLIC__/js/webuploader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
+
+<script type="text/javascript">
+    //
+    <!-- 日期代码 start -->
+    $(".ui-icon-circle-triangle-e").text('>');
+    $("input[name='act_start_time'],input[name='act_stop_time']").datetimepicker();
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F96790c81142777e7724407f030936c10' type='text/javascript'%3E%3C/script%3E"));
+    //
+    <!-- 日期代码 end -->
+
+    $(function () {
+
+
+        var public = "__PUBLIC__";
+        /************项目管理、日志二级菜单点击事件***********/
+        $(".nav_item").click(function () {
+            var ul = $(this).siblings('ul');
+            var display = $(this).siblings('ul').css('display');
+            if (display == "block") {
+                ul.hide();
+                $(this).find('img').attr('src', public + '/img/jia.png');
+            } else {
+                ul.show();
+                $(this).find('img').attr('src', public + '/img/jian.png');
+            }
+        });
+        /**************共享 成员管理、设置鼠标事件**************/
+        $(".nav ul li .nav_item2").mouseover(function () {
+            $(".nav ul li .nav_item2").removeClass('active');
+            $(this).addClass('active');
+            $(".nav ul li .nav_item2").removeClass('action');
+            $(this).prev().addClass('action');
+        });
+        $(".nav_item2").mouseout(function () {
+            $(".nav_item2").removeClass('active');
+            $(".nav_item2").removeClass('action');
+        });
+        /**************项目管理、日志下li的鼠标事件**************/
+        $(".nav_item_li").mouseover(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(this).addClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(this).prev().addClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+            $(this).find('img').attr('src', public + '/img/sj2.png');
+        });
+        $(".nav_item_li").mouseout(function () {
+            $(".nav_item_li").siblings().removeClass('active');
+            $(".nav_item_li").siblings().removeClass('action');
+            $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
+        });
+        $(".add_project").click(function () {
+            $(".index_right").hide();
+            $(".add_ribao").show();
+        });
+        $(".ribao .active").click(function () {
+            $(".index_right").hide();
+            $(".add_ribao").show();
+        var name=$(this).attr("data-name");
+            $('.name').val(name);
+            var processId   =$(this).attr("data-id");
+            $('.processId').val(processId);
+
+            var beizhu  =   $(this).attr("data-beizhu");
+            $('.beizhu').val(beizhu);
+            var charge_user =   $(this).attr("data-charge_user");
+            $('.charge_user').val(charge_user);
+            var content=    $(this).attr("data-content")
+            $('.content').val(content);
+
+        });
+        $(".add_ribao_top").click(function () {
+            $(".index_right").show();
+            $(".add_ribao").hide();
+        });
+        $(".arm_bottom_cancel").click(function () {
+            $(".index_right").show();
+            $(".add_ribao").hide();
+            $('.name').val("");
+            $('.processId').val("");
+            $('.beizhu').val("");
+            $('.charge_user').val("");
+            $('.content').val("");
+
+
+
+
+        });
+
+        $('.arm_bottom_save').click(function () {
+
+            var processId   =   $('.processId').val();
+            var name = $('.name').val();
+            var content = $('.content').val();
+
+            var charge_user = $('.charge_user').val();
+            var beizhu = $('.beizhu').val();
+
+            if(isNaN(processId)){
+
+                $.ajax({
+
+                    url: "{:url('process/addProcess')}",
+
+                    data: {
+                        name: name,
+                        content: content,
+                        charge_user: charge_user,
+                        beizhu: beizhu
+
+
+                    },
+
+                    dataType: 'json',
+                    method: 'post',
+                    success: function (data) {
+
+
+                        if (data > 0) {
+                            window.location.reload();
+
+                        } else {
+                            alert("fail")
+                        }
+                    }
+
+
+                })
+
+
+            }else {
+
+                $.ajax({
+
+                    url: "{:url('process/editProcess')}",
+
+                    data: {
+                        id:processId,
+                        name: name,
+                        content: content,
+                        charge_user: charge_user,
+                        beizhu: beizhu
+
+
+                    },
+
+                    dataType: 'json',
+                    method: 'post',
+                    success: function (data) {
+
+
+                        if (data > 0) {
+                            window.location.reload();
+
+                        } else {
+                            alert("fail")
+                        }
+                    }
+
+
+                })
+
+            }
+
+
+        })
+
+        //退出
+        $('.logout').click(function () {
+
+            window.location.href = "{:url('Ucenter/logout')}"
+        })
+    })
+
+
+</script>
+</body>
+</html>

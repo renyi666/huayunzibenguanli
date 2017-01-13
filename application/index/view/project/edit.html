@@ -120,6 +120,14 @@
                     </ul>
                 </li>
                 {/if}
+                <li>
+                    <a href="{:url('Process/index')}">
+                        <div class="nav_item2 open">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>事项进度表</h4>
+                        </div>
+                    </a>
+                </li>
                 {if condition="$menu_res.4 eq 1"}
                 <li>
                     <a href="{:url('Newfile/share')}">
@@ -496,10 +504,10 @@
                                     <span>目的：</span>
                                     <input type="text" class="pc_input2 event_aim" value=""/>
                                 </div>
-                                <div class="pc_item">
-                                    <span>事件概要：</span>
-                                    <textarea class="event_content"></textarea>
-                                </div>
+                                <!--<div class="pc_item">-->
+                                    <!--<span>事件概要：</span>-->
+                                    <!--<textarea class="event_content"></textarea>-->
+                                <!--</div>-->
                                 <div class="pc_item">
                                     <span>事件记录：</span>
                                     <textarea class="event_log"></textarea>
@@ -677,7 +685,7 @@
             $('.event_ucenter_name').val(user_name).attr("readonly", "readonly");
 
 
-            $('.event_content').val("");
+//            $('.event_content').val("");
             $('.event_name').val("");
             $('.event_ucenter_id').val("");
 
@@ -700,7 +708,7 @@
         $(".touz_cont_table tbody .tct_title").click(function () {
 
             var event_id = $(this).attr("data-id");
-            var event_content = $(this).attr("data-content");
+//            var event_content = $(this).attr("data-content");
             var event_name = $(this).attr("data-name");
             var event_ucenter_id = $(this).attr("data-ucenter_id");
             var event_ucenter_name = $(this).attr("data-ucenter_name");
@@ -717,7 +725,7 @@
                 $('.event_id').val(event_id);
                 $('.event_ucenter_name').val(event_ucenter_name).attr("readonly", "readonly");
 
-                $('.event_content').val(event_content).attr("readonly", "readonly");
+//                $('.event_content').val(event_content).attr("readonly", "readonly");
                 $('.event_name').val(event_name).attr("readonly", "readonly");
                 $('.event_ucenter_id').val(event_ucenter_id).attr("readonly", "readonly");
 
@@ -737,7 +745,7 @@
                 $('.event_id').val(event_id);
                 $('.event_ucenter_name').val(event_ucenter_name).attr("readonly", "readonly");
 
-                $('.event_content').val(event_content);
+//                $('.event_content').val(event_content);
                 $('.event_name').val(event_name);
                 $('.event_ucenter_id').val(event_ucenter_id);
 
@@ -912,7 +920,7 @@
 
             var project_id = $('.project_id').val();
             var event_ucenter_name = $('.event_ucenter_name').val();
-            var event_content = $('.event_content').val();
+//            var event_content = $('.event_content').val();
             var event_name = $('.event_name').val();
             var event_project_name = $('.event_project_name').val();
             var event_time = $('.event_time').val();
