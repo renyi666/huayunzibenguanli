@@ -35,7 +35,6 @@ class Ucenter extends  Model
             $where['u.status']="1";
             $result=$this
                 ->alias('u')
-
                 ->field('u.user_name,u.id,u.mobile,u.update_time,u.create_time,u.user_no,u.remark,u.status,u1.user_name remark_name')
                 ->join('ucenter  u1', 'u1.id=u.remark','LEFT')
                 ->paginate(150);
@@ -372,4 +371,5 @@ class Ucenter extends  Model
 
 
     }
+
 }

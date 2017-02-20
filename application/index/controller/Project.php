@@ -52,6 +52,7 @@ class Project extends Base
     public function index()
     {
 
+
         $userInfo = session('user');
 
         $user_data['user_id'] = $userInfo['id'];
@@ -101,23 +102,13 @@ class Project extends Base
                 if ($data_fin[$i] != null) {
                     $key = array_search($data_fin[$i], $map);
                     array_splice($data_fin[$i], $key, 1);
-
-
                 }
-
                 $data_fin[$i] = implode(',', $data_fin[$i]);
-
-
             }
-
-
             $data_fin = array_unique($data_fin);
             $data_fin = array_filter($data_fin);
             $data_result = $data_fin;
-
-
         }
-
 
         $data_result1 = explode(',', $data_result1);
         $data_result1 = array_unique($data_result1);
@@ -130,9 +121,6 @@ class Project extends Base
         /**
          * 项目更新通知
          */
-
-
-
 
         $message_action['to'] =  $userInfo['id'];
 
@@ -231,6 +219,7 @@ class Project extends Base
                         ->alias('p')
                         ->where("p.stage_id=" . $data['stage_id'])
                         ->where("p.status=1")
+                        ->order('p.time1 desc')
                         ->field('p.valuation,p.id,p.name,p.create_time,p.brief,c.name cname,p.time1,p.time2,p.category_name,p.company_name,p.ucenter_id,u.user_name ename,p.update_time,p.investment_stage,pr.id pid,pr.name stage_name,p.mobile')
                         ->join('project_stage pr', 'pr.id=p.stage_id')
                         ->join('ucenter u', 'u.id=p.ucenter_id')
@@ -243,6 +232,7 @@ class Project extends Base
                         ->where("p.stage_id=" . $data['stage_id'])
                         ->where("p.status=1")
                         ->where($where5)
+                        ->order('p.time1 desc')
                         ->field('p.valuation,p.id,p.name,p.create_time,p.brief,c.name cname,p.time1,p.time2,p.category_name,p.company_name,p.ucenter_id,u.user_name ename,p.update_time,p.investment_stage,pr.id pid,pr.name stage_name,p.mobile')
                         ->join('project_stage pr', 'pr.id=p.stage_id')
                         ->join('ucenter u', 'u.id=p.ucenter_id')
@@ -263,6 +253,7 @@ class Project extends Base
                         ->where("p.stage_id=" . $data['stage_id'])
                         ->where("p.status=1")
                         ->where($auth_shaixuan)
+                        ->order('p.time1 desc')
                         ->field('p.valuation,p.id,p.name,p.brief,p.create_time,c.name cname,p.time1,p.time2,p.category_name,p.company_name,p.ucenter_id,u.user_name ename,p.update_time,p.investment_stage,pr.id pid,pr.name stage_name,p.mobile')
                         ->join('project_stage pr', 'pr.id=p.stage_id')
                         ->join('ucenter u', 'u.id=p.ucenter_id')
@@ -277,6 +268,7 @@ class Project extends Base
                         ->where("p.status=1")
                         ->where($where5)
                         ->where($auth_shaixuan)
+                        ->order('p.time1 desc')
                         ->field('p.valuation,p.id,p.name,p.brief,p.create_time,c.name cname,p.time1,p.time2,p.category_name,p.company_name,p.ucenter_id,u.user_name ename,p.update_time,p.investment_stage,pr.id pid,pr.name stage_name,p.mobile')
                         ->join('project_stage pr', 'pr.id=p.stage_id')
                         ->join('ucenter u', 'u.id=p.ucenter_id')
@@ -298,6 +290,7 @@ class Project extends Base
                         ->alias('p')
                         ->where($where4)
                         ->where("p.status=1")
+                        ->order('p.time1 desc')
                         ->field('p.valuation,p.id,p.name,p.ucenter_id,p.create_time,c.name cname,p.time1,p.time2,p.brief,p.category_name,p.city,u.user_name ename,p.update_time,p.investment_stage,pr.id pid,pr.name stage_name,p.mobile')
                         ->join('project_stage pr', 'pr.id=p.stage_id')
                         ->join('category c', 'c.id=p.category_id')
@@ -310,6 +303,7 @@ class Project extends Base
                         ->where($where5)
                         ->where($where4)
                         ->where("p.status=1")
+                        ->order('p.time1 desc')
                         ->field('p.valuation,p.id,p.name,p.ucenter_id,p.create_time,c.name cname,p.time1,p.time2,p.brief,p.category_name,p.city,u.user_name ename,p.update_time,p.investment_stage,pr.id pid,pr.name stage_name,p.mobile')
                         ->join('project_stage pr', 'pr.id=p.stage_id')
                         ->join('category c', 'c.id=p.category_id')
@@ -328,6 +322,7 @@ class Project extends Base
                         ->where($where4)
                         ->where("p.status=1")
                         ->where($auth_shaixuan)
+                        ->order('p.time1 desc')
                         ->field('p.valuation,p.id,p.name,p.ucenter_id,p.create_time,c.name cname,p.time1,p.time2,p.brief,p.category_name,u.user_name ename,p.city,p.update_time,p.investment_stage,pr.id pid,pr.name stage_name,p.mobile')
                         ->join('category c', 'c.id=p.category_id')
                         ->join('project_stage pr', 'pr.id=p.stage_id')
@@ -341,6 +336,7 @@ class Project extends Base
                         ->where("p.status=1")
                         ->where($where5)
                         ->where($auth_shaixuan)
+                        ->order('p.time1 desc')
                         ->field('p.valuation,p.id,p.name,p.ucenter_id,p.create_time,c.name cname,p.time1,p.time2,p.brief,p.category_name,u.user_name ename,p.city,p.update_time,p.investment_stage,pr.id pid,pr.name stage_name,p.mobile')
                         ->join('category c', 'c.id=p.category_id')
                         ->join('project_stage pr', 'pr.id=p.stage_id')
@@ -406,7 +402,16 @@ class Project extends Base
         $projectM = new     \app\index\model\Project();
 
         $list['time1'] = strtotime($list['time1']);
+        if($list['time1']==null||$list['time1']==""){
+            $list['time1']=time();
+        }
+
         $list['time2'] = strtotime($list['time2']);
+        if($list['time2']==null||$list['time2']==""){
+            $list['time2']=time();
+        }
+        dump($list['time1']);
+        return $list['time2'];
         $list['category_name'] = $categoryM->getName($list['category_id']);
 
         $data = $projectM->savaAll($list);

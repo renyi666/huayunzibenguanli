@@ -56,7 +56,6 @@ class Message extends  Model
             return $this->field('id,stage_id,project_id,to,status,count(stage_id) stagenum,count(project_id) pronum')->where($parm)->group('project_id')->select();
 
         }
-
     }
 
     //吧数据标记为一点击

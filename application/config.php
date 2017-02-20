@@ -232,7 +232,7 @@ return [
     ],
 
     'view_replace_str'  =>  [
-        '__PUBLIC__'=>DOMAIN.'/vc/public/static',
+        '__PUBLIC__'=>'/vc/public/static',
         '__ROOT__' => '/',
     ]
 ];

@@ -16,35 +16,19 @@
  *                (___________))))))) 攻城狮
  *
  * @author：gaoyuan
- * @created_time：2017/1/12 15:53
+ * @created_time：2017/2/15 13:43
  * When I wrote this, only God and I understood what I was doing
  * Now, God only knows
  */
 
-namespace app\index\controller;
+namespace app\index\model;
 
 
-use think\Controller;
+use think\Model;
 
-class Test extends Controller
+class ProcessJindu extends  Model
 {
-    public  function  index(){
+    protected $autoWriteTimestamp = true;
 
-
-
-        dump(cookie('user1'));
-        dump(cookie('user2'));
-        dump(cookie('user3'));
-        dump(cookie('user4'));
-        dump(cookie('user'));
-
-        $result=cookie('user4');
-
-
-        dump(json_decode($result,true));
-
-
-        return $this->fetch();
-    }
 
 }

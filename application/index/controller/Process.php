@@ -27,30 +27,31 @@ namespace app\index\controller;
 use app\index\model\AuthGroup;
 use app\index\model\AuthGroupUser;
 use app\index\model\Message;
+use think\Log;
 use think\Request;
 
-class Process extends  Base
+class Process extends Base
 {
 
-    public  function index(){
+    public function index()
+    {
         $userInfo = session('user');
-        $message_action['to'] =  $userInfo['id'];
+        $message_action['to'] = $userInfo['id'];
 
 
-        $message_action['stage_id'] =  array('neq', 0);
+        $message_action['stage_id'] = array('neq', 0);
 
-        $messageM   =  new  Message();
+        $messageM = new  Message();
 
-        $message_stage_result  =   $messageM->getlist($message_action);
+        $message_stage_result = $messageM->getlist($message_action);
 
         unset($message_action['stage_id']);
-        $message_action['stage_id'] =  array('eq', 0);
-        $message_project_result  =   $messageM->getlist1($message_action);
+        $message_action['stage_id'] = array('eq', 0);
+        $message_project_result = $messageM->getlist1($message_action);
 
 
-
-        $this->assign('messagestageLog',$message_stage_result);
-        $this->assign('messageproLog',$message_project_result);
+        $this->assign('messagestageLog', $message_stage_result);
+        $this->assign('messageproLog', $message_project_result);
 
         $user_data['user_id'] = $userInfo['id'];
         $authGroupM = new AuthGroup();
@@ -59,40 +60,42 @@ class Process extends  Base
         $auth_group = $auth_result['group_id'];
 
 
-        $processM  =new  \app\index\model\Process();
-        $processResult  =   $processM->paginate(10);
+        $processM = new  \app\index\model\Process();
+        $processResult = $processM->paginate(10);
 
 
-$this->assign('processresult',$processResult);
-
-
+        $this->assign('processresult', $processResult);
 
 
         return $this->fetch();
     }
 
-    public  function  addProcess(){
+    public function addProcess()
+    {
 
-        $request     =  Request::instance();
-        $list   =    $request->param();
-        $userInfo   =   session('user');
-        $list['faburen']    =   $userInfo['id'];
-        $list['fabuname']    =   $userInfo['user_name'];
+        $request = Request::instance();
+        $list = $request->param();
+        $userInfo = session('user');
+        $list['faburen'] = $userInfo['id'];
+        $list['fabuname'] = $userInfo['user_name'];
 
-        $processM   = new  \app\index\model\Process();
-        $result =   $processM->save($list);
+        $processM = new  \app\index\model\Process();
+        $result = $processM->save($list);
         return $result;
 
 
     }
 
-    public  function editProcess(){
+    public function editProcess()
+    {
 
-        $request     =  Request::instance();
-        $list   =    $request->param();
+        $request = Request::instance();
+        $list = $request->param();
 
-        $processM   = new  \app\index\model\Process();
-        $result =   $processM->editProcess($list);
+        $processM = new  \app\index\model\Process();
+        $result = $processM->editProcess($list);
+        dump($result);
+        Log::write($result);
         return $result;
     }
 

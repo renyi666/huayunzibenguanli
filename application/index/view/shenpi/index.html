@@ -6,11 +6,12 @@
     <meta name="description" content="" />
     <link rel="shortcut icon" href="__PUBLIC__/img/logo.ico">
     <title>华运资本项目管理系统</title>
+
     <link rel="stylesheet" href="__PUBLIC__/css/zui.css">
     <link rel="stylesheet" href="__PUBLIC__/css/mymine.css">
 
-    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery-ui.css" />
     <link rel="stylesheet" href="__PUBLIC__/css/main.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/webuploader.css"/>
     <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
@@ -51,7 +52,7 @@
         <div class="head_bottom_cont">
             <div class="exit">
                 <img src="__PUBLIC__/img/exit.png">
-                <h4>退出</h4>
+                <h4 class="logout">退出</h4>
             </div>
             <div class="login_user">
                 <img src="__PUBLIC__/img/user_icon.png">
@@ -65,16 +66,13 @@
         <div class="nav">
             <ul>
                 {if condition="$menu_res.0 eq 1"}
-
                 <li>
+
                     <div class="nav_item">
                         <img src="__PUBLIC__/img/jian.png">
                         <h4>项目管理</h4>
                     </div>
                     <ul>
-                        <!--选择的阶段id-->
-
-
                         {volist name="projectStage" id="stage"}
 
                         <li class="nav_item_li">
@@ -102,7 +100,6 @@
                         <h4>日志</h4>
                     </div>
                     <ul>
-
                         {volist name="logtype" id="logtype"}
                         <li class="nav_item_li">
                             <a href="{:url('Log/index',['type_id'=>$logtype['id']])}">
@@ -115,13 +112,12 @@
                             </a>
                         </li>
                         {/volist}
-
                     </ul>
                 </li>
                 {/if}
                 <li>
                     <a href="{:url('Process/index')}">
-                        <div class="nav_item2 open">
+                        <div class="nav_item2 ">
                             <img src="__PUBLIC__/img/jia.png">
                             <h4>事项进度表</h4>
                         </div>
@@ -129,7 +125,7 @@
                 </li>
                 <li>
                     <a href="{:url('Shenpi/index')}">
-                        <div class="nav_item2 ">
+                        <div class="nav_item2 open">
                             <img src="__PUBLIC__/img/jia.png">
                             <h4>审批请示</h4>
                         </div>
@@ -177,95 +173,104 @@
                 {/if}
             </ul>
         </div>
+        <input type="hidden" value="" class="panduan">
+
         <div class="cont_right">
             <div class="index_right">
                 <div class="index_right_top">
-                    <div class="add_project">新增事项</div>
+                    <div class="add_project">新建审批</div>
                 </div>
-                <div class="index_right_table ribao">
+                <div class="index_right_table">
                     <table>
                         <thead>
                         <tr>
-                            <th class="active">事项名称</th>
-                            <th>时间</th>
-                            <th>发布人</th>
+                            <th class="action">审批名称</th>
+                            <th class="action2">申请人</th>
+                            <th class="action">申请时间</th>
+                            <th class="action">审批类型</th>
+                            <th class="action2">审批人</th>
+                            <th class="action">审批时间</th>
+                            <th class="action2">相关人</th>
+                            <th class="action2">状态</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {volist name="processresult" id="prores"}
                         <tr>
-                            <td class="active" data-id="{$prores.id}" data-name="{$prores.name}"
-                                data-content="{$prores.content}" data-charge_user="{$prores.charge_user}"
-                                data-beizhu="{$prores.beizhu}">
-                                <h4 title="">{$prores.name}</h4>
+                            {volist name="shenpiList" id="shenpilist"}
+                            <td class="action shenpiname" data-id="{$shenpilist.id}" data-name="{$shenpilist.name}" data-content="{$shenpilist.content}" data-user_id="{$shenpilist.user_id}"data-to="{$shenpilist.to}" data-relation="{$shenpilist.relation}" data-type="{$shenpilist.type}" data-status="{$shenpilist.status}" >
+                                <h4 title="{$shenpilist.name}" >{$shenpilist.name}</h4>
                             </td>
-                            <td>{:date('Y/m/d',$prores.create_time)}</td>
-                            <td>{$prores.fabuname}</td>
+                            <td class="action2">{$shenpilist.user_name}</td>
+                            <td class="action">{$shenpilist.create_time|date="y-m-d h:i",###}</td>
+                            <td class="action">{if condition="$shenpilist.type eq 1"}请假出差{else/}申请批示{/if}</td>
+                            <td class="action2">{$shenpilist.to_name}</td>
+                            <td class="action">{empty name="$shenpilist.shenpi_time"}暂未审批{else/}{$shenpilist.shenpi_time|date="y-m-d h:i",###}{/empty}</td>
+                            <td class="action2">{$shenpilist.relation_name}</td>
+                            <td class="action2">{if condition="$shenpilist.status eq 1"}同意{elseif condition="$shenpilist.status eq 2"}拒绝{else/}审核中{/if}</td>
                         </tr>
+
                         {/volist}
                         </tbody>
                     </table>
                 </div>
                 <div class="page">
                     <div class="page_right">
-                        {$processresult->render()}
+
+                        {$shenpiList->render()}
 
                     </div>
                 </div>
             </div>
-            <div class="add_ribao">
-                <div class="add_ribao_top">
-                    <img src="__PUBLIC__/img/fh.png"><span>返回事项列表</span>
+            <div class="add_shenpi">
+                <div class="as_top">
+                    <div class="as_top_cont">
+                        <img src="__PUBLIC__/img/fh2.png">
+                        <h5>返回上一级</h5>
+                    </div>
                 </div>
-                <input type="hidden" value="" class="processId">
+                <div class="as_bottom">
+                    <div class="asb_item">
+                        <span>申请类型：</span>
+                        <select class="type">
+                            <option value="1">请假出差</option>
+                            <option value="2">申请请示</option>
+                        </select>
+                    </div>
+                    <div class="asb_item">
+                        <span>申请标题：</span>
+                        <input type="text" value=""  class="name"/>
+                    </div>
+                    <div class="asb_item">
+                        <span>申请内容：</span>
+                        <textarea class="content"></textarea>
+                    </div>
+                    <div class="asb_item">
+                        <span>审批人：</span>
+                        <select class="to">
+                            {volist name="ucentaeData" id="ucent"}
+                            <option value="{$ucent.id}">{$ucent.user_name}</option>
+                          {/volist}
+                        </select>
+                    </div>
+                    <div class="asb_item">
+                        <span>相关人：</span>
+                        <select class="relation">
+                            {volist name="ucentaeData" id="ucent1"}
+                            <option value="{$ucent1.id}">{$ucent1.user_name}</option>
 
-                <div class="add_ribao_top2">
-                    <div class="art2_item" style="margin-bottom:9px;">
-                        <span>事件名称：</span>
-                        <input type="text" value=""/>
+                            {/volist}
+                        </select>
                     </div>
-                    <div class="art2_item" style="margin-bottom:9px;">
-                        <span>备注：</span>
-                        <input type="text" value=""/>
+                    <div class="asb_item">
+
+                        <button class="asb_concel">关闭</button>
+                        <button class="asb_submit">提交</button>
                     </div>
-                    <div class="art2_item" style="margin-bottom:9px;">
-                        <span>主要负责人：</span>
-                        <input type="text" value=""/>
-                    </div>
-                </div>
-                <div class="add_ribao_mid">
-                    <div class="arm_top">
-                        事件进度
-                    </div>
-                    <div class="arm_bottom">
-                        <div class="armb_head">
-                            <button>选择时间</button>
-                            <div class="doc-dd">
-                                <input name="act_start_time" type="text" class="text-box" value="" readonly="readonly"/>
-                            </div>
-                            <h3>添加进度</h3>
-                        </div>
-                        <div class="armb_top">
-                            <textarea class="active" style="height: 200px;"></textarea>
-                            <div class="arm_bottom_save">保存</div>
-                            <div class="arm_bottom_cancel">取消</div>
-                        </div>
-                        <div class="armb_bottom">
-                            <ul>
-                                <li>
-                                    <h3>2-14</h3>
-                                    <h4>对接客户资源对接客户资源对接客户资源对接客户资源对接客户资源</h4>
-                                </li>
-                                <li>
-                                    <h3>2-14</h3>
-                                    <h4>对接客户资源对接客户资源对</h4>
-                                </li>
-                                <li>
-                                    <h3>2-14</h3>
-                                    <h4>对接客户资源对接客户资源对接客户资源对接客户资源对接客户资源</h4>
-                                </li>
-                            </ul>
-                        </div>
+
+                    <div class="asb_item">
+
+                        <button class="refuse" value="2" hidden>拒绝</button>
+                        <button class="accept"  value="1" hidden>同意</button>
                     </div>
                 </div>
             </div>
@@ -280,17 +285,10 @@
 <script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-ui-timepicker-zh-CN.js"></script>
 <script src="__PUBLIC__/js/webuploader.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/js.js"></script>
-
+<script type="text/javascript" src="__PUBLIC__/js/js.js" ></script>
 <script type="text/javascript">
-    //<!-- 日期代码 start -->
-    $(".ui-icon-circle-triangle-e").text('>');
-    $( "input[name='act_start_time'],input[name='act_stop_time']" ).datetimepicker();
-    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F96790c81142777e7724407f030936c10' type='text/javascript'%3E%3C/script%3E"));
-    //<!-- 日期代码 end -->
-
     $(function(){
+
 
         var public = "__PUBLIC__";
         /************项目管理、日志二级菜单点击事件***********/
@@ -304,6 +302,17 @@
                 ul.show();
                 $(this).find('img').attr('src', public + '/img/jian.png');
             }
+        });
+        /**************共享 成员管理、设置鼠标事件**************/
+        $(".nav ul li .nav_item2").mouseover(function () {
+            $(".nav ul li .nav_item2").removeClass('active');
+            $(this).addClass('active');
+            $(".nav ul li .nav_item2").removeClass('action');
+            $(this).prev().addClass('action');
+        });
+        $(".nav_item2").mouseout(function () {
+            $(".nav_item2").removeClass('active');
+            $(".nav_item2").removeClass('action');
         });
         /**************项目管理、日志下li的鼠标事件**************/
         $(".nav_item_li").mouseover(function () {
@@ -319,142 +328,223 @@
             $(".nav_item_li").siblings().removeClass('action');
             $(".nav_item_li").find('img').attr('src', public + '/img/sj1.png');
         });
-        /**************共享 成员管理、设置鼠标事件**************/
-        $(".nav ul li .nav_item2").mouseover(function () {
-            $(".nav ul li .nav_item2").removeClass('active');
-            $(this).addClass('active');
-            $(".nav ul li .nav_item2").removeClass('action');
-            $(this).prev().addClass('action');
-        });
-        $(".nav_item2").mouseout(function () {
-            $(".nav_item2").removeClass('active');
-            $(".nav_item2").removeClass('action');
+        $(".add_project").click(function () {
+            $('.panduan').val("");
+            $(".index_right").hide();
+            $(".add_ribao").show();
         });
         $(".add_project").click(function(){
 
+            $('.panduan').val("");
+            $('.name').val("");
+            $('.content').val("");
+            $('.relation').val("");
+            $('.to').val("");
+            $('.type').val("")
             $(".index_right").hide();
-            $(".add_ribao").show();
+            $(".add_shenpi").show();
         });
-        $(".ribao .active").click(function(){
-            $(".index_right").hide();
-            $(".add_ribao").show();
-            $(".armb_top").hide();
-            $(".armb_head .doc-dd").hide();
-            $(".armb_head button").hide();
-            var name=$(this).attr("data-name");
+        $(".shenpiname").click(function(){
+
+            var name=$(this).attr('data-name');
+            var id=$(this).attr('data-id');
+            var user_id = $(this).attr('data-user_id');
+            var to =$(this).attr('data-to');
+            var relation=$(this).attr('data-relation');
+            var content= $(this).attr('data-content');
+            var type=$(this).attr('data-type');
+            var status=$(this).attr('data-status');
+            $('.panduan').val(id);
             $('.name').val(name);
-            var processId   =$(this).attr("data-id");
-            $('.processId').val(processId);
-
-            var beizhu  =   $(this).attr("data-beizhu");
-            $('.beizhu').val(beizhu);
-            var charge_user =   $(this).attr("data-charge_user");
-            $('.charge_user').val(charge_user);
-            var content=    $(this).attr("data-content")
             $('.content').val(content);
+            $('.relation').val(relation);
+            $('.to').val(to);
+            $('.type').val(type)
+
+
+            $(".index_right").hide();
+
+
+            var nowUser= {$Think.session.think.user};
+           var  nowuserid=nowUser['id']
+            if(nowuserid!=user_id){
+                $('.asb_concel').hide();
+                $('.asb_submit').hide();
+            }
+            if(status==0){
+
+                if(nowuserid==to){
+
+                    $('.refuse').show();
+                    $('.accept').show();
+
+                }else {
+                    $('.refuse').hide();
+                    $('.accept').hide();
+
+                }
+            }
+
+            $(".add_shenpi").show();
         });
-        $(".add_ribao_top").click(function(){
+        $(".as_top_cont").click(function(){
             $(".index_right").show();
-            $(".add_ribao").hide();
+            $(".add_shenpi").hide();
         });
-        $(".arm_bottom_cancel").click(function(){
-            $(".armb_top").hide();
-            $(".armb_head .doc-dd").hide();
-            $(".armb_head button").hide();
-            $(".armb_top textarea").val('');
-        });
-        $(".armb_head h3").click(function(){
-            $(".armb_top").show();
-            $(".armb_head button").show();
-        });
-        $(".armb_head button").click(function(){
-            $(".armb_head .doc-dd").show();
-        });
-        $('.arm_bottom_save').click(function () {
+        $(".asb_concel").click(function(){
 
-            var processId   =   $('.processId').val();
-            var name = $('.name').val();
-
-            var charge_user = $('.charge_user').val();
-            var beizhu = $('.beizhu').val();
-            if(processId==null||processId==""){
-
-                $.ajax({
-
-                    url: "{:url('process/addProcess')}",
-
-                    data: {
-                        name: name,
-                        baizhu: beizhu,
-                        charge_user: charge_user,
-
-
-
-                    },
-
-                    dataType: 'json',
-                    method: 'post',
-                    success: function (data) {
-
-
-                        if (data > 0) {
-                            window.location.reload();
-
-                        } else {
-                            alert("fail")
-                        }
-                    }
-
-
-                })
-
+            var panduan=$('.panduan').val();
+            alert(panduan)
+            if (panduan==""){
 
             }else {
 
                 $.ajax({
-
-                    url: "{:url('process/editProcess')}",
-
+                    url: "{:url('shenpi/deleteShenpi')}",
                     data: {
-                        id:processId,
-                        name: name,
-                        content: content,
-                        charge_user: charge_user,
-                        beizhu: beizhu
-
-
+                        id:panduan,
                     },
-
                     dataType: 'json',
                     method: 'post',
                     success: function (data) {
-
-
                         if (data > 0) {
                             window.location.reload();
-
                         } else {
                             alert("fail")
                         }
                     }
-
-
                 })
-
             }
+            window.location.reload();
+        });
 
+        $('.asb_submit').click(function () {
+             var panduan=$('.panduan').val();
+            var type=$('.type').val();
+            var name=$('.name').val();
+            var content =$('.content').val();
+            var to =$('.to').val();
+            var relation=$('.relation').val();
+
+            console.log(type);
+            console.log(name);
+
+            console.log(content);
+
+            console.log(to);
+
+            console.log(relation);
+            //新建
+            if(panduan==null||panduan==""){
+                $.ajax({
+                    url: "{:url('shenpi/addNew')}",
+                    data: {
+                        type:type,
+                        name: name,
+                        content: content,
+                        to: to,
+                        relation: relation
+                    },
+                    dataType: 'json',
+                    method: 'post',
+                    success: function (data) {
+                        if (data > 0) {
+                            window.location.reload();
+                        } else {
+                            alert("fail")
+                        }
+                    }
+                })
+            }else {
+                //编辑
+
+                $.ajax({
+                    url: "{:url('shenpi/editShenpi')}",
+                    data: {
+                        id:panduan,
+                        type:type,
+                        name: name,
+                        content: content,
+                        to: to,
+                        relation: relation
+                    },
+                    dataType: 'json',
+                    method: 'post',
+                    success: function (data) {
+                        if (data > 0) {
+                            window.location.reload();
+                        } else {
+                            alert("fail")
+                        }
+                    }
+                })
+            }
 
         })
 
+        $('.refuse').click(function () {
+
+            var panduan=$('.panduan').val();
+            var type=$('.type').val();
+            var name=$('.name').val();
+            var content =$('.content').val();
+            var to =$('.to').val();
+            var relation=$('.relation').val();
+            var status=$(this).val();
+            $.ajax({
+                url: "{:url('shenpi/refuseShenpi')}",
+                data: {
+                    id:panduan,
+                    status:status
+                },
+                dataType: 'json',
+                method: 'post',
+                success: function (data) {
+                    if (data > 0) {
+
+                        window.location.reload();
+                    } else {
+                        alert("fail")
+                    }
+                }
+            })
+
+        })
+
+        $('.accept').click(function () {
+
+            var panduan=$('.panduan').val();
+            var type=$('.type').val();
+            var name=$('.name').val();
+            var content =$('.content').val();
+            var to =$('.to').val();
+            var relation=$('.relation').val();
+            var status=$(this).val();
+            $.ajax({
+                url: "{:url('shenpi/refuseShenpi')}",
+                data: {
+                    id:panduan,
+                    status:status
+                },
+                dataType: 'json',
+                method: 'post',
+                success: function (data) {
+                    if (data > 0) {
+
+                        window.location.reload();
+                    } else {
+                        alert("fail")
+                    }
+                }
+            })
+
+        })
+        //退出
+        $('.logout').click(function () {
+
+            window.location.href = "{:url('Ucenter/logout')}"
+        })
     })
-
-
-
-
-
-
-
-
 </script>
 </body>
 </html>

@@ -128,6 +128,14 @@
                         </div>
                     </a>
                 </li>
+                <li>
+                    <a href="{:url('Shenpi/index')}">
+                        <div class="nav_item2 open">
+                            <img src="__PUBLIC__/img/jia.png">
+                            <h4>审批请示</h4>
+                        </div>
+                    </a>
+                </li>
                 {if condition="$menu_res.4 eq 1"}
                 <li>
                     <a href="{:url('Newfile/share')}">
@@ -193,6 +201,7 @@
                                 文件夹
                             </li>
                         </ul>
+                        <!--<div class="folder-add" style="margin-top:6px;" id="detele">删除</div>-->
                     </div>
                     <div class="pit_bottom">
                         <div class="project_cont">
@@ -257,15 +266,21 @@
                                 <div class="pc_item">
                                     <span>时间：</span>
                                     <div class="doc-dd">
+                                        {if condition="$pr_result.time1 eq ''"} <input name="act_start_time" type="text" class="text-box time1"
+                                                                                       value="{:date('Y-m-d H:i',time())}" readonly="readonly"/>{else/}
                                         <input name="act_start_time" type="text" class="text-box time1"
-                                               value="{:date('Y-m-d H:i',$pr_result.time1)}" readonly="readonly"/>
+                                               value="{:date('Y-m-d H:i',$pr_result.time1)}" readonly="readonly"/>{/if}
                                     </div>
                                 </div>
                                 <div class="pc_item">
                                     <span>更新时间：</span>
                                     <div class="doc-dd">
+                                        {if condition="$pr_result.time2 eq ''"} <input name="act_start_time" type="text" class="text-box time2"
+
+                                                                                       value="{:date('Y-m-d H:i',time())}" readonly="readonly"/>{else/}
                                         <input name="act_start_time" type="text" class="text-box time2"
-                                               value="{:date('Y-m-d H:i',$pr_result.time2)}" readonly="readonly"/>
+                                               value="{:date('Y-m-d H:i',$pr_result.time2)}" readonly="readonly"/>{/if}
+
                                     </div>
                                 </div>
                                 <div class="pc_item">
@@ -297,6 +312,7 @@
                                 {if condition="$userInfo.id eq $pr_result.ucenter_id "}
                                 <div class="pc_item">
                                     <button type="button" class="new_save">保存</button>
+                                    <button type="button" class="new_save1" style="background: #f00;margin-left: 20px;">删除</button>
                                 </div>
                                 {/if}
                             </form>
@@ -536,6 +552,16 @@
                         <input type="text" id="user-name" placeholder="文件夹名称" value="" style="width: 280px;"/>
                         <button type="button" class="aui-button" style="width: 260px;">确定</button>
                         <div class="login-cerror">必填项不可为空</div>
+                    </form>
+                </div>
+            </div>
+            <div class="add-user-infoa" style="top:400px;width: 320px;">
+                <div class="aui-infoa" style="width: 320px;">
+                    <form>
+
+                        <input type="text"  title="删除该项目，项目下的文件和事件也会删除！" id="must" placeholder="删除该项目，项目下的文件和事件也会删除！" readonly />
+                            <button type="button" class="aui-buttona" style="width: 260px;">确定</button>
+
                     </form>
                 </div>
             </div>
@@ -1109,7 +1135,10 @@
         });
         $(".bj").click(function () {
             $(".add-user-info").hide();
+            $('.add-user-infoa').hide();
+
             $(this).hide()
+
         });
 
         //文件命名
@@ -1217,7 +1246,29 @@
 
             window.location.href = "{:url('Ucenter/logout')}"
         })
+$('.new_save1').click(function () {
+    var project_id = $('.project_id').val();
+    $('.add-user-infoa').show();
+    $('.bj').show();
+$('.aui-buttona').click(function () {
 
+    $.ajax(
+            {
+                url: "{:url('project/deleteProject')}",
+                data: {id: project_id},
+                dataType: 'json',
+                method: 'post',
+                success: function (data) {
+                    var url="{$Think.server.HTTP_REFERER}";
+                    window.location.href=url;
+
+                }
+            }
+    )
+
+})
+
+})
 
     });
 </script>

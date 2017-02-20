@@ -40,6 +40,8 @@ class Base extends Controller
     );
 
 
+
+
 //控制器启动时自动运行是否登录和检测菜单权限
     public function _initialize()
     {
@@ -90,6 +92,7 @@ class Base extends Controller
         }
         return $this->result;
     }
+
 
     public function showError($code = 0)
     {

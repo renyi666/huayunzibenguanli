@@ -176,7 +176,11 @@ class Newfile extends Base
 
                 }
 
+                if ($data['ext'] == "rar" || $data['ext'] == "zip") {
 
+                    $data['type_number'] = "7";//类型为压缩文件
+
+                }
                 $row = $fileM->save($data);
 
                 if ($row) {

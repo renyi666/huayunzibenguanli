@@ -191,7 +191,8 @@ class FileShare extends Model
         $where['folder_id'] =0;
         $result=$this
             ->alias('f')
-        ->where($where)
+            ->where($where)
+            ->order('f.create_time desc')
             ->field('f.id,f.name,f.save_path,f.ext,f.project_id,f.type_number,u.user_name,f.create_time,f.ucenter_id')
 
             ->join('ucenter u','u.id=f.ucenter_id')
